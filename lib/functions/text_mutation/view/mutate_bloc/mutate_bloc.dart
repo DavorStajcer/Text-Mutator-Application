@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:text_mutator/data/models/mutated_text.dart';
-import 'package:text_mutator/data/models/text.dart';
-import 'package:text_mutator/data/repositories/mutated_text_repository.dart';
-import 'package:text_mutator/data/repositories/text_repository.dart';
-import 'package:text_mutator/logic/text_bloc/text_bloc.dart';
+import 'package:text_mutator/functions/text_mutation/domain/enteties/mutated_text.dart';
+import 'package:text_mutator/functions/text_mutation/domain/enteties/text.dart';
+import 'package:text_mutator/functions/text_mutation/data/repositories/mutated_text_repository.dart';
+import 'package:text_mutator/functions/text_mutation/data/repositories/text_repository.dart';
+import 'package:text_mutator/functions/text_mutation/view/text_bloc/text_bloc.dart';
 
 part 'mutate_event.dart';
 part 'mutate_state.dart';
@@ -20,14 +20,14 @@ class MutateBloc extends Bloc<MutateEvent, MutateState> {
       : super(MutateInitial()) {
     print("CREATED MUTATE BLOC");
 
-    this.add(MutateText(_textBloc.getText, 4));
+    this.add(MutateText(_textBloc.getText, 2));
 
     _textBlocSubscription = _textBloc.listen((TextState state) {
       if (state is TextLoaded) {
         print("LISTEND TO TextLoaded");
         this.add(MutateText(
           state.text,
-          4, //TODO: ADD VARIABLE NUMBER OF MUTATIONS
+          2, //TODO: ADD VARIABLE NUMBER OF MUTATIONS
         ));
       }
     });

@@ -1,5 +1,5 @@
-import 'package:text_mutator/data/models/text.dart';
-import 'package:text_mutator/data/models/words/clean_word.dart';
+import 'package:text_mutator/functions/text_mutation/domain/enteties/text.dart';
+import 'package:text_mutator/functions/text_mutation/domain/enteties/word/clean_word.dart';
 
 class TextRepository {
   Text _text;

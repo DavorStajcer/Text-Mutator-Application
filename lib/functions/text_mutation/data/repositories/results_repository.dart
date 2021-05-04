@@ -1,8 +1,8 @@
 import 'package:text_mutator/core/selectable_text_widget.dart';
-import 'package:text_mutator/data/models/result.dart';
-import 'package:text_mutator/data/models/text.dart';
-import 'package:text_mutator/data/models/words/clean_word.dart';
-import 'package:text_mutator/data/models/words/mutated_word.dart';
+import 'package:text_mutator/functions/text_mutation/domain/enteties/result.dart';
+import 'package:text_mutator/functions/text_mutation/domain/enteties/text.dart';
+import 'package:text_mutator/functions/text_mutation/domain/enteties/word/clean_word.dart';
+import 'package:text_mutator/functions/text_mutation/domain/enteties/word/mutated_word.dart';
 
 class ResultRepository {
   Result _result;

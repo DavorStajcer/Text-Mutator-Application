@@ -1,10 +1,10 @@
 import 'dart:math';
 
-import 'package:text_mutator/data/models/words/mutated_word.dart';
+import 'package:text_mutator/functions/text_mutation/domain/enteties/word/mutated_word.dart';
 import 'package:text_mutator/dummy_mutate_words.dart';
 
-import '../models/mutated_text.dart';
-import '../models/text.dart';
+import '../../domain/enteties/mutated_text.dart';
+import '../../domain/enteties/text.dart';
 
 class MutatedTextRepository {
   MutatedText _mutatedText;

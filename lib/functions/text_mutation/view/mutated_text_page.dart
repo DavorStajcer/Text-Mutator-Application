@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:text_mutator/data/repositories/results_repository.dart';
-import 'package:text_mutator/logic/bloc/result_bloc.dart';
+import 'package:text_mutator/functions/text_mutation/data/repositories/results_repository.dart';
+import 'package:text_mutator/functions/text_mutation/view/result_bloc/result_bloc.dart';
 
-import 'package:text_mutator/logic/text_bloc/text_bloc.dart';
+import 'package:text_mutator/functions/text_mutation/view/text_bloc/text_bloc.dart';
 
-import '../../core/selectable_text_widget.dart';
-import '../../data/models/mutated_text.dart';
-import '../../data/models/words/mutated_word.dart';
-import '../../logic/mutate_bloc/mutate_bloc.dart';
+import '../../../core/selectable_text_widget.dart';
+import '../domain/enteties/mutated_text.dart';
+import '../domain/enteties/word/mutated_word.dart';
+import 'mutate_bloc/mutate_bloc.dart';
 
 class MutatedTextPage extends StatelessWidget {
   MutatedTextPage({Key key}) : super(key: key);
@@ -151,6 +151,8 @@ class MutatedTextPage extends StatelessWidget {
         textAlign: TextAlign.left,
         text: TextSpan(
             text: "",
-            children: _allText.map((e) => WidgetSpan(child: e)).toList()));
+            children: _allText
+                .map((SelectableTextWidget e) => WidgetSpan(child: e))
+                .toList()));
   }
 }

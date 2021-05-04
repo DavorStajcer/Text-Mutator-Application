@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:text_mutator/core/selectable_text_widget.dart';
-import 'package:text_mutator/data/models/result.dart';
-import 'package:text_mutator/data/models/text.dart';
-import 'package:text_mutator/data/repositories/results_repository.dart';
+import 'package:text_mutator/functions/text_mutation/domain/enteties/result.dart';
+import 'package:text_mutator/functions/text_mutation/domain/enteties/text.dart';
+import 'package:text_mutator/functions/text_mutation/data/repositories/results_repository.dart';
 
 part 'result_event.dart';
 part 'result_state.dart';

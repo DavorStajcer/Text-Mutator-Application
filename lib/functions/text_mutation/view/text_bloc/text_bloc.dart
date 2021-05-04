@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:text_mutator/data/models/text.dart';
-import 'package:text_mutator/data/repositories/text_repository.dart';
+import 'package:text_mutator/functions/text_mutation/domain/enteties/text.dart';
+import 'package:text_mutator/functions/text_mutation/data/repositories/text_repository.dart';
 
 part 'text_event.dart';
 part 'text_state.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:text_mutator/logic/text_bloc/text_bloc.dart';
+import 'package:text_mutator/functions/text_mutation/view/text_bloc/text_bloc.dart';
 
 class CleanTextPage extends StatefulWidget {
   const CleanTextPage({Key key}) : super(key: key);

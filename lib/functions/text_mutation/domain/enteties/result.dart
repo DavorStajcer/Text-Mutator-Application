@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'text.dart';
-import 'words/clean_word.dart';
-import 'words/mutated_word.dart';
+import 'word/clean_word.dart';
+import 'word/mutated_word.dart';
 
 class Result {
   final Text text;
@@ -21,8 +21,7 @@ class Result {
     final int _numberOfMutatedWords = mutatedWords.length;
 
     if (numberOfMarkedWords < _numberOfMutatedWords) {
-      _numberOfWrongWords +=
-          (_numberOfMutatedWords - numberOfMarkedWords).abs();
+      _numberOfWrongWords += _numberOfMutatedWords - numberOfMarkedWords;
     }
 
     score = _numberOfWrongWords / _numberOfMutatedWords;
