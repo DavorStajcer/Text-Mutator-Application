@@ -6,7 +6,13 @@ abstract class MutateEvent {
 }
 
 class MutateText extends MutateEvent {
-  final Text text;
+  final String text;
   final int numberOfMutations;
   const MutateText(this.text, this.numberOfMutations);
+}
+
+class UpdateWord extends MutateEvent {
+  final Word word;
+
+  UpdateWord(this.word);
 }

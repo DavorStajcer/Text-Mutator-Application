@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:text_mutator/data/repositories/mutated_text_repository.dart';
-import 'package:text_mutator/data/repositories/text_repository.dart';
-import 'package:text_mutator/logic/mutate_bloc/mutate_bloc.dart';
+import 'package:text_mutator/functions/database/database.dart';
+import 'package:text_mutator/functions/text_mutation/data/repositories/mutated_text_repository_impl.dart';
+import 'package:text_mutator/functions/text_input_and_load/data/respositories/text_repository_impl.dart';
+import 'package:text_mutator/functions/text_mutation/view/mutate_bloc/mutate_bloc.dart';
 
-import 'logic/text_bloc/text_bloc.dart';
-import 'presentation/clean_text_page/clean_text_page.dart';
-import 'routing/route_generation.dart';
+import 'functions/text_input_and_load/view/text_bloc/text_bloc.dart';
+import 'functions/text_input_and_load/view/clean_text_page.dart';
+import 'core/navigation/route_generation.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,11 +20,12 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => TextBloc(TextRepository()),
+          create: (context) => TextBloc(TextRepositoryImpl(DatabaseHelper())),
         ),
         BlocProvider(
-          create: (context) => MutateBloc(MutatedTextRepository(),
-              BlocProvider.of<TextBloc>(context, listen: false)),
+          create: (context) => MutateBloc(
+            MutatedTextRepositoryImpl(),
+          ),
         )
       ],
       child: MaterialApp(

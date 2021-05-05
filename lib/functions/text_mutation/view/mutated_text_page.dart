@@ -1,19 +1,18 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:text_mutator/functions/text_mutation/data/repositories/results_repository.dart';
-import 'package:text_mutator/functions/text_mutation/view/result_bloc/result_bloc.dart';
+import 'package:text_mutator/functions/database/database.dart';
+import 'package:text_mutator/functions/result_presentation/data/respositories/results_repository_impl.dart';
+import 'package:text_mutator/functions/text_mutation/domain/models/word/word.dart';
+import 'package:text_mutator/functions/result_presentation/view/result_bloc/result_bloc.dart';
 
-import 'package:text_mutator/functions/text_mutation/view/text_bloc/text_bloc.dart';
-
-import '../../../core/selectable_text_widget.dart';
-import '../domain/enteties/mutated_text.dart';
-import '../domain/enteties/word/mutated_word.dart';
+import '../domain/models/mutated_text.dart';
+import '../domain/models/word/mutated_word.dart';
 import 'mutate_bloc/mutate_bloc.dart';
 
 class MutatedTextPage extends StatelessWidget {
   MutatedTextPage({Key key}) : super(key: key);
-
-  List<SelectableTextWidget> _allText = [];
 
   // void _clearAllText() {
   //   _allText.forEach((element) {
@@ -23,8 +22,12 @@ class MutatedTextPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextStyle _defaultStyle = Theme.of(context).textTheme.bodyText1;
+    final MutateBloc _mutateBloc =
+        BlocProvider.of<MutateBloc>(context, listen: false);
+
     return BlocProvider(
-      create: (context) => ResultBloc(ResultRepository()),
+      create: (context) => ResultBloc(ResultRepositoryImpl(DatabaseHelper())),
       child: Scaffold(
         body: BlocBuilder<ResultBloc, ResultState>(
           builder: (context, state) {
@@ -39,9 +42,9 @@ class MutatedTextPage extends StatelessWidget {
                 children: [
                   Text("Result:" + state.result.score.toString()),
                   Text("Number of mutated words:" +
-                      state.result.mutatedWords.length.toString()),
+                      state.result.mutatedWords.toString()),
                   Text("Number of wrongly marked words: " +
-                      state.result.wrongWords.length.toString()),
+                      state.result.wrongWords.toString()),
                   Text("Number of selected words: " +
                       state.result.numberOfMarkedWords.toString()),
                   TextButton(
@@ -86,12 +89,10 @@ class MutatedTextPage extends StatelessWidget {
                               child: CircularProgressIndicator(),
                             );
                           } else if (state is MutateLoaded) {
-                            return Column(
-                              children: [
-                                Expanded(
-                                    child: _buildSelectableText(
-                                        state.mutatedText)),
-                              ],
+                            return _buildSelectableText(
+                              state.mutatedText,
+                              _defaultStyle,
+                              _mutateBloc,
                             );
                           } else if (state is MutateInitial) {
                             return Center(
@@ -114,11 +115,9 @@ class MutatedTextPage extends StatelessWidget {
                       TextButton(
                         onPressed: () =>
                             BlocProvider.of<ResultBloc>(context, listen: false)
-                                .add(CreateResult(
-                                    _allText,
-                                    BlocProvider.of<TextBloc>(context,
-                                            listen: false)
-                                        .getText)),
+                                .add(
+                          CreateResult(_mutateBloc.state.mutatedText),
+                        ),
                         child: Text("Check"),
                       ),
                     ],
@@ -132,11 +131,13 @@ class MutatedTextPage extends StatelessWidget {
     );
   }
 
-  Widget _buildSelectableText(MutatedText mutatedText) {
-    _allText = [];
-    for (int index = 0; index < mutatedText.text.text.length; index++) {
-      _allText
-          .add(SelectableTextWidget(mutatedText.text.text.elementAt(index)));
+  Widget _buildSelectableText(
+      MutatedText mutatedText, TextStyle defaultStyle, MutateBloc mutateBloc) {
+    final _allText = <Word>[];
+    for (int index = 0; index < mutatedText.cleanWords.length; index++) {
+      // _allText.add(SelectableTextWidget(mutatedText.cleanWords[index]));
+
+      _allText.add(mutatedText.cleanWords[index]);
 
       final MutatedWord _mutatedWord = mutatedText.mutatedWords.firstWhere(
           (MutatedWord mutatedWord) => mutatedWord.index == index, orElse: () {
@@ -144,15 +145,34 @@ class MutatedTextPage extends StatelessWidget {
       });
 
       if (_mutatedWord != null)
-        _allText.add(SelectableTextWidget(_mutatedWord));
+        // _allText.add(SelectableTextWidget(_mutatedWord));
+
+        _allText.add(_mutatedWord);
     }
 
     return RichText(
         textAlign: TextAlign.left,
+        softWrap: true,
         text: TextSpan(
             text: "",
             children: _allText
-                .map((SelectableTextWidget e) => WidgetSpan(child: e))
+                .map(
+                  (Word e) => TextSpan(
+                    text: e.word + ' ',
+                    style: e.isSelected
+                        ? defaultStyle.copyWith(
+                            decoration: TextDecoration.lineThrough)
+                        : defaultStyle,
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        HapticFeedback.vibrate();
+                        //setState(() {
+                        e.isSelected = !e.isSelected;
+                        mutateBloc.add(UpdateWord(e));
+                        //});
+                      },
+                  ),
+                )
                 .toList()));
   }
 }
