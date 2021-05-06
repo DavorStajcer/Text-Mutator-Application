@@ -4,7 +4,7 @@ import 'package:text_mutator/functions/text_mutation/view/mutate_bloc/mutate_blo
 import 'package:text_mutator/functions/text_input_and_load/view/text_bloc/text_bloc.dart';
 
 class CleanTextPage extends StatefulWidget {
-  const CleanTextPage({Key key}) : super(key: key);
+  const CleanTextPage({Key? key}) : super(key: key);
 
   @override
   _CleanTextPageState createState() => _CleanTextPageState();

@@ -5,5 +5,5 @@ class Text {
   final String text;
   final String name;
   final String id;
-  const Text({this.text = '', @required this.name, @required this.id});
+  const Text({this.text = '', required this.name, required this.id});
 }

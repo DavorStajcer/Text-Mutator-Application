@@ -9,24 +9,24 @@ import 'package:text_mutator/functions/text_mutation/domain/models/word/clean_wo
 import 'package:text_mutator/functions/text_mutation/domain/models/word/mutated_word.dart';
 
 class ResultRepositoryImpl extends ResultRepository {
-  final DatabaseSource _databaseSource;
+  final DatabaseSource? _databaseSource;
 
   ResultRepositoryImpl(this._databaseSource);
 
-  Future<Result> calculateResult(MutatedText mutatedText) {
+  Future<Result> calculateResult(MutatedText? mutatedText) {
     return Future(() {
       int _wrongWords = 0;
       int _numberOfMarkedWords = 0;
 
-      mutatedText.cleanWords.forEach((CleanWord currentWord) {
+      mutatedText!.cleanWords.forEach((CleanWord currentWord) {
         if (currentWord.isSelected) {
           _wrongWords++;
           _numberOfMarkedWords++;
         }
       });
 
-      mutatedText.mutatedWords.forEach((MutatedWord currentWord) {
-        if (currentWord.isSelected) _numberOfMarkedWords++;
+      mutatedText.mutatedWords.forEach((MutatedWord? currentWord) {
+        if (currentWord!.isSelected) _numberOfMarkedWords++;
       });
 
       return ResultModel(mutatedText.mutatedWords.length, _wrongWords,
@@ -37,7 +37,7 @@ class ResultRepositoryImpl extends ResultRepository {
   @override
   Future<Either<Failure, List<Result>>> loadResults() async {
     final List<Map<String, dynamic>> _res =
-        await _databaseSource.fetchResults();
+        await _databaseSource!.fetchResults();
 
     final List<ResultModel> _results = _res
         .map((Map<String, dynamic> map) => ResultModel.fromJson(map))

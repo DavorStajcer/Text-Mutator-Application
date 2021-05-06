@@ -7,15 +7,15 @@ class Result extends Equatable {
   final int wrongWords;
   final int numberOfMarkedWords;
   final String id;
-  double score;
+  late double score;
 
   Result({
-    this.mutatedWords,
-    this.wrongWords,
-    this.numberOfMarkedWords,
-    this.id,
+    required this.mutatedWords,
+    required this.wrongWords,
+    required this.numberOfMarkedWords,
+    required this.id,
   }) {
-    int _numberOfWrongWords = wrongWords;
+    int? _numberOfWrongWords = wrongWords;
     final int _numberOfMutatedWords = mutatedWords;
 
     if (numberOfMarkedWords < _numberOfMutatedWords) {
@@ -28,5 +28,6 @@ class Result extends Equatable {
   }
 
   @override
-  List<Object> get props => [id, mutatedWords, wrongWords, numberOfMarkedWords];
+  List<Object?> get props =>
+      [id, mutatedWords, wrongWords, numberOfMarkedWords];
 }

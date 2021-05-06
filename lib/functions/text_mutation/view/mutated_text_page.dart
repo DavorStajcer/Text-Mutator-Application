@@ -12,7 +12,7 @@ import '../domain/models/word/mutated_word.dart';
 import 'mutate_bloc/mutate_bloc.dart';
 
 class MutatedTextPage extends StatelessWidget {
-  MutatedTextPage({Key key}) : super(key: key);
+  MutatedTextPage({Key? key}) : super(key: key);
 
   // void _clearAllText() {
   //   _allText.forEach((element) {
@@ -22,7 +22,7 @@ class MutatedTextPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle _defaultStyle = Theme.of(context).textTheme.bodyText1;
+    final TextStyle? _defaultStyle = Theme.of(context).textTheme.bodyText1;
     final MutateBloc _mutateBloc =
         BlocProvider.of<MutateBloc>(context, listen: false);
 
@@ -90,7 +90,7 @@ class MutatedTextPage extends StatelessWidget {
                             );
                           } else if (state is MutateLoaded) {
                             return _buildSelectableText(
-                              state.mutatedText,
+                              state.mutatedText!,
                               _defaultStyle,
                               _mutateBloc,
                             );
@@ -132,15 +132,15 @@ class MutatedTextPage extends StatelessWidget {
   }
 
   Widget _buildSelectableText(
-      MutatedText mutatedText, TextStyle defaultStyle, MutateBloc mutateBloc) {
+      MutatedText mutatedText, TextStyle? defaultStyle, MutateBloc mutateBloc) {
     final _allText = <Word>[];
     for (int index = 0; index < mutatedText.cleanWords.length; index++) {
       // _allText.add(SelectableTextWidget(mutatedText.cleanWords[index]));
 
       _allText.add(mutatedText.cleanWords[index]);
 
-      final MutatedWord _mutatedWord = mutatedText.mutatedWords.firstWhere(
-          (MutatedWord mutatedWord) => mutatedWord.index == index, orElse: () {
+      final MutatedWord? _mutatedWord = mutatedText.mutatedWords.firstWhere(
+          (MutatedWord? mutatedWord) => mutatedWord!.index == index, orElse: () {
         return null;
       });
 
@@ -158,9 +158,9 @@ class MutatedTextPage extends StatelessWidget {
             children: _allText
                 .map(
                   (Word e) => TextSpan(
-                    text: e.word + ' ',
+                    text: e.word! + ' ',
                     style: e.isSelected
-                        ? defaultStyle.copyWith(
+                        ? defaultStyle!.copyWith(
                             decoration: TextDecoration.lineThrough)
                         : defaultStyle,
                     recognizer: TapGestureRecognizer()

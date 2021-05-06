@@ -6,7 +6,7 @@ abstract class ResultEvent {
 }
 
 class CreateResult extends ResultEvent {
-  final MutatedText mutatedText;
+  final MutatedText? mutatedText;
   const CreateResult(this.mutatedText);
 }
 

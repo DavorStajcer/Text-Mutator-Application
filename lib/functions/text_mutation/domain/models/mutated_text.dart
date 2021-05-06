@@ -4,7 +4,7 @@ import 'package:text_mutator/functions/text_mutation/domain/models/word/word.dar
 
 class MutatedText {
   final List<CleanWord> cleanWords;
-  final List<MutatedWord> mutatedWords;
+  final List<MutatedWord?> mutatedWords;
 
   const MutatedText(
     this.cleanWords,

@@ -12,23 +12,23 @@ import 'package:text_mutator/functions/text_mutation/domain/repositories/mutated
 import '../../domain/models/mutated_text.dart';
 
 class MutatedTextRepositoryImpl extends MutatedTextRepository {
-  MutatedText _mutatedText;
+  MutatedText? _mutatedText;
   final Random _random = new Random();
 
   MutatedTextRepositoryImpl();
 
   void setMutatedText(MutatedText text) => _mutatedText;
-  MutatedText get mutatedTex => _mutatedText;
+  MutatedText? get mutatedTex => _mutatedText;
 
   void updateWord(Word word) {
     if (word is CleanWord) {
-      final _index = _mutatedText.cleanWords
+      final _index = _mutatedText!.cleanWords
           .indexWhere((element) => element.index == word.index);
-      _mutatedText.cleanWords[_index] = word;
+      _mutatedText!.cleanWords[_index] = word;
     } else {
-      final _index = _mutatedText.mutatedWords
-          .indexWhere((element) => element.index == word.index);
-      _mutatedText.mutatedWords[_index] = word;
+      final _index = _mutatedText!.mutatedWords
+          .indexWhere((element) => element!.index == word.index);
+      _mutatedText!.mutatedWords[_index] = word as MutatedWord?;
     }
   }
 

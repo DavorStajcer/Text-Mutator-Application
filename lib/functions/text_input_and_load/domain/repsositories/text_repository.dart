@@ -7,5 +7,5 @@ abstract class TextRepository {
   Future<Either<Failure, Text>> loadText(String id);
   Future<Either<Failure, void>> saveText(TextModel id);
 
-  Text get text;
+  Text? get text;
 }

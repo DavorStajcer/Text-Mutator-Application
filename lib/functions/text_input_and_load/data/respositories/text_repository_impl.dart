@@ -6,16 +6,16 @@ import 'package:text_mutator/functions/text_input_and_load/domain/models/text.da
 import 'package:text_mutator/functions/text_input_and_load/domain/repsositories/text_repository.dart';
 
 class TextRepositoryImpl extends TextRepository {
-  final DatabaseSource _databaseSource;
+  final DatabaseSource? _databaseSource;
 
-  Text _currentText;
+  Text? _currentText;
 
   TextRepositoryImpl(this._databaseSource);
 
   @override
   Future<Either<Failure, Text>> loadText(String id) async {
     try {
-      final Map<String, dynamic> _text = await _databaseSource.fetchText(id);
+      final Map<String, dynamic> _text = await _databaseSource!.fetchText(id);
       final TextModel _textModel = TextModel.fromJson(_text);
 
       return Right(_textModel);
@@ -27,12 +27,12 @@ class TextRepositoryImpl extends TextRepository {
   @override
   Future<Either<Failure, void>> saveText(TextModel text) async {
     try {
-      return Right(await _databaseSource.saveText(text));
+      return Right(await _databaseSource!.saveText(text));
     } catch (err) {
       return Left(DatabaseFailure());
     }
   }
 
   @override
-  Text get text => _currentText;
+  Text? get text => _currentText;
 }

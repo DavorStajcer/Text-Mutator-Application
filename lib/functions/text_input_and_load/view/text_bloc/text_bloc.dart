@@ -14,7 +14,7 @@ class TextBloc extends Bloc<TextEvent, TextState> {
     print("CREATED TEXT BLOC");
   }
 
-  Text get getText => _textRepository.text;
+  Text? get getText => _textRepository.text;
 
   @override
   Stream<TextState> mapEventToState(

@@ -12,8 +12,8 @@ import 'package:text_mutator/functions/text_mutation/domain/models/word/mutated_
 class MockDatabaseSource extends Mock implements DatabaseSource {}
 
 void main() {
-  MockDatabaseSource _mockDatabaseSource;
-  ResultRepositoryImpl _resultRepositoryImpl;
+  MockDatabaseSource? _mockDatabaseSource;
+  late ResultRepositoryImpl _resultRepositoryImpl;
 
   setUp(() {
     _mockDatabaseSource = MockDatabaseSource();
@@ -82,13 +82,13 @@ void main() {
       'should return correct list when success',
       () async {
         // arrange
-        when(_mockDatabaseSource.fetchResults())
+        when(_mockDatabaseSource!.fetchResults())
             .thenAnswer((realInvocation) async => _testMapResults);
         // act
         final res = await _resultRepositoryImpl.loadResults();
         // assert
         expect(res, Right(_testResults));
-        verify(_mockDatabaseSource.fetchResults()).called(1);
+        verify(_mockDatabaseSource!.fetchResults()).called(1);
         verifyNoMoreInteractions(_mockDatabaseSource);
       },
     );

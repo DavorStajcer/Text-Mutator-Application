@@ -11,8 +11,8 @@ import 'package:text_mutator/functions/text_input_and_load/domain/models/text.da
 class MockDatabaseSource extends Mock implements DatabaseSource {}
 
 void main() {
-  MockDatabaseSource mockDatabaseSource;
-  TextRepositoryImpl textRepositoryImpl;
+  MockDatabaseSource? mockDatabaseSource;
+  late TextRepositoryImpl textRepositoryImpl;
 
   setUp(() {
     mockDatabaseSource = MockDatabaseSource();
@@ -29,13 +29,13 @@ void main() {
       'should return appropriate text and call fetchText function once',
       () async {
         // arrange
-        when(mockDatabaseSource.fetchText(_testId))
+        when(mockDatabaseSource!.fetchText(_testId))
             .thenAnswer((realInvocation) async => _testTextMap);
         // act
         final res = await textRepositoryImpl.loadText(_testId);
         // assert
         expect(res, equals(Right(_testText)));
-        verify(mockDatabaseSource.fetchText(_testId)).called(1);
+        verify(mockDatabaseSource!.fetchText(_testId)).called(1);
         verifyNoMoreInteractions(mockDatabaseSource);
       },
     );
@@ -46,7 +46,7 @@ void main() {
         // act
         await textRepositoryImpl.saveText(_testTextModel);
         // assert
-        verify(mockDatabaseSource.saveText(_testTextModel)).called(1);
+        verify(mockDatabaseSource!.saveText(_testTextModel)).called(1);
         verifyNoMoreInteractions(mockDatabaseSource);
       },
     );
@@ -57,13 +57,13 @@ void main() {
       'should return DatabaseFasilure when fetching text goes wrong',
       () async {
         // arrange
-        when(mockDatabaseSource.fetchText(_testId))
+        when(mockDatabaseSource!.fetchText(_testId))
             .thenThrow(UnimplementedError());
         // act
         final res = await textRepositoryImpl.loadText(_testId);
         // assert
         expect(res, equals(Left(DatabaseFailure())));
-        verify(mockDatabaseSource.fetchText(_testId)).called(1);
+        verify(mockDatabaseSource!.fetchText(_testId)).called(1);
         verifyNoMoreInteractions(mockDatabaseSource);
       },
     );
@@ -71,13 +71,13 @@ void main() {
     test(
       'should return DatabaseFailure when saving goes wrong',
       () async {
-        when(mockDatabaseSource.saveText(_testTextModel))
+        when(mockDatabaseSource!.saveText(_testTextModel))
             .thenThrow(UnimplementedError());
         // act
         final res = await textRepositoryImpl.saveText(_testTextModel);
         // assert
         expect(res, equals(Left(DatabaseFailure())));
-        verify(mockDatabaseSource.saveText(_testTextModel)).called(1);
+        verify(mockDatabaseSource!.saveText(_testTextModel)).called(1);
         verifyNoMoreInteractions(mockDatabaseSource);
       },
     );
