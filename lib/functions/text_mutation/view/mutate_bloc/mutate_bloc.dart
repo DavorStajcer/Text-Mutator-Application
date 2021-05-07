@@ -2,12 +2,9 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:text_mutator/functions/text_mutation/domain/models/mutated_text.dart';
-import 'package:text_mutator/functions/text_input_and_load/domain/models/text.dart';
+import 'package:text_mutator/functions/text_evaluation/domain/model/text_evalluation_model.dart';
 import 'package:text_mutator/functions/text_mutation/data/repositories/mutated_text_repository_impl.dart';
-import 'package:text_mutator/functions/text_input_and_load/data/respositories/text_repository_impl.dart';
 import 'package:text_mutator/functions/text_mutation/domain/models/word/word.dart';
-import 'package:text_mutator/functions/text_input_and_load/view/text_bloc/text_bloc.dart';
 
 part 'mutate_event.dart';
 part 'mutate_state.dart';
@@ -24,7 +21,7 @@ class MutateBloc extends Bloc<MutateEvent, MutateState> {
   //     print("LISTEND TO TextLoaded");
   //     this.add(MutateText(
   //       state.text,
-  //       2, //TODO: ADD VARIABLE NUMBER OF MUTATIONS
+  //       2,
   //     ));
   //   }
   // });
@@ -34,15 +31,14 @@ class MutateBloc extends Bloc<MutateEvent, MutateState> {
     MutateEvent event,
   ) async* {
     if (event is MutateText) {
-      yield MutateLoading(null);
-      await _mutatedTextRepository.mutateText(
-          event.text, event.numberOfMutations);
+      yield MutateLoading();
+      await _mutatedTextRepository.mutateText(event.textEvaluationModel);
       print("text mutated");
-      yield MutateLoaded(_mutatedTextRepository.mutatedTex);
+      // yield MutateLoaded();
     } else if (event is UpdateWord) {
-      yield MutateLoading(null);
+      yield MutateLoading();
       _mutatedTextRepository.updateWord(event.word);
-      yield MutateLoaded(_mutatedTextRepository.mutatedTex);
+      // yield MutateLoaded(_mutatedTextRepository.mutatedTex);
     }
   }
 }

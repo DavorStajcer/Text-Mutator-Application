@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:text_mutator/functions/database/database_source.dart';
+import 'package:text_mutator/core/network/connection_checker.dart';
+import 'package:text_mutator/functions/result_presentation/data/datasources/network_data_source.dart';
 import 'package:text_mutator/functions/result_presentation/data/enteties/result_model.dart';
 import 'package:text_mutator/core/error/failures/failure.dart';
 import 'package:text_mutator/functions/result_presentation/domain/repositories/result_respository.dart';
@@ -9,16 +10,17 @@ import 'package:text_mutator/functions/text_mutation/domain/models/word/clean_wo
 import 'package:text_mutator/functions/text_mutation/domain/models/word/mutated_word.dart';
 
 class ResultRepositoryImpl extends ResultRepository {
-  final DatabaseSource? _databaseSource;
+  //final DatabaseSource _databaseSource;
+  final NetworkResultDataSource _networkResultDataSource;
+  final ConnectionChecker _connectionChecker;
+  ResultRepositoryImpl(this._connectionChecker, this._networkResultDataSource);
 
-  ResultRepositoryImpl(this._databaseSource);
-
-  Future<Result> calculateResult(MutatedText? mutatedText) {
+  Future<Result> calculateResult(MutatedText mutatedText) {
     return Future(() {
       int _wrongWords = 0;
       int _numberOfMarkedWords = 0;
 
-      mutatedText!.cleanWords.forEach((CleanWord currentWord) {
+      mutatedText.cleanWords.forEach((CleanWord currentWord) {
         if (currentWord.isSelected) {
           _wrongWords++;
           _numberOfMarkedWords++;
@@ -29,25 +31,46 @@ class ResultRepositoryImpl extends ResultRepository {
         if (currentWord!.isSelected) _numberOfMarkedWords++;
       });
 
-      return ResultModel(mutatedText.mutatedWords.length, _wrongWords,
-          _numberOfMarkedWords, 'test');
+      return ResultModel(
+          mutatedText.mutatedWords.length,
+          _wrongWords,
+          _numberOfMarkedWords,
+          mutatedText.resultDifficulty,
+          DateTime.now().toIso8601String());
     });
   }
 
   @override
   Future<Either<Failure, List<Result>>> loadResults() async {
-    final List<Map<String, dynamic>> _res =
-        await _databaseSource!.fetchResults();
+    if (await _connectionChecker.hasConnection) {
+      try {
+        final List<Map<String, dynamic>> _res =
+            await _networkResultDataSource.fetchResults();
 
-    final List<ResultModel> _results = _res
-        .map((Map<String, dynamic> map) => ResultModel.fromJson(map))
-        .toList();
-    return Right(_results);
+        final List<ResultModel> _results = _res
+            .map((Map<String, dynamic> map) => ResultModel.fromJson(map))
+            .toList();
+        return Right(_results);
+      } catch (err) {
+        return Left(ServerFailure());
+      }
+    } else {
+      return Left(NoConnetionFailure());
+    }
   }
 
   @override
-  Future<Either<Failure, void>> saveResult(ResultModel result) {
-    // TODO: implement saveResult
-    throw UnimplementedError();
+  Future<Either<Failure, void>> saveResult(ResultModel result) async {
+    if (await _connectionChecker.hasConnection) {
+      try {
+        await _networkResultDataSource.saveResult(result);
+
+        return Right(null);
+      } catch (err) {
+        return Left(ServerFailure());
+      }
+    } else {
+      return Left(NoConnetionFailure());
+    }
   }
 }

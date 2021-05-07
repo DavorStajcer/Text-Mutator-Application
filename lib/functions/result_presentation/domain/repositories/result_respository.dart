@@ -5,7 +5,7 @@ import 'package:text_mutator/functions/text_mutation/domain/models/mutated_text.
 import 'package:text_mutator/functions/result_presentation/domain/models/result.dart';
 
 abstract class ResultRepository {
-  Future<Result> calculateResult(MutatedText? mutatedText);
+  Future<Result> calculateResult(MutatedText mutatedText);
   Future<Either<Failure, void>> saveResult(ResultModel result);
   Future<Either<Failure, List<Result>>> loadResults();
 }

@@ -5,17 +5,24 @@ class ResultModel extends Result {
     int mutatedWords,
     int wrongWords,
     int numberOfMarkedWords,
+    double difficulty,
     String id,
   ) : super(
           id: id,
           mutatedWords: mutatedWords,
           numberOfMarkedWords: numberOfMarkedWords,
           wrongWords: wrongWords,
+          difficulty: difficulty,
         );
 
   factory ResultModel.fromJson(Map<String, dynamic> map) {
-    return ResultModel(map['mutatedWords'], map['wrongWords'],
-        map['numberOfMarkedWords'], map['id']);
+    return ResultModel(
+      map['mutatedWords'],
+      map['wrongWords'],
+      map['numberOfMarkedWords'],
+      map['difficulty'],
+      map['id'],
+    );
   }
 
   Map<String, dynamic> toJson() {
@@ -23,6 +30,7 @@ class ResultModel extends Result {
       'mutatedWords': this.mutatedWords,
       'wrongWords': this.wrongWords,
       'numberOfMarkedWords': this.numberOfMarkedWords,
+      'difficulty': this.difficulty,
       'id': this.id,
     };
   }

@@ -2,19 +2,19 @@ part of 'mutate_bloc.dart';
 
 @immutable
 abstract class MutateState {
-  final MutatedText? mutatedText;
-
-  MutateState(this.mutatedText);
+  MutateState();
 }
 
 class MutateInitial extends MutateState {
-  MutateInitial() : super(null);
+  MutateInitial() : super();
 }
 
 class MutateLoading extends MutateState {
-  MutateLoading(MutatedText? mutatedText) : super(mutatedText);
+  MutateLoading() : super();
 }
 
 class MutateLoaded extends MutateState {
-  MutateLoaded(MutatedText? mutatedText) : super(mutatedText);
+  final MutateText mutateText;
+
+  MutateLoaded({required this.mutateText}) : super();
 }

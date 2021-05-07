@@ -1,13 +1,16 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:text_mutator/functions/database/database.dart';
+import 'package:text_mutator/core/network/connection_checker.dart';
+import 'package:text_mutator/functions/text_mutation/data/datasources/network_data_source.dart';
 import 'package:text_mutator/functions/text_mutation/data/repositories/mutated_text_repository_impl.dart';
-import 'package:text_mutator/functions/text_input_and_load/data/respositories/text_repository_impl.dart';
 import 'package:text_mutator/functions/text_mutation/view/mutate_bloc/mutate_bloc.dart';
 
-import 'functions/text_input_and_load/view/text_bloc/text_bloc.dart';
-import 'functions/text_input_and_load/view/clean_text_page.dart';
 import 'core/navigation/route_generation.dart';
+import 'functions/text_load/data/datasources/network_data_source.dart';
+import 'functions/text_load/data/respositories/text_repository_impl.dart';
+import 'functions/text_load/view/text_load_bloc/text_bloc.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,11 +23,13 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => TextBloc(TextRepositoryImpl(DatabaseHelper())),
+          create: (context) => TextBloc(TextRepositoryImpl(
+              ConnectionCheckerImpl(), NetworkTextDataSourceImpl())),
         ),
         BlocProvider(
           create: (context) => MutateBloc(
-            MutatedTextRepositoryImpl(),
+            MutatedTextRepositoryImpl(ConnectionCheckerImpl(),
+                NetworkMutatedWordsSourceImpl(), Random()),
           ),
         )
       ],
@@ -44,7 +49,6 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.blue,
         ),
-        home: CleanTextPage(),
         onGenerateRoute: onGenerateRoute,
       ),
     );

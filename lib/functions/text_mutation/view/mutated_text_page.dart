@@ -2,7 +2,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:text_mutator/core/network/connection_checker.dart';
 import 'package:text_mutator/functions/database/database.dart';
+import 'package:text_mutator/functions/result_presentation/data/datasources/network_data_source.dart';
 import 'package:text_mutator/functions/result_presentation/data/respositories/results_repository_impl.dart';
 import 'package:text_mutator/functions/text_mutation/domain/models/word/word.dart';
 import 'package:text_mutator/functions/result_presentation/view/result_bloc/result_bloc.dart';
@@ -27,7 +29,8 @@ class MutatedTextPage extends StatelessWidget {
         BlocProvider.of<MutateBloc>(context, listen: false);
 
     return BlocProvider(
-      create: (context) => ResultBloc(ResultRepositoryImpl(DatabaseHelper())),
+      create: (context) => ResultBloc(ResultRepositoryImpl(
+          ConnectionCheckerImpl(), NetworkResultDataSourceImpl())),
       child: Scaffold(
         body: BlocBuilder<ResultBloc, ResultState>(
           builder: (context, state) {
@@ -88,13 +91,15 @@ class MutatedTextPage extends StatelessWidget {
                             return Center(
                               child: CircularProgressIndicator(),
                             );
-                          } else if (state is MutateLoaded) {
-                            return _buildSelectableText(
-                              state.mutatedText!,
-                              _defaultStyle,
-                              _mutateBloc,
-                            );
-                          } else if (state is MutateInitial) {
+                          }
+                          //  else if (state is MutateLoaded) {
+                          //   return _buildSelectableText(
+                          //     state.mutatedText!,
+                          //     _defaultStyle,
+                          //     _mutateBloc,
+                          //   );
+                          // }
+                          else if (state is MutateInitial) {
                             return Center(
                               child: Center(
                                 child: Text("Initial state."),
@@ -112,14 +117,14 @@ class MutatedTextPage extends StatelessWidget {
                         onPressed: () => Navigator.of(context).pop(),
                         child: Text("Back"),
                       ),
-                      TextButton(
-                        onPressed: () =>
-                            BlocProvider.of<ResultBloc>(context, listen: false)
-                                .add(
-                          CreateResult(_mutateBloc.state.mutatedText),
-                        ),
-                        child: Text("Check"),
-                      ),
+                      // TextButton(
+                      //   onPressed: () =>
+                      //       BlocProvider.of<ResultBloc>(context, listen: false)
+                      //           .add(
+                      //     CreateResult(_mutateBloc.state.mutatedText),
+                      //   ),
+                      //   child: Text("Check"),
+                      // ),
                     ],
                   ),
                 ],
@@ -139,15 +144,11 @@ class MutatedTextPage extends StatelessWidget {
 
       _allText.add(mutatedText.cleanWords[index]);
 
-      final MutatedWord? _mutatedWord = mutatedText.mutatedWords.firstWhere(
-          (MutatedWord? mutatedWord) => mutatedWord!.index == index, orElse: () {
-        return null;
-      });
+      final MutatedWord _mutatedWord = mutatedText.mutatedWords.firstWhere(
+          (MutatedWord mutatedWord) => mutatedWord.index == index,
+          orElse: () => MutatedWord(word: '', index: -1));
 
-      if (_mutatedWord != null)
-        // _allText.add(SelectableTextWidget(_mutatedWord));
-
-        _allText.add(_mutatedWord);
+      if (_mutatedWord.index >= 0) _allText.add(_mutatedWord);
     }
 
     return RichText(
@@ -158,10 +159,10 @@ class MutatedTextPage extends StatelessWidget {
             children: _allText
                 .map(
                   (Word e) => TextSpan(
-                    text: e.word! + ' ',
+                    text: e.word + ' ',
                     style: e.isSelected
-                        ? defaultStyle!.copyWith(
-                            decoration: TextDecoration.lineThrough)
+                        ? defaultStyle!
+                            .copyWith(decoration: TextDecoration.lineThrough)
                         : defaultStyle,
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
