@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -30,7 +32,9 @@ class MutatedTextPage extends StatelessWidget {
 
     return BlocProvider(
       create: (context) => ResultBloc(ResultRepositoryImpl(
-          ConnectionCheckerImpl(), NetworkResultDataSourceImpl())),
+          ConnectionCheckerImpl(),
+          NetworkResultDataSourceImpl(
+              FirebaseFirestore.instance, FirebaseAuth.instance))),
       child: Scaffold(
         body: BlocBuilder<ResultBloc, ResultState>(
           builder: (context, state) {

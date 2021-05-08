@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:text_mutator/core/error/failures/failure.dart';
 import 'package:text_mutator/core/network/connection_checker.dart';
 import 'package:text_mutator/functions/text_evaluation/domain/model/text_evalluation_model.dart';
+import 'package:text_mutator/functions/text_load/data/datasources/network_data_source.dart';
 import 'package:text_mutator/functions/text_load/domain/models/text.dart'
     as text;
 import 'package:text_mutator/functions/text_mutation/data/datasources/network_data_source.dart';
@@ -21,9 +22,13 @@ class MutatedTextRepositoryImpl extends MutatedTextRepository {
   final Random _random;
   final ConnectionChecker _connectionChecker;
   final NetworkMutatedWordsSource _networkMutatedWordsSource;
+  final NetworkTextDataSource _networkTextDataSource;
 
   MutatedTextRepositoryImpl(
-      this._connectionChecker, this._networkMutatedWordsSource, this._random);
+      this._connectionChecker,
+      this._networkMutatedWordsSource,
+      this._random,
+      this._networkTextDataSource);
 
   void updateWord(Word word) {
     if (word is CleanWord) {
@@ -62,6 +67,7 @@ class MutatedTextRepositoryImpl extends MutatedTextRepository {
       final List<String> _mutations = await _networkMutatedWordsSource
           .getWords(textEvaluationModel.numberOfMutations);
 
+      //TODO: IMPLEMENT IF CONJUCTIONS AND THAT SYNC... WORDS
       _mutatedText = _mutateText(
         textEvaluationModel.text,
         _mutations,
@@ -101,5 +107,18 @@ class MutatedTextRepositoryImpl extends MutatedTextRepository {
       _mutatedWords,
       resultDifficulty,
     );
+  }
+
+  @override
+  Future<Either<Failure, void>> saveSolvedText(
+      TextEvaluationModel textEvaluationModel) async {
+    if (!await _connectionChecker.hasConnection)
+      return Left(NoConnetionFailure());
+    try {
+      await _networkTextDataSource.saveSolvedText(textEvaluationModel.text.id);
+      return Right(_mutatedText!);
+    } catch (err) {
+      return Left(ServerFailure());
+    }
   }
 }

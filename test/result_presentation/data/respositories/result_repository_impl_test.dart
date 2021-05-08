@@ -64,16 +64,16 @@ void main() {
     verifyNoMoreInteractions(_mockConnectionChecker);
   }
 
-  test(
-    'should calculate correct tesult',
-    () async {
-      // act
-      final res = await _resultRepositoryImpl.calculateResult(_testMutatedText);
+  // test(
+  //   'should calculate correct tesult',
+  //   () async {
+  //     // act
+  //     final res = await _resultRepositoryImpl.calculateResult(_testMutatedText);
 
-      // assert
-      expect(res, equals(_testResult));
-    },
-  );
+  //     // assert
+  //     expect(res, equals(_testResult));
+  //   },
+  // );
 
   group('Connected', () {
     final List<Map<String, dynamic>> _testMapResults = [

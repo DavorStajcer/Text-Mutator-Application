@@ -18,3 +18,5 @@ class MutateLoaded extends MutateState {
 
   MutateLoaded({required this.mutateText}) : super();
 }
+
+class MutateAndSavingFinished extends MutateState {}

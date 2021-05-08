@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:equatable/equatable.dart';
-import 'package:text_mutator/core/constants/enums.dart';
 
 class Result extends Equatable {
   final int mutatedWords;
@@ -18,19 +17,21 @@ class Result extends Equatable {
     required this.difficulty,
     required this.id,
   }) {
-    int? _numberOfWrongWords = wrongWords;
+    int _numberOfWrongWords = wrongWords;
     final int _numberOfMutatedWords = mutatedWords;
+    double _tempScore = 0;
 
     if (numberOfMarkedWords < _numberOfMutatedWords) {
       _numberOfWrongWords += _numberOfMutatedWords - numberOfMarkedWords;
     }
 
-    score = _numberOfWrongWords / _numberOfMutatedWords;
-    score = (1 - score) * 100;
-    score = max(score, 0);
+    _tempScore = _numberOfWrongWords / _numberOfMutatedWords;
+    _tempScore = (1 - _tempScore) * 100;
+    _tempScore = max(_tempScore, 0);
+    score = _tempScore;
   }
 
   @override
   List<Object?> get props =>
-      [id, mutatedWords, wrongWords, numberOfMarkedWords];
+      [id, mutatedWords, wrongWords, numberOfMarkedWords, score];
 }

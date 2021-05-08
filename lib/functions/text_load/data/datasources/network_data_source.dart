@@ -1,20 +1,60 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:text_mutator/core/constants/enums.dart';
+import 'package:text_mutator/core/error/exceptions/exceptions.dart';
 import 'package:text_mutator/functions/text_load/data/enteties/text_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class NetworkTextDataSource {
-  Future<Map<String, dynamic>> fetchText(String id);
-  Future<void> saveText(TextModel textModel);
+  Future<Map<String, dynamic>> fetchText(
+      String textDifficulty, List<String> solvedTexts);
+  Future<List<String>> fetchSolvedTextIds();
+  Future<void> saveSolvedText(String id);
+  Future<void> saveText(TextModel textModel, String textDifficulty);
 }
 
 class NetworkTextDataSourceImpl extends NetworkTextDataSource {
+  final FirebaseFirestore _firebaseFirestore;
+  final FirebaseAuth _firebaseAuth;
+
+  NetworkTextDataSourceImpl(this._firebaseFirestore, this._firebaseAuth);
+
   @override
-  Future<Map<String, dynamic>> fetchText(String id) {
-    // TODO: implement fetchText
-    throw UnimplementedError();
+  Future<Map<String, dynamic>> fetchText(
+      String textDifficulty, List<String> solvedTexts) async {
+    final QuerySnapshot _snapshot = await _firebaseFirestore
+        .collection('text/kgffDVkJl6VHcPCyOZd1/$textDifficulty')
+        .get();
+
+    final _doc = _snapshot.docs.firstWhere(
+        (QueryDocumentSnapshot element) => !solvedTexts.contains(element.id),
+        orElse: () => throw AllTextsSolvedException());
+
+    return _doc.data() as Map<String, dynamic>;
   }
 
   @override
-  Future<void> saveText(TextModel textModel) {
-    // TODO: implement saveText
-    throw UnimplementedError();
+  Future<void> saveText(TextModel textModel, String textDifficulty) async {
+    await _firebaseFirestore
+        .collection('text/kgffDVkJl6VHcPCyOZd1/$textDifficulty')
+        .add(textModel.toJson());
+  }
+
+  @override
+  Future<List<String>> fetchSolvedTextIds() async {
+    final QuerySnapshot _res = await _firebaseFirestore
+        .collection('users/${_firebaseAuth.currentUser!.uid}')
+        .get();
+    if (_res.docs.isEmpty) return [];
+    return _res.docs
+        .map((e) => (e.data() as Map<String, dynamic>)['id'])
+        .toList() as List<String>;
+  }
+
+  @override
+  Future<void> saveSolvedText(String id) async {
+    await _firebaseFirestore
+        .collection('users/${_firebaseAuth.currentUser!.uid}')
+        .add({'id': id});
   }
 }

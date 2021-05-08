@@ -1,9 +1,11 @@
 //@dart=2.9
 
 import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:text_mutator/core/constants/enums.dart';
+import 'package:text_mutator/core/error/exceptions/exceptions.dart';
 import 'package:text_mutator/core/error/failures/failure.dart';
 import 'package:text_mutator/core/network/connection_checker.dart';
 import 'package:text_mutator/functions/text_load/data/datasources/network_data_source.dart';
@@ -37,6 +39,7 @@ void main() {
     TextDifficulty.Easy,
   );
   final Text _testText = _testTextModel;
+  final String _testDifficulty = 'easy';
 
   void _arrangeConnection(bool isConnected) {
     when(_mockConnectionChecker.hasConnection)
@@ -54,13 +57,14 @@ void main() {
       () async {
         // arrange
         _arrangeConnection(true);
-        when(_mockNetworkDataSource.fetchText(_testId))
+        when(_mockNetworkDataSource.fetchText(_testDifficulty, []))
             .thenAnswer((realInvocation) async => _testTextMap);
         // act
-        final res = await textRepositoryImpl.loadText(_testId);
+        final res =
+            await textRepositoryImpl.loadText(_testText.textDifficulty, []);
         // assert
         expect(res, equals(Right(_testText)));
-        verify(_mockNetworkDataSource.fetchText(_testId)).called(1);
+        verify(_mockNetworkDataSource.fetchText(_testDifficulty, [])).called(1);
         _verifyCheckConnection();
         verifyNoMoreInteractions(_mockNetworkDataSource);
       },
@@ -75,7 +79,26 @@ void main() {
         // act
         await textRepositoryImpl.saveText(_testTextModel);
         // assert
-        verify(_mockNetworkDataSource.saveText(_testTextModel)).called(1);
+        verify(_mockNetworkDataSource.saveText(_testTextModel, _testDifficulty))
+            .called(1);
+        _verifyCheckConnection();
+        verifyNoMoreInteractions(_mockNetworkDataSource);
+      },
+    );
+
+    test(
+      'should call saveSolvedText with right id',
+      () async {
+        //arrange
+        _arrangeConnection(true);
+        when(_mockNetworkDataSource.saveSolvedText(_testTextModel.id))
+            .thenAnswer((_) async => null);
+
+        // act
+        await textRepositoryImpl.addSolvedTextId(_testTextModel.id);
+        // assert
+        verify(_mockNetworkDataSource.saveSolvedText(_testTextModel.id))
+            .called(1);
         _verifyCheckConnection();
         verifyNoMoreInteractions(_mockNetworkDataSource);
       },
@@ -89,13 +112,33 @@ void main() {
         // arrange
         _arrangeConnection(true);
 
-        when(_mockNetworkDataSource.fetchText(_testId))
+        when(_mockNetworkDataSource.fetchText(_testDifficulty, []))
             .thenThrow(UnimplementedError());
         // act
-        final res = await textRepositoryImpl.loadText(_testId);
+        final res =
+            await textRepositoryImpl.loadText(_testText.textDifficulty, []);
         // assert
         expect(res, equals(Left(ServerFailure())));
-        verify(_mockNetworkDataSource.fetchText(_testId)).called(1);
+        verify(_mockNetworkDataSource.fetchText(_testDifficulty, [])).called(1);
+        _verifyCheckConnection();
+        verifyNoMoreInteractions(_mockNetworkDataSource);
+      },
+    );
+
+    test(
+      'should return AllTextReadFailure when AllTextsSolvedExeption is thrown',
+      () async {
+        // arrange
+        _arrangeConnection(true);
+
+        when(_mockNetworkDataSource.fetchText(_testDifficulty, []))
+            .thenThrow(AllTextsSolvedException());
+        // act
+        final res =
+            await textRepositoryImpl.loadText(_testText.textDifficulty, []);
+        // assert
+        expect(res, equals(Left(AllTextsReadFailure())));
+        verify(_mockNetworkDataSource.fetchText(_testDifficulty, [])).called(1);
         _verifyCheckConnection();
         verifyNoMoreInteractions(_mockNetworkDataSource);
       },
@@ -106,34 +149,36 @@ void main() {
       () async {
         _arrangeConnection(true);
 
-        when(_mockNetworkDataSource.saveText(_testTextModel))
+        when(_mockNetworkDataSource.saveText(_testTextModel, _testDifficulty))
             .thenThrow(UnimplementedError());
         // act
         final res = await textRepositoryImpl.saveText(_testTextModel);
         // assert
         expect(res, equals(Left(ServerFailure())));
-        verify(_mockNetworkDataSource.saveText(_testTextModel)).called(1);
+        verify(_mockNetworkDataSource.saveText(_testTextModel, _testDifficulty))
+            .called(1);
         verifyNoMoreInteractions(_mockNetworkDataSource);
       },
     );
 
     test(
-      'should return NoConnectionFailure when fetching text goes wrong',
+      'should return NoConnectionFailure when not connected on loading text',
       () async {
         // arrange
         _arrangeConnection(false);
 
         // act
-        final res = await textRepositoryImpl.loadText(_testId);
+        final res =
+            await textRepositoryImpl.loadText(_testText.textDifficulty, []);
         // assert
         expect(res, equals(Left(NoConnetionFailure())));
         _verifyCheckConnection();
-        verifyNever(_mockNetworkDataSource.fetchText(_testId));
+        verifyNever(_mockNetworkDataSource.fetchText(_testDifficulty, []));
       },
     );
 
     test(
-      'should return NoConnectionFailure when not connected',
+      'should return NoConnectionFailure when not connected on saving text',
       () async {
         _arrangeConnection(false);
 
@@ -142,7 +187,70 @@ void main() {
         // assert
         expect(res, equals(Left(NoConnetionFailure())));
         _verifyCheckConnection();
-        verifyNever(_mockNetworkDataSource.saveText(_testTextModel));
+        verifyNever(
+            _mockNetworkDataSource.saveText(_testTextModel, _testDifficulty));
+      },
+    );
+
+    test(
+      'should return NoConnectionFailure when not connected on fetching text ids',
+      () async {
+        _arrangeConnection(false);
+        // when(_mockNetworkDataSource.fetchSolvedTextIds())
+        //     .thenAnswer((realInvocation) async => []);
+
+        // act
+        final res = await textRepositoryImpl.getSolvedTextIds();
+        // assert
+        expect(res, equals(Left(NoConnetionFailure())));
+        _verifyCheckConnection();
+        verifyNever(_mockNetworkDataSource.fetchSolvedTextIds());
+      },
+    );
+
+    test(
+      'should return NoConnectionFailure when not connected on adding solved text id',
+      () async {
+        _arrangeConnection(false);
+        // when(_mockNetworkDataSource.fetchSolvedTextIds())
+        //     .thenAnswer((realInvocation) async => []);
+
+        // act
+        final res = await textRepositoryImpl.addSolvedTextId(_testTextModel.id);
+        // assert
+        expect(res, equals(Left(NoConnetionFailure())));
+        _verifyCheckConnection();
+        verifyNever(_mockNetworkDataSource.saveSolvedText(_testTextModel.id));
+      },
+    );
+
+    test(
+      'should return ServerFailure when adding solved text id goes wrong',
+      () async {
+        _arrangeConnection(true);
+        when(_mockNetworkDataSource.saveSolvedText(_testTextModel.id))
+            .thenThrow(UnimplementedError());
+
+        // act
+        final res = await textRepositoryImpl.addSolvedTextId(_testTextModel.id);
+        // assert
+        expect(res, equals(Left(ServerFailure())));
+        _verifyCheckConnection();
+      },
+    );
+
+    test(
+      'should return ServerFailure when fetching solved text id goes wrong ',
+      () async {
+        _arrangeConnection(true);
+        when(_mockNetworkDataSource.fetchSolvedTextIds())
+            .thenThrow(UnimplementedError());
+
+        // act
+        final res = await textRepositoryImpl.getSolvedTextIds();
+        // assert
+        expect(res, equals(Left(ServerFailure())));
+        _verifyCheckConnection();
       },
     );
   });

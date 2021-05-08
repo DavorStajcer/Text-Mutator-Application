@@ -1,0 +1,1 @@
+class AllTextsSolvedException implements Exception {}

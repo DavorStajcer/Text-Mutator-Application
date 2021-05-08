@@ -7,5 +7,8 @@ import 'package:text_mutator/functions/text_mutation/domain/models/word/word.dar
 abstract class MutatedTextRepository {
   Future<Either<Failure, MutatedText>> mutateText(
       TextEvaluationModel textEvaluationModel);
+
+  Future<Either<Failure, void>> saveSolvedText(
+      TextEvaluationModel textEvaluationModel);
   void updateWord(Word word);
 }

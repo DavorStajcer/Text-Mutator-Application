@@ -1,5 +1,8 @@
+import 'dart:io';
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:text_mutator/core/network/connection_checker.dart';
@@ -11,6 +14,10 @@ import 'core/navigation/route_generation.dart';
 import 'functions/text_load/data/datasources/network_data_source.dart';
 import 'functions/text_load/data/respositories/text_repository_impl.dart';
 import 'functions/text_load/view/text_load_bloc/text_bloc.dart';
+
+import 'package:http/http.dart' as http;
+
+//TODO: DO DEPENDENCY INJECTION FOR ALL FUNCTIONS
 
 void main() {
   runApp(MyApp());
@@ -24,12 +31,21 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => TextBloc(TextRepositoryImpl(
-              ConnectionCheckerImpl(), NetworkTextDataSourceImpl())),
+            ConnectionCheckerImpl(),
+            NetworkTextDataSourceImpl(
+                FirebaseFirestore.instance, FirebaseAuth.instance),
+          )),
         ),
         BlocProvider(
           create: (context) => MutateBloc(
-            MutatedTextRepositoryImpl(ConnectionCheckerImpl(),
-                NetworkMutatedWordsSourceImpl(), Random()),
+            MutatedTextRepositoryImpl(
+                ConnectionCheckerImpl(),
+                NetworkMutatedWordsSourceImpl(http.Client()),
+                Random(),
+                NetworkTextDataSourceImpl(
+                  FirebaseFirestore.instance,
+                  FirebaseAuth.instance,
+                )),
           ),
         )
       ],
