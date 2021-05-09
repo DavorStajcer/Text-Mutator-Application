@@ -22,13 +22,14 @@ class MutatedTextRepositoryImpl extends MutatedTextRepository {
   final Random _random;
   final ConnectionChecker _connectionChecker;
   final NetworkMutatedWordsSource _networkMutatedWordsSource;
-  final NetworkTextDataSource _networkTextDataSource;
 
   MutatedTextRepositoryImpl(
-      this._connectionChecker,
-      this._networkMutatedWordsSource,
-      this._random,
-      this._networkTextDataSource);
+    this._connectionChecker,
+    this._networkMutatedWordsSource,
+    this._random,
+  );
+
+  MutatedText get mutatedText => this._mutatedText!;
 
   void updateWord(Word word) {
     if (word is CleanWord) {
@@ -109,16 +110,16 @@ class MutatedTextRepositoryImpl extends MutatedTextRepository {
     );
   }
 
-  @override
-  Future<Either<Failure, void>> saveSolvedText(
-      TextEvaluationModel textEvaluationModel) async {
-    if (!await _connectionChecker.hasConnection)
-      return Left(NoConnetionFailure());
-    try {
-      await _networkTextDataSource.saveSolvedText(textEvaluationModel.text.id);
-      return Right(_mutatedText!);
-    } catch (err) {
-      return Left(ServerFailure());
-    }
-  }
+  // @override
+  // Future<Either<Failure, void>> saveSolvedText(
+  //     TextEvaluationModel textEvaluationModel) async {
+  //   if (!await _connectionChecker.hasConnection)
+  //     return Left(NoConnetionFailure());
+  //   try {
+  //     await _networkTextDataSource.saveSolvedText(textEvaluationModel.text.id);
+  //     return Right(_mutatedText!);
+  //   } catch (err) {
+  //     return Left(ServerFailure());
+  //   }
+  // }
 }

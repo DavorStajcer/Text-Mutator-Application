@@ -3,8 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:text_mutator/core/error/failures/failure.dart';
 
 abstract class UserAuthenticator {
-  Future<Either<Failure, User>> authenticateUserWithEmailAndPassword(
+  Future<Either<Failure, void>> authenticateUserWithEmailAndPassword(
       String email, String password);
 
-  Future<void> signOut();
+  Future<Either<Failure, void>> signUp(String email, String password);
+
+  Future<Either<Failure, void>> signOut();
 }

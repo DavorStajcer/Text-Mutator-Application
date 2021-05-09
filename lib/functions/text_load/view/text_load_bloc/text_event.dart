@@ -15,7 +15,7 @@ class LoadText extends TextEvent {
 }
 
 class SaveText extends TextEvent {
-  final String text;
+  final Text text;
 
   SaveText(this.text);
 

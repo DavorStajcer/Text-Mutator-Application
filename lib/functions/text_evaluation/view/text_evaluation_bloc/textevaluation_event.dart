@@ -22,11 +22,22 @@ class TextMutationsChanged extends TextEvaluationEvent {
 }
 
 class TextConjuctionsChanged extends TextEvaluationEvent {
+  final bool value;
+
+  TextConjuctionsChanged(this.value);
   @override
   List<Object?> get props => [];
 }
 
 class TextSyncategorematicChanged extends TextEvaluationEvent {
+  final bool value;
+
+  TextSyncategorematicChanged(this.value);
   @override
   List<Object?> get props => [];
 }
+
+// class TextSave extends TextEvaluationEvent {
+//   @override
+//   List<Object?> get props => [];
+// }

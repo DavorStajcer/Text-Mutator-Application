@@ -38,15 +38,16 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => MutateBloc(
-            MutatedTextRepositoryImpl(
+              MutatedTextRepositoryImpl(
                 ConnectionCheckerImpl(),
                 NetworkMutatedWordsSourceImpl(http.Client()),
                 Random(),
+              ),
+              TextRepositoryImpl(
+                ConnectionCheckerImpl(),
                 NetworkTextDataSourceImpl(
-                  FirebaseFirestore.instance,
-                  FirebaseAuth.instance,
-                )),
-          ),
+                    FirebaseFirestore.instance, FirebaseAuth.instance),
+              )),
         )
       ],
       child: MaterialApp(

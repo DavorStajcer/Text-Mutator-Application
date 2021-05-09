@@ -57,15 +57,11 @@ class MutatedTextPage extends StatelessWidget {
                   TextButton(
                     onPressed: () {
                       // _clearAllText();
-                      BlocProvider.of<ResultBloc>(context, listen: false)
-                          .add(Restart());
                     },
                     child: Text("Repeat"),
                   ),
                   TextButton(
                     onPressed: () {
-                      BlocProvider.of<ResultBloc>(context, listen: false)
-                          .add(AbandoneResult());
                       Navigator.of(context).pop();
                     },
                     child: Text("Abandone result."),

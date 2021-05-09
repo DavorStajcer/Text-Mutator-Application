@@ -176,6 +176,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.10.0-nullsafety.1"
+  email_validator:
+    dependency: "direct main"
+    description:
+      name: email_validator
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
   equatable:
     dependency: "direct main"
     description:
@@ -205,7 +212,7 @@ packages:
     source: hosted
     version: "1.1.3"
   firebase_auth_mocks:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: firebase_auth_mocks
       url: "https://pub.dev"

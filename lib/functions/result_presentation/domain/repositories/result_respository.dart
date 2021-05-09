@@ -6,6 +6,6 @@ import 'package:text_mutator/functions/result_presentation/domain/models/result.
 
 abstract class ResultRepository {
   Future<Result> calculateResult(MutatedText mutatedText);
-  Future<Either<Failure, void>> saveResult(ResultModel result);
+  Future<Either<Failure, Result>> saveResult(MutatedText mutatedText);
   Future<Either<Failure, List<Result>>> loadResults();
 }

@@ -8,7 +8,9 @@ abstract class MutatedTextRepository {
   Future<Either<Failure, MutatedText>> mutateText(
       TextEvaluationModel textEvaluationModel);
 
-  Future<Either<Failure, void>> saveSolvedText(
-      TextEvaluationModel textEvaluationModel);
+  // Future<Either<Failure, void>> saveSolvedText(
+  //     TextEvaluationModel textEvaluationModel);
+
+  MutatedText get mutatedText;
   void updateWord(Word word);
 }

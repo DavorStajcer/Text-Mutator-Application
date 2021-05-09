@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:text_mutator/core/error/failures/failure.dart';
 import 'package:text_mutator/core/network/connection_checker.dart';
 import 'package:text_mutator/functions/result_presentation/data/datasources/network_data_source.dart';
@@ -18,7 +19,8 @@ class ResultRepositoryImpl extends ResultRepository {
   bool _isLastCashed = false;
   List<ResultModel> _cashedResults = [];
 
-  Future<Result> calculateResult(MutatedText mutatedText) {
+  @visibleForTesting
+  Future<ResultModel> calculateResult(MutatedText mutatedText) {
     return Future(() {
       int _wrongWords = 0;
       int _numberOfMarkedWords = 0;
@@ -66,12 +68,13 @@ class ResultRepositoryImpl extends ResultRepository {
   }
 
   @override
-  Future<Either<Failure, void>> saveResult(ResultModel result) async {
+  Future<Either<Failure, Result>> saveResult(MutatedText mutatedText) async {
     if (await _connectionChecker.hasConnection) {
       try {
-        await _networkResultDataSource.saveResult(result);
-        _cashedResults.add(result);
-        return Right(null);
+        final ResultModel _result = await calculateResult(mutatedText);
+        await _networkResultDataSource.saveResult(_result);
+        _cashedResults.add(_result);
+        return Right(_result);
       } catch (err) {
         return Left(ServerFailure());
       }

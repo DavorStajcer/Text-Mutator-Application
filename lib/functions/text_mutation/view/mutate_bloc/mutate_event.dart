@@ -18,5 +18,3 @@ class UpdateWord extends MutateEvent {
 
   UpdateWord(this.word);
 }
-
-class FinishAndScaeSolvedText extends MutateEvent {}

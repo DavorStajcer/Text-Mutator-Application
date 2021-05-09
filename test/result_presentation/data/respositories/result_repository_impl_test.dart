@@ -154,30 +154,14 @@ void main() {
     );
 
     test(
-      'saving should call saveResult with appropriate parameters',
+      'saving should return ServerFailure when exception goes wrong',
       () async {
         // arrange
         _arrangeConnection(true);
-
-        // act
-        await _resultRepositoryImpl.saveResult(_testResultModel);
-        // assert
-
-        verify(_mockNetworkDataSource.saveResult(_testResultModel)).called(1);
-        _verifyCheckConnection();
-        verifyNoMoreInteractions(_mockNetworkDataSource);
-      },
-    );
-
-    test(
-      'saving should return ServerFailure when exception goes',
-      () async {
-        // arrange
-        _arrangeConnection(true);
-        when(_mockNetworkDataSource.saveResult(_testResultModel))
+        when(_mockNetworkDataSource.saveResult(any))
             .thenThrow(UnimplementedError());
         // act
-        final res = await _resultRepositoryImpl.saveResult(_testResultModel);
+        final res = await _resultRepositoryImpl.saveResult(_testMutatedText);
         // assert
 
         expect(res, Left(ServerFailure()));
@@ -205,7 +189,7 @@ void main() {
         // arrange
         _arrangeConnection(false);
         // act
-        final res = await _resultRepositoryImpl.saveResult(_testResultModel);
+        final res = await _resultRepositoryImpl.saveResult(_testMutatedText);
         // assert
         expect(res, Left(NoConnetionFailure()));
       },

@@ -5,6 +5,5 @@ class MutatedWord extends Word {
       : super(word, index, false);
 
   @override
-  // TODO: implement props
   List<Object?> get props => [word, index];
 }

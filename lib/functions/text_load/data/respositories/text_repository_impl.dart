@@ -16,15 +16,17 @@ class TextRepositoryImpl extends TextRepository {
   TextRepositoryImpl(this._connectionChecker, this._networkTextDataSource);
 
   @override
-  Future<Either<Failure, Text>> loadText(
-      TextDifficulty difficulty, List<String> solvedIds) async {
+  Future<Either<Failure, Text>> loadText(TextDifficulty difficulty) async {
     if (!await _connectionChecker.hasConnection)
       return Left(NoConnetionFailure());
     try {
+      final List<String> _solvedIds =
+          await _networkTextDataSource.fetchSolvedTextIds();
+
       final String _textDifficulty = _assignDifficulty(difficulty);
 
       final Map<String, dynamic> _text =
-          await _networkTextDataSource.fetchText(_textDifficulty, solvedIds);
+          await _networkTextDataSource.fetchText(_textDifficulty, _solvedIds);
       final TextModel _textModel = TextModel.fromJson(_text);
 
       return Right(_textModel);
@@ -56,19 +58,6 @@ class TextRepositoryImpl extends TextRepository {
     try {
       return Right(await _networkTextDataSource.saveText(
           text, _assignDifficulty(text.textDifficulty)));
-    } catch (err) {
-      return Left(ServerFailure());
-    }
-  }
-
-  Future<Either<Failure, List<String>>> getSolvedTextIds() async {
-    if (!await _connectionChecker.hasConnection)
-      return Left(NoConnetionFailure());
-    try {
-      final List<String> _res =
-          await _networkTextDataSource.fetchSolvedTextIds();
-
-      return Right(_res);
     } catch (err) {
       return Left(ServerFailure());
     }
