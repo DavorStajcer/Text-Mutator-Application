@@ -31,7 +31,7 @@ class ResultModel extends Result {
       'wrongWords': this.wrongWords,
       'numberOfMarkedWords': this.numberOfMarkedWords,
       'difficulty': this.difficulty,
-      'id': this.id,
+      // 'id': this.id,
     };
   }
 }

@@ -23,7 +23,8 @@ class NetworkResultDataSourceImpl extends NetworkResultDataSource {
         .get();
 
     return _querySnapshot.docs
-        .map((e) => e.data() as Map<String, dynamic>)
+        .map((e) =>
+            (e.data() as Map<String, dynamic>)..putIfAbsent('id', () => e.id))
         .toList();
   }
 

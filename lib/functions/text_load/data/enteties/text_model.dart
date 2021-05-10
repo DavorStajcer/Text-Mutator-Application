@@ -26,7 +26,7 @@ class TextModel extends Text {
     return {
       'text': this.text,
       // 'name': this.name,
-      'id': this.id,
+      // 'id': this.id,
       'textDifficulty': this.textDifficulty.index,
     };
   }

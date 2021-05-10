@@ -30,7 +30,8 @@ class NetworkTextDataSourceImpl extends NetworkTextDataSource {
         (QueryDocumentSnapshot element) => !solvedTexts.contains(element.id),
         orElse: () => throw AllTextsSolvedException());
 
-    return _doc.data() as Map<String, dynamic>;
+    return (_doc.data() as Map<String, dynamic>)
+      ..putIfAbsent('id', () => _doc.id);
   }
 
   @override
