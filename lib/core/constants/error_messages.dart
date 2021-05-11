@@ -20,3 +20,8 @@ const String ERROR_SERVER_FAILURE =
     'All available text read from this category, try another one.';
 
 const String ERROR_NO_CONNECTION = 'You are not connected to the internet.';
+
+//!text not good enough
+const String TEXT_VALIDATION_SHORT = 'Text is too short.';
+const String TEXT_IS_NOT_DIVERSE_ENOUGH =
+    'Text is not diverese enough, dont make it too easy.';

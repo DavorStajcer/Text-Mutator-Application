@@ -22,8 +22,8 @@ class ResultRepositoryImpl extends ResultRepository {
   @visibleForTesting
   Future<ResultModel> calculateResult(MutatedText mutatedText) {
     return Future(() {
-      int _wrongWords = 0;
       int _numberOfMarkedWords = 0;
+      int _wrongWords = 0;
 
       mutatedText.cleanWords.forEach((CleanWord currentWord) {
         if (currentWord.isSelected) {
@@ -50,21 +50,25 @@ class ResultRepositoryImpl extends ResultRepository {
     if (await _connectionChecker.hasConnection) {
       try {
         if (_isLastCashed) return Right(_cashedResults);
-        final List<Map<String, dynamic>> _res =
-            await _networkResultDataSource.fetchResults();
-
-        final List<ResultModel> _results = _res
-            .map((Map<String, dynamic> map) => ResultModel.fromJson(map))
-            .toList();
-        _cashedResults = _results;
-        _isLastCashed = true;
-        return Right(_results);
+        return await _loadAllResultsForCurrentUser();
       } catch (err) {
         return Left(ServerFailure());
       }
     } else {
       return Left(NoConnetionFailure());
     }
+  }
+
+  Future<Right<Failure, List<Result>>> _loadAllResultsForCurrentUser() async {
+    final List<Map<String, dynamic>> _res =
+        await _networkResultDataSource.fetchResults();
+
+    final List<ResultModel> _results = _res
+        .map((Map<String, dynamic> map) => ResultModel.fromJson(map))
+        .toList();
+    _cashedResults = _results;
+    _isLastCashed = true;
+    return Right(_results);
   }
 
   @override

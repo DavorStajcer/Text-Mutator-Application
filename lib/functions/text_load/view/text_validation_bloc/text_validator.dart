@@ -1,10 +1,8 @@
+import 'package:text_mutator/core/constants/error_messages.dart';
+
 abstract class TextValidator {
   String? isValid(String text);
 }
-
-const String TEXT_VALIDATION_SHORT = 'Text is too short.';
-const String TEXT_IS_NOT_DIVERSE_ENOUGH =
-    'Text is not diverese enough, dont make it too easy.';
 
 class TextValidatorImpl extends TextValidator {
   @override
@@ -12,11 +10,12 @@ class TextValidatorImpl extends TextValidator {
     final List<String> _words = text.split(' ');
 
     if (_words.length < 100) return TEXT_VALIDATION_SHORT;
-    if (!_checkLegit(_words, text.length)) return TEXT_IS_NOT_DIVERSE_ENOUGH;
+    if (!_isTextLegit(_words, text.length)) return TEXT_IS_NOT_DIVERSE_ENOUGH;
     return null;
   }
 
-  bool _checkLegit(List<String> words, int textLength) {
+//TODO: IMPLEMENT THIS FUNCTIONALITY SO THAT IT ISNT CALLED ON EVERY TEXT TYPE MBY?
+  bool _isTextLegit(List<String> words, int textLength) {
     int _lengthSum = 0;
     Map<String, int> _sameWords = {};
     Map<String, int> _sameLetters = {};

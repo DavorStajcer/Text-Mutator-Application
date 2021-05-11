@@ -22,16 +22,23 @@ class NetworkTextDataSourceImpl extends NetworkTextDataSource {
   @override
   Future<Map<String, dynamic>> fetchText(
       String textDifficulty, List<String> solvedTexts) async {
-    final QuerySnapshot _snapshot = await _firebaseFirestore
-        .collection('text/kgffDVkJl6VHcPCyOZd1/$textDifficulty')
-        .get();
+    final QuerySnapshot<Map<String, dynamic>> _snapshot =
+        await _firebaseFirestore
+            .collection('text/kgffDVkJl6VHcPCyOZd1/$textDifficulty')
+            .get();
 
+    QueryDocumentSnapshot<Map<String, dynamic>> _doc =
+        _findFirstNotReadText(_snapshot, solvedTexts);
+
+    return _doc.data()..putIfAbsent('id', () => _doc.id);
+  }
+
+  QueryDocumentSnapshot<Map<String, dynamic>> _findFirstNotReadText(
+      QuerySnapshot<Map<String, dynamic>> _snapshot, List<String> solvedTexts) {
     final _doc = _snapshot.docs.firstWhere(
         (QueryDocumentSnapshot element) => !solvedTexts.contains(element.id),
         orElse: () => throw AllTextsSolvedException());
-
-    return (_doc.data() as Map<String, dynamic>)
-      ..putIfAbsent('id', () => _doc.id);
+    return _doc;
   }
 
   @override
