@@ -29,7 +29,6 @@ class TextBloc extends Bloc<TextEvent, TextState> {
         (Text text) => TextLoaded(text),
       );
     } else if (event is SaveText) {
-      //TODO:REMOVE SAVE FORM HERE
       yield TextLoading();
 
       final _either = await _textRepository
