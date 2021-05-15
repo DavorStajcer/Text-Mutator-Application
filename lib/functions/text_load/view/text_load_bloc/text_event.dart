@@ -14,12 +14,11 @@ class LoadText extends TextEvent {
   List<Object?> get props => [textDifficulty];
 }
 
-class TextChanged extends TextEvent {
-  final String text;
+class SetText extends TextEvent {
+  final Text text;
 
-  TextChanged(this.text);
+  SetText(this.text);
 
-  @override
   List<Object?> get props => [];
 }
 

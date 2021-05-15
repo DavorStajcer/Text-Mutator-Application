@@ -19,6 +19,7 @@ class TextEvaluationModel extends Equatable {
   final bool includeConjuctions;
   final bool includeSyncategorematic;
   late final double resultDifficulty;
+  late final int maxNumberOfMutations;
 
   TextEvaluationModel(
     this.text,
@@ -26,7 +27,9 @@ class TextEvaluationModel extends Equatable {
     this.includeConjuctions,
     this.includeSyncategorematic,
   ) {
-    this.resultDifficulty = calculateResultDifficulty();
+    final int _maxNumberOfMutations = _calculateMaxNumberOfMutations(text.text);
+    this.maxNumberOfMutations = _maxNumberOfMutations;
+    this.resultDifficulty = calculateResultDifficulty(_maxNumberOfMutations);
   }
 
   // @visibleForTesting
@@ -46,10 +49,15 @@ class TextEvaluationModel extends Equatable {
     );
   }
 
+  int _calculateMaxNumberOfMutations(String text) {
+    final List<String> _words = text.split(' ');
+    return _words.length ~/ 10;
+  }
+
   @visibleForTesting
-  double calculateResultDifficulty() {
+  double calculateResultDifficulty(int maxNumberOfMutations) {
     return (text.textDifficulty.index * 25) + // max 55 percent difficulty
-        ((numberOfMutations / (text.text.split(' ').length / 4)) *
+        ((numberOfMutations / (maxNumberOfMutations)) *
             25) + //25 percent depending on number of mutations
         (10 * (includeConjuctions ? 1 : 0)) + //10 pecent for conunctions
         (10 *

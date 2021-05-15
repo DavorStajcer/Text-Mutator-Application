@@ -14,6 +14,9 @@ final _darkTheme = ThemeData(
   accentColor: Colors.white,
   accentIconTheme: IconThemeData(color: Colors.black),
   dividerColor: Colors.black12,
+  checkboxTheme: CheckboxThemeData(
+    checkColor: MaterialStateProperty.all(DARK_HIGHLIGHTED_COLOR),
+  ),
 );
 
 final _lightTheme = ThemeData(
@@ -22,6 +25,9 @@ final _lightTheme = ThemeData(
   accentColor: LIGHT_HIGHLIGHTED_COLOR,
   brightness: Brightness.light,
   backgroundColor: LIGHT_PRIMARY_COLOR,
+  // checkboxTheme: CheckboxThemeData(
+  //   checkColor: MaterialStateProperty.all(LIGHT_HIGHLIGHTED_COLOR),
+  // ),
   textTheme: TextTheme(
     bodyText1: TextStyle(
       fontSize: 16,

@@ -14,6 +14,19 @@ class ProgressAnimationCubit extends Cubit<ProgressAnimationState> {
   ProgressAnimationCubit()
       : super(ProgressAnimationInitial(0, _pageStepNames[0]));
 
-  void pageChanged(int pageIndex) =>
-      emit(ProgressAnimationChanged(pageIndex, _pageStepNames[pageIndex]));
+  void pageBack() {
+    if (state.value == 0)
+      emit(ProgressAnimationChanged(0, _pageStepNames[0]));
+    else
+      emit(ProgressAnimationChanged(
+          state.value - 1, _pageStepNames[state.value - 1]));
+  }
+
+  void pageForward() {
+    if (state.value == 3)
+      emit(ProgressAnimationChanged(3, _pageStepNames[3]));
+    else
+      emit(ProgressAnimationChanged(
+          state.value + 1, _pageStepNames[state.value + 1]));
+  }
 }

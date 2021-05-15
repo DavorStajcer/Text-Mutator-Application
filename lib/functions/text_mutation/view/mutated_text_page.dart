@@ -1,13 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:text_mutator/core/network/connection_checker.dart';
-import 'package:text_mutator/functions/database/database.dart';
-import 'package:text_mutator/functions/result_presentation/data/datasources/network_data_source.dart';
-import 'package:text_mutator/functions/result_presentation/data/respositories/results_repository_impl.dart';
+import 'package:get_it/get_it.dart';
 import 'package:text_mutator/functions/text_mutation/domain/models/word/word.dart';
 import 'package:text_mutator/functions/result_presentation/view/result_bloc/result_bloc.dart';
 
@@ -26,15 +21,8 @@ class MutatedTextPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle? _defaultStyle = Theme.of(context).textTheme.bodyText1;
-    final MutateBloc _mutateBloc =
-        BlocProvider.of<MutateBloc>(context, listen: false);
-
     return BlocProvider(
-      create: (context) => ResultBloc(ResultRepositoryImpl(
-          ConnectionCheckerImpl(),
-          NetworkResultDataSourceImpl(
-              FirebaseFirestore.instance, FirebaseAuth.instance))),
+      create: (context) => GetIt.I<ResultBloc>(),
       child: Scaffold(
         body: BlocBuilder<ResultBloc, ResultState>(
           builder: (context, state) {
@@ -91,15 +79,7 @@ class MutatedTextPage extends StatelessWidget {
                             return Center(
                               child: CircularProgressIndicator(),
                             );
-                          }
-                          //  else if (state is MutateLoaded) {
-                          //   return _buildSelectableText(
-                          //     state.mutatedText!,
-                          //     _defaultStyle,
-                          //     _mutateBloc,
-                          //   );
-                          // }
-                          else if (state is MutateInitial) {
+                          } else if (state is MutateInitial) {
                             return Center(
                               child: Center(
                                 child: Text("Initial state."),
@@ -117,14 +97,6 @@ class MutatedTextPage extends StatelessWidget {
                         onPressed: () => Navigator.of(context).pop(),
                         child: Text("Back"),
                       ),
-                      // TextButton(
-                      //   onPressed: () =>
-                      //       BlocProvider.of<ResultBloc>(context, listen: false)
-                      //           .add(
-                      //     CreateResult(_mutateBloc.state.mutatedText),
-                      //   ),
-                      //   child: Text("Check"),
-                      // ),
                     ],
                   ),
                 ],

@@ -8,7 +8,6 @@ class TextValidatorImpl extends TextValidator {
   @override
   String? isValid(String text) {
     final List<String> _words = text.split(' ');
-
     if (_words.length < 100) return TEXT_VALIDATION_SHORT;
     if (!_isTextLegit(_words, text.length)) return TEXT_IS_NOT_DIVERSE_ENOUGH;
     return null;

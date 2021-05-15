@@ -5,11 +5,11 @@ abstract class TextValidatorState extends Equatable {
   const TextValidatorState(this.text);
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [text];
 }
 
 class TextValidationInitial extends TextValidatorState {
-  TextValidationInitial() : super(null);
+  TextValidationInitial() : super('You have not entered any text.');
 }
 
 class TextNotValid extends TextValidatorState {

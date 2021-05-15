@@ -1,4 +1,4 @@
-import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -9,12 +9,17 @@ import 'package:text_mutator/core/error/failures/failure.dart';
 import 'package:text_mutator/functions/text_load/data/enteties/text_model.dart';
 import 'package:text_mutator/functions/text_load/domain/models/text.dart';
 import 'package:text_mutator/functions/text_load/domain/repsositories/text_repository.dart';
+import 'package:text_mutator/functions/text_load/view/text_validation_bloc/textvalidator_bloc.dart';
 part 'text_event.dart';
 part 'text_state.dart';
 
 class TextBloc extends Bloc<TextEvent, TextState> {
   final TextRepository _textRepository;
-  TextBloc(this._textRepository) : super(TextInitial()) {}
+  final TextValidatorBloc _textValidatorBloc;
+  TextBloc(
+    this._textRepository,
+    this._textValidatorBloc,
+  ) : super(TextInitial());
 
   @override
   Stream<TextState> mapEventToState(
@@ -26,7 +31,10 @@ class TextBloc extends Bloc<TextEvent, TextState> {
       final _either = await _textRepository.loadText(event.textDifficulty);
       yield _either.fold(
         (Failure failure) => TextError(_errorMessage(failure)),
-        (Text text) => TextLoaded(text),
+        (Text text) {
+          _textValidatorBloc.add(TextChanged(text.text));
+          return TextLoaded(text);
+        },
       );
     } else if (event is SaveText) {
       yield TextLoading();
@@ -37,6 +45,10 @@ class TextBloc extends Bloc<TextEvent, TextState> {
         (Failure failure) => TextError(_errorMessage(failure)),
         (_) => TextInitial(),
       );
+    } else if (event is SetText) {
+      // yield TextLoading();
+
+      yield TextLoaded(event.text);
     }
   }
 
