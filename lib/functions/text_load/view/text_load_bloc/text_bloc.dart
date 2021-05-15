@@ -46,8 +46,6 @@ class TextBloc extends Bloc<TextEvent, TextState> {
         (_) => TextInitial(),
       );
     } else if (event is SetText) {
-      // yield TextLoading();
-
       yield TextLoaded(event.text);
     }
   }
