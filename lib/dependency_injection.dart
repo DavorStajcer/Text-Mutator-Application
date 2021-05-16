@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:text_mutator/core/local_storage_manager/dependency_injection.dart';
 import 'package:text_mutator/core/network/dependency_injection.dart';
@@ -34,4 +37,5 @@ void _initializeAllDependencies(SharedPreferences sharedPreferences) {
   initiDependenciesTextLoad();
   initiDependenciesTextMutation();
   initiDependenciesThemeManagment();
+  GetIt.I.registerLazySingleton<Random>(() => Random());
 }

@@ -17,7 +17,7 @@ const String ERROR_TEXT_LOAD_ALL_TEXT_READ =
 
 //!network
 const String ERROR_SERVER_FAILURE =
-    'All available text read from this category, try another one.';
+    'Error occured while communicating with the server.';
 
 const String ERROR_NO_CONNECTION = 'You are not connected to the internet.';
 

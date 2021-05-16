@@ -20,21 +20,24 @@ class BottomPageNavigator extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(50, 8, 50, 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          GestureDetector(
-            onTap: backOnTapFunction,
-            child: AutoSizeText(
-              '<- Back',
-              style: _theme.textTheme.headline3,
+      child: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            GestureDetector(
+              onTap: backOnTapFunction,
+              child: AutoSizeText(
+                '<- Back',
+                style: _theme.textTheme.headline3,
+              ),
             ),
-          ),
-          GestureDetector(
-            onTap: proceedeOnTapFunction,
-            child: proceedWidget,
-          ),
-        ],
+            GestureDetector(
+              onTap: proceedeOnTapFunction,
+              child: proceedWidget,
+            ),
+          ],
+        ),
       ),
     );
   }

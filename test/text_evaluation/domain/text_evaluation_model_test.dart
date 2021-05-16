@@ -8,14 +8,14 @@ void main() {
   TextEvaluationModel textEvaluationModel;
 
   final Text _testText =
-      Text.createDifficulty(text: 'a a a a a a a a', id: 'test');
+      Text.createDifficulty(text: 'a a a a a a a a a a', id: 'test');
   test(
     'should calculate result difficulty  to be 35',
     () async {
       // arrange
-      textEvaluationModel = TextEvaluationModel(_testText, 2, true, false);
+      textEvaluationModel = TextEvaluationModel(_testText, 1, true, false);
       // act
-      expect(textEvaluationModel.resultDifficulty, 35.0);
+      expect(textEvaluationModel.resultDifficulty, 40.0);
       // assert
     },
   );
@@ -26,7 +26,7 @@ void main() {
       // arrange
       textEvaluationModel = TextEvaluationModel(_testText, 1, true, true);
       // act
-      expect(textEvaluationModel.resultDifficulty, 32.5);
+      expect(textEvaluationModel.resultDifficulty, 50.0);
       // assert
     },
   );

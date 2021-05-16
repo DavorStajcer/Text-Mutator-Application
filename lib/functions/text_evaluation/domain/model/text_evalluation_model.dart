@@ -56,9 +56,9 @@ class TextEvaluationModel extends Equatable {
 
   @visibleForTesting
   double calculateResultDifficulty(int maxNumberOfMutations) {
-    return (text.textDifficulty.index * 25) + // max 55 percent difficulty
+    return (text.textDifficulty.index * 25) + // max 50 percent difficulty
         ((numberOfMutations / (maxNumberOfMutations)) *
-            25) + //25 percent depending on number of mutations
+            30) + //30 percent depending on number of mutations
         (10 * (includeConjuctions ? 1 : 0)) + //10 pecent for conunctions
         (10 *
             (includeSyncategorematic

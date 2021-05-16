@@ -1,6 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:text_mutator/core/constants/enums.dart';
 import 'package:text_mutator/core/error/exceptions/exceptions.dart';
 import 'package:text_mutator/functions/text_load/data/enteties/text_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,7 +8,7 @@ abstract class NetworkTextDataSource {
       String textDifficulty, List<String> solvedTexts);
   Future<List<String>> fetchSolvedTextIds();
   Future<void> saveSolvedText(String id);
-  Future<void> saveText(TextModel textModel, String textDifficulty);
+  Future<String> saveText(TextModel textModel, String textDifficulty);
 }
 
 class NetworkTextDataSourceImpl extends NetworkTextDataSource {
@@ -42,10 +40,11 @@ class NetworkTextDataSourceImpl extends NetworkTextDataSource {
   }
 
   @override
-  Future<void> saveText(TextModel textModel, String textDifficulty) async {
-    await _firebaseFirestore
+  Future<String> saveText(TextModel textModel, String textDifficulty) async {
+    final DocumentReference _documentReference = await _firebaseFirestore
         .collection('text/kgffDVkJl6VHcPCyOZd1/$textDifficulty')
         .add(textModel.toJson());
+    return _documentReference.id;
   }
 
   @override

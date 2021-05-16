@@ -56,8 +56,14 @@ class TextRepositoryImpl extends TextRepository {
     if (!await _connectionChecker.hasConnection)
       return Left(NoConnetionFailure());
     try {
-      return Right(await _networkTextDataSource.saveText(
-          text, _assignDifficulty(text.textDifficulty)));
+      String _textId = text.id;
+
+      //TODO: UNCOMENT WHEN MAKE AUTHENTICATION AVALIABLE
+      // if (_textId.length < 8)
+      //   _textId = await _networkTextDataSource.saveText(
+      //       text, _assignDifficulty(text.textDifficulty));
+
+      return Right(await addSolvedTextId(_textId));
     } catch (err) {
       return Left(ServerFailure());
     }

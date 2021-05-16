@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:text_mutator/core/constants/error_messages.dart';
@@ -22,24 +23,12 @@ class MutateBloc extends Bloc<MutateEvent, MutateState> {
   MutateBloc(this._mutatedTextRepository, this._textRepository)
       : super(MutateInitial());
 
-  //  this.add(MutateText(_textBloc.getText, 2));
-
-  // _textBlocSubscription = _textBloc.listen((TextState state) {
-  //   if (state is TextLoaded) {
-  //     print("LISTEND TO TextLoaded");
-  //     this.add(MutateText(
-  //       state.text,
-  //       2,
-  //     ));
-  //   }
-  // });
-
   @override
   Stream<MutateState> mapEventToState(
     MutateEvent event,
   ) async* {
+    yield MutateLoading();
     if (event is MutateText) {
-      yield MutateLoading();
       final _either =
           await _mutatedTextRepository.mutateText(event.textEvaluationModel);
 
