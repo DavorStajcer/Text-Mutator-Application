@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:text_mutator/core/error/failures/failure.dart';
@@ -36,12 +38,17 @@ class ResultRepositoryImpl extends ResultRepository {
         if (currentWord!.isSelected) _numberOfMarkedWords++;
       });
 
-      return ResultModel(
-          mutatedText.mutatedWords.length,
-          _wrongWords,
-          _numberOfMarkedWords,
-          mutatedText.resultDifficulty,
-          DateTime.now().toIso8601String());
+      final ResultModel _resultModel = ResultModel(
+        mutatedText.mutatedWords.length,
+        _wrongWords,
+        _numberOfMarkedWords,
+        mutatedText.resultDifficulty,
+        '',
+      );
+
+      log(_resultModel.score.toString());
+
+      return _resultModel;
     });
   }
 
@@ -76,8 +83,9 @@ class ResultRepositoryImpl extends ResultRepository {
     if (await _connectionChecker.hasConnection) {
       try {
         final ResultModel _result = await calculateResult(mutatedText);
-        await _networkResultDataSource.saveResult(_result);
-        _cashedResults.add(_result);
+        //TODO: UNCOMENT WHEN AUTHENTICATION FINISHED
+        // await _networkResultDataSource.saveResult(_result);
+        // _cashedResults.add(_result);
         return Right(_result);
       } catch (err) {
         return Left(ServerFailure());

@@ -22,19 +22,17 @@ class TextLoadPage extends StatefulWidget {
 
 class _TextLoadPageState extends State<TextLoadPage> {
   late final TextEditingController _textEditingController;
-  late final FocusNode _textFocusNode;
 
   @override
   void initState() {
     super.initState();
     _textEditingController = TextEditingController();
-    _textFocusNode = FocusNode();
   }
 
   @override
   void dispose() {
     _textEditingController.dispose();
-    _textFocusNode.dispose();
+
     super.dispose();
   }
 
@@ -85,7 +83,7 @@ class _TextLoadPageState extends State<TextLoadPage> {
 
                   return TextField(
                     controller: _textEditingController,
-                    focusNode: _textFocusNode,
+                    textDirection: TextDirection.ltr,
                     style: _theme.textTheme.bodyText1,
                     onChanged: (String text) {
                       _textEditingController.text = text;

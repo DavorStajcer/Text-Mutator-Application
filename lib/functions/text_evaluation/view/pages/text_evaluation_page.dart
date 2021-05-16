@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:text_mutator/core/constants/enums.dart';
 import 'package:text_mutator/core/widgets/bottom_page_navitator.dart';
+import 'package:text_mutator/core/widgets/text_data_display_row_widget.dart';
 import 'package:text_mutator/functions/mutation_flow_managment/view/progress_animation_cubit/progress_animation_cubit.dart';
 import 'package:text_mutator/functions/text_evaluation/view/text_evaluation_bloc/textevaluation_bloc.dart';
-import 'package:text_mutator/functions/text_evaluation/view/widgets/checkbox_evaluation_row.dart';
-import 'package:text_mutator/functions/text_evaluation/view/widgets/difficulty_represetnation_widget.dart';
+import 'package:text_mutator/core/widgets/circular_data_represetnation_widget.dart';
 import 'package:text_mutator/functions/text_evaluation/view/widgets/hard_words_options_widget.dart';
 import 'package:text_mutator/functions/text_evaluation/view/widgets/mutations_slider_widget.dart';
 import 'package:text_mutator/functions/text_load/view/text_load_bloc/text_bloc.dart';
@@ -40,24 +40,11 @@ class TextEvaluationPage extends StatelessWidget {
                         Expanded(
                           flex: 2,
                           child: Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                AutoSizeText(
-                                  'Text difficulty',
-                                  maxLines: 1,
-                                  style: _theme.textTheme.bodyText1!
-                                      .copyWith(fontWeight: FontWeight.w700)
-                                      .copyWith(fontSize: 20),
-                                ),
-                                AutoSizeText(
+                            child: TextDataDisplayRow(
+                              theme: _theme,
+                              text: 'Text Difficulty',
+                              data:
                                   '${_convertTextDifficultyToString(state.textEvaluationModel.text.textDifficulty)}',
-                                  maxLines: 1,
-                                  style: _theme.textTheme.bodyText1!
-                                      .copyWith(fontWeight: FontWeight.w700)
-                                      .copyWith(fontSize: 20),
-                                ),
-                              ],
                             ),
                           ),
                         ),
@@ -88,13 +75,13 @@ class TextEvaluationPage extends StatelessWidget {
                   ),
                   Flexible(
                     flex: 1,
-                    child: DifficultyRepresentationWidget(
+                    child: CircularDataRepresentationWidget(
                       innerCircleRadialGradientColor: _theme.primaryColor,
                       outerCircleRadialGradiantColor: _theme.accentColor,
-                      difficulty:
-                          state.textEvaluationModel.resultDifficulty.toInt(),
+                      data: state.textEvaluationModel.resultDifficulty.toInt(),
                       textStyle: _theme.textTheme.headline3!,
                       circleRepresentationColor: _theme.accentColor,
+                      dataRepresentationTitle: 'DIFFICULTY',
                     ),
                   )
                 ],

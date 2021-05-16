@@ -4,19 +4,21 @@ import 'dart:ui' as ui;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
-class DifficultyRepresentationWidget extends StatelessWidget {
-  final int difficulty;
+class CircularDataRepresentationWidget extends StatelessWidget {
+  final int data;
   final TextStyle textStyle;
+  final String dataRepresentationTitle;
   final Color innerCircleRadialGradientColor;
   final Color outerCircleRadialGradiantColor;
   final Color circleRepresentationColor;
-  const DifficultyRepresentationWidget({
+  const CircularDataRepresentationWidget({
     Key? key,
-    required this.difficulty,
+    required this.data,
     required this.textStyle,
     required this.circleRepresentationColor,
     required this.innerCircleRadialGradientColor,
     required this.outerCircleRadialGradiantColor,
+    required this.dataRepresentationTitle,
   }) : super(key: key);
 
   @override
@@ -28,7 +30,7 @@ class DifficultyRepresentationWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 4, 10, 0),
             child: AutoSizeText(
-              'DIFFICULTY',
+              dataRepresentationTitle,
               style: textStyle,
             ),
           ),
@@ -37,7 +39,7 @@ class DifficultyRepresentationWidget extends StatelessWidget {
               children: [
                 Center(
                   child: AutoSizeText(
-                    difficulty.toString(),
+                    data.toString(),
                     style: textStyle.copyWith(fontSize: 40),
                   ),
                 ),
@@ -50,7 +52,7 @@ class DifficultyRepresentationWidget extends StatelessWidget {
                             innerCircleRadialGradientColor,
                         outerCircleRadialGradiantColor:
                             outerCircleRadialGradiantColor,
-                        percentage: (difficulty / 100) * 360,
+                        percentage: (data / 100) * 360,
                         mainPaintColor: circleRepresentationColor,
                       ),
                       child: SizedBox.expand(),

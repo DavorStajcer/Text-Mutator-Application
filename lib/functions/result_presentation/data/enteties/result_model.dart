@@ -9,9 +9,9 @@ class ResultModel extends Result {
     String id,
   ) : super(
           id: id,
-          mutatedWords: mutatedWords,
+          numberOfMutatedWords: mutatedWords,
           numberOfMarkedWords: numberOfMarkedWords,
-          wrongWords: wrongWords,
+          numberOfWrongWords: wrongWords,
           difficulty: difficulty,
         );
 
@@ -27,8 +27,8 @@ class ResultModel extends Result {
 
   Map<String, dynamic> toJson() {
     return {
-      'mutatedWords': this.mutatedWords,
-      'wrongWords': this.wrongWords,
+      'mutatedWords': this.numberOfMutatedWords,
+      'wrongWords': this.numberOfWrongWords,
       'numberOfMarkedWords': this.numberOfMarkedWords,
       'difficulty': this.difficulty,
       // 'id': this.id,

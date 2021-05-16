@@ -14,7 +14,14 @@ part 'result_state.dart';
 
 class ResultBloc extends Bloc<ResultEvent, ResultState> {
   final ResultRepository _resultRepository;
-  ResultBloc(this._resultRepository) : super(ResultInitial());
+  ResultBloc(this._resultRepository)
+      : super(ResultLoaded(Result(
+          difficulty: 44,
+          id: '',
+          numberOfMarkedWords: 4,
+          numberOfMutatedWords: 4,
+          numberOfWrongWords: 1,
+        )));
 
   @override
   Stream<ResultState> mapEventToState(

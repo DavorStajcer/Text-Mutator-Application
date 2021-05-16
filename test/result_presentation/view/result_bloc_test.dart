@@ -27,9 +27,9 @@ void main() {
   final Result _testResult = Result(
     difficulty: 44,
     id: '',
-    mutatedWords: 4,
+    numberOfMutatedWords: 4,
     numberOfMarkedWords: 4,
-    wrongWords: 0,
+    numberOfWrongWords: 0,
   );
   final List<Result> _testResults = [_testResult];
   final MutatedText _testMutatedText = MutatedText([

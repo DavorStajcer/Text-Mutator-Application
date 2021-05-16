@@ -7,6 +7,7 @@ import 'package:text_mutator/functions/text_mutation/view/mutate_bloc/mutate_blo
 import 'package:text_mutator/functions/theme_managment/cubit/theme_changing_cubit.dart';
 
 import 'core/navigation/route_generation.dart';
+import 'functions/result_presentation/view/result_bloc/result_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +32,10 @@ class MyApp extends StatelessWidget {
               ),
               BlocProvider(
                 create: (context) => GetIt.I<MutateBloc>(),
-              )
+              ),
+              BlocProvider(
+                create: (context) => GetIt.I<ResultBloc>(),
+              ),
             ],
             child: BlocBuilder<ThemeChangingCubit, ThemeChangingState>(
               builder: (context, state) {

@@ -110,11 +110,19 @@ void main() {
 
     final List<Result> _testResults = _testResultModels;
     final ResultModel _testResultModel = ResultModel(
-      1,
+      2,
       1,
       2,
       _testResultDifficulty,
       '2',
+    );
+
+    test(
+      'should caluclate correct score',
+      () async {
+        // assert
+        expect(_testResultModel.score, 50.0);
+      },
     );
 
     test(
