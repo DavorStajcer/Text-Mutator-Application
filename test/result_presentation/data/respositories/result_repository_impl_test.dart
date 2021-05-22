@@ -144,7 +144,7 @@ void main() {
     );
 
     test(
-      'loading should return ServerFailure when exception goes',
+      'loading should return ServerFailure when fetching results goes wrong',
       () async {
         // arrange
         _arrangeConnection(true);
@@ -162,7 +162,7 @@ void main() {
     );
 
     test(
-      'saving should return ServerFailure when exception goes wrong',
+      'saving should return ServerFailure when saving results goes wrong',
       () async {
         // arrange
         _arrangeConnection(true);

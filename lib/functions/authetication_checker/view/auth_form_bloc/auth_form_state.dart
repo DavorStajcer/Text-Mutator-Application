@@ -4,7 +4,7 @@ abstract class AuthFormState extends Equatable {
   final AuthCredentials authCredentials;
   const AuthFormState(this.authCredentials);
   @override
-  List<Object> get props => [authCredentials];
+  List<Object?> get props => [authCredentials];
 }
 
 class AuthFormInitial extends AuthFormState {

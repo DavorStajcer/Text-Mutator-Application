@@ -3,11 +3,11 @@ import 'dart:developer';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:text_mutator/core/widgets/app_button.dart';
-import 'package:text_mutator/core/widgets/bottom_page_navitator.dart';
-import 'package:text_mutator/core/widgets/dialog.dart';
-import 'package:text_mutator/functions/mutation_flow_managment/view/progress_animation_cubit/progress_animation_cubit.dart';
-import 'package:text_mutator/functions/text_evaluation/view/text_evaluation_bloc/textevaluation_bloc.dart';
+import '../../../../core/widgets/app_button.dart';
+import '../../../../core/widgets/bottom_page_navitator.dart';
+import '../../../../core/widgets/dialog.dart';
+import '../../../mutation_flow_managment/view/progress_animation_cubit/progress_animation_cubit.dart';
+import '../../../text_evaluation/view/text_evaluation_bloc/textevaluation_bloc.dart';
 import 'package:text_mutator/functions/text_load/domain/models/text.dart'
     as text;
 import 'package:text_mutator/functions/text_load/view/text_load_bloc/text_bloc.dart';

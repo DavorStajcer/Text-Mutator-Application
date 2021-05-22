@@ -2,7 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:text_mutator/functions/authetication_checker/domain/models/auth_credentials.dart';
+import '../../domain/models/auth_credentials.dart';
+import 'package:stream_transform/stream_transform.dart';
 
 part 'auth_form_event.dart';
 part 'auth_form_state.dart';
@@ -14,6 +15,17 @@ class AuthFormBloc extends Bloc<AuthFormEvent, AuthFormState> {
           passwordConfirmCredential: PasswordConfirmCredential.initial(),
           passwordCredential: PasswordCredential.initial(),
         )));
+
+  @override
+  Stream<Transition<AuthFormEvent, AuthFormState>> transformEvents(
+      Stream<AuthFormEvent> events,
+      TransitionFunction<AuthFormEvent, AuthFormState> transitionFn) {
+    final debounce = StreamTransformer.fromBind(
+            (s) => s.debounce(const Duration(milliseconds: 100)))
+        .cast<AuthFormEvent, AuthFormEvent>();
+    Stream<AuthFormEvent> _debuonceStream = events.transform(debounce);
+    return super.transformEvents(_debuonceStream, transitionFn);
+  }
 
   @override
   Stream<AuthFormState> mapEventToState(

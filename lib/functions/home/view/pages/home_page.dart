@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:text_mutator/functions/home/view/widgets/bottom_layout.dart';
-import 'package:text_mutator/functions/home/view/widgets/top_layout_buttons.dart';
-import 'package:text_mutator/functions/home/view/widgets/top_layout_text.dart';
+import '../widgets/bottom_layout.dart';
+import '../widgets/top_layout_buttons.dart';
+import '../widgets/top_layout_text.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);

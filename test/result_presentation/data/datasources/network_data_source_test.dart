@@ -1,7 +1,6 @@
 //@dart=2.9
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
@@ -66,11 +65,15 @@ void main() {
   ];
 
   final Map<String, dynamic> _testResultMap = {
-    'mutatedWords': 4,
-    'wrongWords': 2,
-    'numberOfMarkedWords': 4,
-    'difficulty': 44,
-    'id': 'testId',
+    'list': [
+      {
+        'mutatedWords': 4,
+        'wrongWords': 2,
+        'numberOfMarkedWords': 4,
+        'difficulty': 44,
+        'id': 'testId',
+      }
+    ]
   };
 
   void _setupFirestoreLoad() {
@@ -78,20 +81,10 @@ void main() {
     when(mockCollectionReference.doc(any)).thenReturn(mockDocumentReference);
     when(mockDocumentReference.collection(any))
         .thenReturn(mockCollectionReference);
-    when(mockCollectionReference.get())
-        .thenAnswer((_) async => mockQuerySnapshot);
-    when(mockQuerySnapshot.docs).thenReturn([mockQueryDocumentSnapshot]);
+    when(mockDocumentReference.get())
+        .thenAnswer((_) async => mockQueryDocumentSnapshot);
+
     when(mockQueryDocumentSnapshot.data()).thenReturn(_testResultMap);
-  }
-
-  // void _setupAuth() {
-  //   when(_mockFirebaseAuth.currentUser).thenReturn(user);
-  // }
-
-  void _setupSave() {
-    when(_mockFirestore.collection(any)).thenReturn(mockCollectionReference);
-    when(mockCollectionReference.add(_testResultMap))
-        .thenAnswer((realInvocation) async => mockDocumentReference);
   }
 
   test(

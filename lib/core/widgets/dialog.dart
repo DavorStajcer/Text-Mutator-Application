@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:text_mutator/core/widgets/app_button.dart';
+import 'app_button.dart';
 
 void showNotificationDialog(
     BuildContext context, String text, ThemeData theme) {

@@ -48,7 +48,7 @@ void main() {
         _setupMockLogin(true);
         return AuthBloc(_mockUserAuthenticator);
       },
-      act: (ab) => ab.add(LoginIn(_testEmail, _testPass)),
+      act: (ab) => ab.add(LogIn(_testEmail, _testPass)),
       expect: () => [AuthLoading(), AuthSuccesfull()],
     );
 
@@ -58,7 +58,7 @@ void main() {
         _setupMockLogin(false);
         return AuthBloc(_mockUserAuthenticator);
       },
-      act: (ab) => ab.add(LoginIn(_testEmail, _testPass)),
+      act: (ab) => ab.add(LogIn(_testEmail, _testPass)),
       expect: () => [AuthLoading(), AuthFailed(ERROR_AUTH_INVALID_EMAIL)],
     );
 
@@ -71,7 +71,7 @@ void main() {
         _setupMockLogin(false);
         return AuthBloc(_mockUserAuthenticator);
       },
-      act: (ab) => ab.add(LoginIn(_testEmail, _testPass)),
+      act: (ab) => ab.add(LogIn(_testEmail, _testPass)),
       expect: () => [AuthLoading(), AuthFailed(ERROR_NO_CONNECTION)],
       verify: (ab) => _mockUserAuthenticator
           .authenticateUserWithEmailAndPassword(_testEmail, _testPass),

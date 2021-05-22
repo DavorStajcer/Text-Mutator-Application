@@ -1,17 +1,16 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:text_mutator/core/constants/error_messages.dart';
-import 'package:text_mutator/core/error/failures/failure.dart';
-import 'package:text_mutator/functions/text_evaluation/domain/model/text_evalluation_model.dart';
-import 'package:text_mutator/functions/text_load/data/enteties/text_model.dart';
-import 'package:text_mutator/functions/text_load/domain/repsositories/text_repository.dart';
-import 'package:text_mutator/functions/text_mutation/domain/models/mutated_text.dart';
-import 'package:text_mutator/functions/text_mutation/domain/models/word/word.dart';
-import 'package:text_mutator/functions/text_mutation/domain/repositories/mutated_text_repository.dart';
+import '../../../../core/constants/error_messages.dart';
+import '../../../../core/error/failures/failure.dart';
+import '../../../text_evaluation/domain/model/text_evalluation_model.dart';
+import '../../../text_load/data/enteties/text_model.dart';
+import '../../../text_load/domain/repsositories/text_repository.dart';
+import '../../domain/models/mutated_text.dart';
+import '../../domain/models/word/word.dart';
+import '../../domain/repositories/mutated_text_repository.dart';
 
 part 'mutate_event.dart';
 part 'mutate_state.dart';

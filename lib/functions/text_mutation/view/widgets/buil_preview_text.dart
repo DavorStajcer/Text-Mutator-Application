@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:text_mutator/core/constants/theme.dart';
-import 'package:text_mutator/functions/text_mutation/domain/models/mutated_text.dart';
-import 'package:text_mutator/functions/text_mutation/domain/models/word/clean_word.dart';
-import 'package:text_mutator/functions/text_mutation/domain/models/word/mutated_word.dart';
-import 'package:text_mutator/functions/text_mutation/domain/models/word/word.dart';
+import '../../../../core/constants/theme.dart';
+import '../../domain/models/mutated_text.dart';
+import '../../domain/models/word/clean_word.dart';
+import '../../domain/models/word/mutated_word.dart';
+import '../../domain/models/word/word.dart';
 
 TextStyle _determineStyleColorOfTheWord(Word word, ThemeData theme) {
   final TextStyle _defaultStyle = theme.textTheme.bodyText1!.copyWith(

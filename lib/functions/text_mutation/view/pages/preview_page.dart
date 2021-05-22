@@ -1,11 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:text_mutator/core/constants/theme.dart';
-import 'package:text_mutator/core/widgets/app_button.dart';
-import 'package:text_mutator/functions/text_mutation/view/mutate_bloc/mutate_bloc.dart';
-import 'package:text_mutator/functions/text_mutation/view/widgets/buil_preview_text.dart';
-import 'package:text_mutator/functions/text_mutation/view/widgets/preview_color_indicator.dart';
+import '../../../../core/constants/theme.dart';
+import '../../../../core/widgets/app_button.dart';
+import '../mutate_bloc/mutate_bloc.dart';
+import '../widgets/buil_preview_text.dart';
+import '../widgets/preview_color_indicator.dart';
 
 class PreviewPage extends StatelessWidget {
   const PreviewPage({Key? key}) : super(key: key);

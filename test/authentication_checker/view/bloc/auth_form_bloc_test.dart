@@ -1,5 +1,4 @@
 //@dart=2.9
-import 'package:flutter_test/flutter_test.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:text_mutator/functions/authetication_checker/domain/models/auth_credentials.dart';
 import 'package:text_mutator/functions/authetication_checker/view/auth_form_bloc/auth_form_bloc.dart';
@@ -23,6 +22,7 @@ void main() {
   blocTest(
     'should emit AuthFormChanged with correct credentials when email changed',
     build: () => AuthFormBloc(),
+    wait: Duration(milliseconds: 120),
     act: (bloc) => bloc.add(EmailChanged(_testEmail)),
     expect: () => [
       AuthFormChanged(AuthCredentials(
@@ -37,6 +37,7 @@ void main() {
     'should emit AuthFormChanged with correct credentials when password cofnirmed changed',
     build: () => AuthFormBloc(),
     act: (bloc) => bloc.add(PasswordChanged(_testPassword)),
+    wait: Duration(milliseconds: 120),
     expect: () => [
       AuthFormChanged(AuthCredentials(
         emailCredential: EmailCredential.initial(),
@@ -49,6 +50,7 @@ void main() {
   blocTest(
     'should emit AuthFormChanged with correct credentials when password changed',
     build: () => AuthFormBloc(),
+    wait: Duration(milliseconds: 120),
     act: (bloc) =>
         bloc.add(PasswordConfirmChanged(_testPassword, _testConfirmPassowrd)),
     expect: () => [

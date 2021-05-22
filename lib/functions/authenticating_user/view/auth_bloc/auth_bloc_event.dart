@@ -7,11 +7,11 @@ abstract class AuthBlocEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoginIn extends AuthBlocEvent {
+class LogIn extends AuthBlocEvent {
   final String email;
   final String password;
 
-  LoginIn(this.email, this.password);
+  LogIn(this.email, this.password);
 }
 
 class SignUp extends AuthBlocEvent {

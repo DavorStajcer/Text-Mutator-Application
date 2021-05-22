@@ -3,11 +3,12 @@ import 'dart:developer';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:text_mutator/core/constants/pages.dart';
-import 'package:text_mutator/core/widgets/app_button.dart';
-import 'package:text_mutator/functions/result_presentation/view/result_bloc/result_bloc.dart';
-import 'package:text_mutator/functions/text_mutation/view/mutate_bloc/mutate_bloc.dart';
-import 'package:text_mutator/functions/text_mutation/view/widgets/build_selectable_text.dart';
+import 'package:text_mutator/core/widgets/dialog.dart';
+import '../../../../core/constants/pages.dart';
+import '../../../../core/widgets/app_button.dart';
+import '../../../result_presentation/view/result_bloc/result_bloc.dart';
+import '../mutate_bloc/mutate_bloc.dart';
+import '../widgets/build_selectable_text.dart';
 
 class MutatedTextPage extends StatelessWidget {
   const MutatedTextPage({Key? key}) : super(key: key);
@@ -44,7 +45,8 @@ class MutatedTextPage extends StatelessWidget {
                     BlocConsumer<ResultBloc, ResultState>(
                       listener: (context, resultState) {
                         if (resultState is ResultError)
-                          log('error ${resultState.message}');
+                          showNotificationDialog(
+                              context, resultState.message, _theme);
                         else if (resultState is ResultLoaded)
                           Navigator.of(context)
                               .pushNamed(ROUTE_RESULT_FINISHED_PAGE);
@@ -54,12 +56,15 @@ class MutatedTextPage extends StatelessWidget {
                           return Center(
                             child: CircularProgressIndicator(),
                           );
-                        return AppButton(
-                          text: 'Done.',
-                          onTap: () => _resultBloc.add(
-                            CreateResult(mutationState.mutateText),
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: AppButton(
+                            text: 'Done.',
+                            onTap: () => _resultBloc.add(
+                              CreateResult(mutationState.mutateText),
+                            ),
+                            widthSizeFactor: 2.8,
                           ),
-                          widthSizeFactor: 2.8,
                         );
                       },
                     ),

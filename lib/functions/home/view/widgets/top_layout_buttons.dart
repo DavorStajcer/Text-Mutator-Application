@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:text_mutator/core/constants/pages.dart';
-import 'package:text_mutator/core/widgets/app_button.dart';
+import '../../../../core/constants/pages.dart';
+import '../../../../core/widgets/app_button.dart';
 
 class TopLayoutButtons extends StatelessWidget {
   const TopLayoutButtons({Key? key}) : super(key: key);

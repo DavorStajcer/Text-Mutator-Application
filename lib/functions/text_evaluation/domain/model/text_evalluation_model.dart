@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart' show visibleForTesting;
-import 'package:text_mutator/functions/text_load/domain/models/text.dart';
+import '../../../text_load/domain/models/text.dart';
 
 /*
 Words like 'the', 'a', and 'of' are often called syncategorematic words, words "that do not stand by themselves... (i.e. prepositions, logical connectives, etc.)" (here).
@@ -31,9 +31,6 @@ class TextEvaluationModel extends Equatable {
     this.maxNumberOfMutations = _maxNumberOfMutations;
     this.resultDifficulty = calculateResultDifficulty(_maxNumberOfMutations);
   }
-
-  // @visibleForTesting
-  // double get difficulty => this.resultDifficulty;
 
   TextEvaluationModel copyWith({
     Text? text,

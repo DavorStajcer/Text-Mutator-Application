@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:text_mutator/functions/text_mutation/domain/models/word/clean_word.dart';
-import 'package:text_mutator/functions/text_mutation/domain/models/word/mutated_word.dart';
+import 'word/clean_word.dart';
+import 'word/mutated_word.dart';
 
 class MutatedText extends Equatable {
   final List<CleanWord> cleanWords;

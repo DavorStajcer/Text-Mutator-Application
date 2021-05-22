@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:text_mutator/core/constants/error_messages.dart';
-import 'package:text_mutator/core/error/failures/failure.dart';
-import 'package:text_mutator/functions/result_presentation/domain/repositories/result_respository.dart';
-import 'package:text_mutator/functions/text_mutation/domain/models/mutated_text.dart';
-import 'package:text_mutator/functions/result_presentation/domain/models/result.dart';
+import '../../../../core/constants/error_messages.dart';
+import '../../../../core/error/failures/failure.dart';
+import '../../domain/repositories/result_respository.dart';
+import '../../../text_mutation/domain/models/mutated_text.dart';
+import '../../domain/models/result.dart';
 
 part 'result_event.dart';
 part 'result_state.dart';

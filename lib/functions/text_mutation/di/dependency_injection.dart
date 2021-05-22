@@ -1,8 +1,8 @@
 import 'package:get_it/get_it.dart';
-import 'package:text_mutator/functions/text_mutation/data/datasources/network_data_source.dart';
-import 'package:text_mutator/functions/text_mutation/data/repositories/mutated_text_repository_impl.dart';
-import 'package:text_mutator/functions/text_mutation/domain/repositories/mutated_text_repository.dart';
-import 'package:text_mutator/functions/text_mutation/view/mutate_bloc/mutate_bloc.dart';
+import '../data/datasources/network_data_source.dart';
+import '../data/repositories/mutated_text_repository_impl.dart';
+import '../domain/repositories/mutated_text_repository.dart';
+import '../view/mutate_bloc/mutate_bloc.dart';
 
 void initiDependenciesTextMutation() {
   final _get = GetIt.instance;

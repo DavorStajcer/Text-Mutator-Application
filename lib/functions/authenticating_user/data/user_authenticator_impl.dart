@@ -1,9 +1,11 @@
-import 'package:text_mutator/core/constants/error_messages.dart';
-import 'package:text_mutator/core/error/failures/failure.dart';
+import 'dart:developer';
+
+import '../../../core/constants/error_messages.dart';
+import '../../../core/error/failures/failure.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:dartz/dartz.dart';
-import 'package:text_mutator/core/network/connection_checker.dart';
-import 'package:text_mutator/functions/authenticating_user/domain/contracts/user_authenticator.dart';
+import '../../../core/network/connection_checker.dart';
+import '../domain/contracts/user_authenticator.dart';
 
 class UserAuthenticatorImpl extends UserAuthenticator {
   final FirebaseAuth _firebaseAuth;
@@ -35,7 +37,7 @@ class UserAuthenticatorImpl extends UserAuthenticator {
       case 'user-not-found':
         return ERROR_AUTH_USER_NOT_FOUND;
       case 'email-already-in-use':
-        return ERROR_AUTH_USER_NOT_FOUND;
+        return ERROR_AUTH_EMAIL_IN_USE;
       case 'wrong-password':
         return ERROR_AUTH_WRONG_PASS;
       case 'invalid-email':
@@ -64,11 +66,10 @@ class UserAuthenticatorImpl extends UserAuthenticator {
     if (!await _connectionChecker.hasConnection)
       return Left(NoConnetionFailure());
     try {
+      log('SIGNING UP');
       final UserCredential _userCredential = await _firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password);
 
-      if (_userCredential.user == null)
-        throw FirebaseAuthException(code: 'user-not-found');
       return Right(null);
     } on FirebaseAuthException catch (err) {
       return Left(UserAuthenticationFailure(_pickFailureMessage(err.code)));

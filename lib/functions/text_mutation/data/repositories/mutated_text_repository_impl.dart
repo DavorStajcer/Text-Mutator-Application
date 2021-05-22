@@ -3,9 +3,9 @@ import 'dart:developer' as dev;
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:text_mutator/core/error/failures/failure.dart';
-import 'package:text_mutator/core/network/connection_checker.dart';
-import 'package:text_mutator/functions/text_evaluation/domain/model/text_evalluation_model.dart';
+import '../../../../core/error/failures/failure.dart';
+import '../../../../core/network/connection_checker.dart';
+import '../../../text_evaluation/domain/model/text_evalluation_model.dart';
 import 'package:text_mutator/functions/text_load/domain/models/text.dart'
     as text;
 import 'package:text_mutator/functions/text_mutation/data/datasources/network_data_source.dart';
@@ -90,8 +90,7 @@ class MutatedTextRepositoryImpl extends MutatedTextRepository {
     for (int i = 0; i < mutations.length && i < _cleanWords.length; i++) {
       //da se ne ponavljaju isti indexi, spriejčava da bude 4 instance mutated word, a samo 1 riječč da se prikaže je rimaju iste indekse
       int _newIndex = _random.nextInt(_cleanWords.length);
-      // print(_mutationIndexes.contains(_newIndex));
-      // print(_mutationIndexes.toString() + "::::" + _newIndex.toString());
+
       while (_mutationIndexes.contains(_newIndex)) {
         _newIndex = _random.nextInt(_cleanWords.length);
       }
@@ -109,17 +108,4 @@ class MutatedTextRepositoryImpl extends MutatedTextRepository {
       resultDifficulty,
     );
   }
-
-  // @override
-  // Future<Either<Failure, void>> saveSolvedText(
-  //     TextEvaluationModel textEvaluationModel) async {
-  //   if (!await _connectionChecker.hasConnection)
-  //     return Left(NoConnetionFailure());
-  //   try {
-  //     await _networkTextDataSource.saveSolvedText(textEvaluationModel.text.id);
-  //     return Right(_mutatedText!);
-  //   } catch (err) {
-  //     return Left(ServerFailure());
-  //   }
-  // }
 }

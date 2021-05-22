@@ -1,4 +1,4 @@
-import 'package:text_mutator/functions/text_mutation/domain/models/word/word.dart';
+import 'word.dart';
 
 class MutatedWord extends Word {
   MutatedWord({required String word, required int index})

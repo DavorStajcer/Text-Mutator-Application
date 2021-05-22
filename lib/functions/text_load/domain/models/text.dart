@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:text_mutator/core/constants/enums.dart';
+import '../../../../core/constants/enums.dart';
 
 class Text extends Equatable {
   final String text;

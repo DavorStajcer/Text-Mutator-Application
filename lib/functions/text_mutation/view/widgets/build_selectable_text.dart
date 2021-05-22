@@ -1,11 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:text_mutator/core/constants/theme.dart';
-import 'package:text_mutator/functions/text_mutation/domain/models/mutated_text.dart';
-import 'package:text_mutator/functions/text_mutation/domain/models/word/mutated_word.dart';
-import 'package:text_mutator/functions/text_mutation/domain/models/word/word.dart';
-import 'package:text_mutator/functions/text_mutation/view/mutate_bloc/mutate_bloc.dart';
+import '../../../../core/constants/theme.dart';
+import '../../domain/models/mutated_text.dart';
+import '../../domain/models/word/mutated_word.dart';
+import '../../domain/models/word/word.dart';
+import '../mutate_bloc/mutate_bloc.dart';
 
 Widget buildSelectableText(
     MutatedText mutatedText, TextStyle? defaultStyle, MutateBloc mutateBloc) {

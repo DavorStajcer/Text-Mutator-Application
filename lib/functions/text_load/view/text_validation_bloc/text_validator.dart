@@ -1,4 +1,4 @@
-import 'package:text_mutator/core/constants/error_messages.dart';
+import '../../../../core/constants/error_messages.dart';
 
 abstract class TextValidator {
   String? isValid(String text);

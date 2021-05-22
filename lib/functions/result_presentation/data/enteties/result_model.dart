@@ -1,4 +1,4 @@
-import 'package:text_mutator/functions/result_presentation/domain/models/result.dart';
+import '../../domain/models/result.dart';
 
 class ResultModel extends Result {
   ResultModel(

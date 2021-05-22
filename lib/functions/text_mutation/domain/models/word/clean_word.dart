@@ -1,4 +1,4 @@
-import 'package:text_mutator/functions/text_mutation/domain/models/word/word.dart';
+import 'word.dart';
 
 class CleanWord extends Word {
   CleanWord({required String word, required int index})

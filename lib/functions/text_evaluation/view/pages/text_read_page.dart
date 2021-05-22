@@ -2,12 +2,13 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:text_mutator/core/constants/pages.dart';
-import 'package:text_mutator/core/widgets/app_button.dart';
-import 'package:text_mutator/core/widgets/bottom_page_navitator.dart';
-import 'package:text_mutator/functions/mutation_flow_managment/view/progress_animation_cubit/progress_animation_cubit.dart';
-import 'package:text_mutator/functions/text_evaluation/view/text_evaluation_bloc/textevaluation_bloc.dart';
-import 'package:text_mutator/functions/text_mutation/view/mutate_bloc/mutate_bloc.dart';
+import 'package:text_mutator/core/widgets/dialog.dart';
+import '../../../../core/constants/pages.dart';
+import '../../../../core/widgets/app_button.dart';
+import '../../../../core/widgets/bottom_page_navitator.dart';
+import '../../../mutation_flow_managment/view/progress_animation_cubit/progress_animation_cubit.dart';
+import '../text_evaluation_bloc/textevaluation_bloc.dart';
+import '../../../text_mutation/view/mutate_bloc/mutate_bloc.dart';
 
 class TextReadPage extends StatelessWidget {
   const TextReadPage({Key? key}) : super(key: key);
@@ -46,7 +47,8 @@ class TextReadPage extends StatelessWidget {
               proceedWidget: BlocConsumer<MutateBloc, MutateState>(
                 listener: (context, mutateState) {
                   if (mutateState is MutateError)
-                    log('error ${mutateState.message}');
+                    showNotificationDialog(
+                        context, mutateState.message, _theme);
                   else if (mutateState is MutateLoaded) {
                     Navigator.of(context).pushReplacementNamed(
                       ROUTE_MUTATED_TEXT_PAGE,

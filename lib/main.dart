@@ -1,10 +1,16 @@
+import 'dart:developer';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:text_mutator/dependency_injection.dart';
-import 'package:text_mutator/functions/text_mutation/view/mutate_bloc/mutate_bloc.dart';
-import 'package:text_mutator/functions/theme_managment/cubit/theme_changing_cubit.dart';
+import 'package:text_mutator/functions/authenticating_user/view/pages/authetication_page.dart';
+import 'package:text_mutator/functions/authetication_checker/view/authentication_checker_bloc/authentication_checker_bloc.dart';
+import 'package:text_mutator/functions/home/view/pages/home_page.dart';
+import 'dependency_injection.dart';
+import 'functions/authetication_checker/view/authetication_action_cubit/authentication_action_cubit.dart';
+import 'functions/text_mutation/view/mutate_bloc/mutate_bloc.dart';
+import 'functions/theme_managment/cubit/theme_changing_cubit.dart';
 
 import 'core/navigation/route_generation.dart';
 import 'functions/result_presentation/view/result_bloc/result_bloc.dart';
@@ -36,14 +42,28 @@ class MyApp extends StatelessWidget {
               BlocProvider(
                 create: (context) => GetIt.I<ResultBloc>(),
               ),
+              BlocProvider(
+                create: (context) => GetIt.I<AuthenticationActionCubit>(),
+              ),
+              BlocProvider(
+                create: (context) => GetIt.I<AuthenticationCheckerBloc>(),
+              ),
             ],
             child: BlocBuilder<ThemeChangingCubit, ThemeChangingState>(
-              builder: (context, state) {
+              builder: (context, themeState) {
                 return MaterialApp(
                   debugShowCheckedModeBanner: false,
                   title: 'Flutter Demo',
-                  theme: state.theme,
+                  theme: themeState.theme,
                   onGenerateRoute: onGenerateRoute,
+                  home: BlocBuilder<AuthenticationCheckerBloc,
+                      AuthenticationCheckerState>(
+                    builder: (context, state) {
+                      log(state.toString());
+                      if (state is UserAuthenticated) return HomePage();
+                      return AuthenticationPage();
+                    },
+                  ),
                 );
               },
             ),

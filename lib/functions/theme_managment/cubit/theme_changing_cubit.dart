@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:text_mutator/core/constants/theme.dart';
-import 'package:text_mutator/core/local_storage_manager/local_storage_manager.dart';
+import '../../../core/constants/theme.dart';
+import '../../../core/local_storage_manager/local_storage_manager.dart';
 
 part 'theme_changing_state.dart';
 
@@ -40,8 +40,8 @@ final _lightTheme = ThemeData(
       color: LIGHT_TEXT_COLOR.withAlpha(150),
     ),
     headline1: TextStyle(
-      fontSize: 50,
-      letterSpacing: -3,
+      fontSize: 40,
+      letterSpacing: -1.5,
       fontWeight: FontWeight.w900,
       color: LIGHT_HIGHLIGHTED_COLOR,
     ),

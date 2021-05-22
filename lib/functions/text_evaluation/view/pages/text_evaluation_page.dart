@@ -1,15 +1,15 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:text_mutator/core/constants/enums.dart';
-import 'package:text_mutator/core/widgets/bottom_page_navitator.dart';
-import 'package:text_mutator/core/widgets/text_data_display_row_widget.dart';
-import 'package:text_mutator/functions/mutation_flow_managment/view/progress_animation_cubit/progress_animation_cubit.dart';
-import 'package:text_mutator/functions/text_evaluation/view/text_evaluation_bloc/textevaluation_bloc.dart';
-import 'package:text_mutator/core/widgets/circular_data_represetnation_widget.dart';
-import 'package:text_mutator/functions/text_evaluation/view/widgets/hard_words_options_widget.dart';
-import 'package:text_mutator/functions/text_evaluation/view/widgets/mutations_slider_widget.dart';
-import 'package:text_mutator/functions/text_load/view/text_load_bloc/text_bloc.dart';
+import '../../../../core/constants/enums.dart';
+import '../../../../core/widgets/bottom_page_navitator.dart';
+import '../../../../core/widgets/text_data_display_row_widget.dart';
+import '../../../mutation_flow_managment/view/progress_animation_cubit/progress_animation_cubit.dart';
+import '../text_evaluation_bloc/textevaluation_bloc.dart';
+import '../../../../core/widgets/circular_data_represetnation_widget.dart';
+import '../widgets/hard_words_options_widget.dart';
+import '../widgets/mutations_slider_widget.dart';
+import '../../../text_load/view/text_load_bloc/text_bloc.dart';
 
 class TextEvaluationPage extends StatelessWidget {
   const TextEvaluationPage({Key? key}) : super(key: key);

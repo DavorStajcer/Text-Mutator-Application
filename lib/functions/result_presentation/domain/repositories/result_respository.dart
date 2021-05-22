@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:text_mutator/core/error/failures/failure.dart';
-import 'package:text_mutator/functions/text_mutation/domain/models/mutated_text.dart';
-import 'package:text_mutator/functions/result_presentation/domain/models/result.dart';
+import '../../../../core/error/failures/failure.dart';
+import '../../../text_mutation/domain/models/mutated_text.dart';
+import '../models/result.dart';
 
 abstract class ResultRepository {
   Future<Result> calculateResult(MutatedText mutatedText);

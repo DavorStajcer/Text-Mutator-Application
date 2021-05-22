@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:text_mutator/functions/text_evaluation/view/text_evaluation_bloc/textevaluation_bloc.dart';
+import '../text_evaluation_bloc/textevaluation_bloc.dart';
 
 class MutationsSliderWidget extends StatelessWidget {
   const MutationsSliderWidget({

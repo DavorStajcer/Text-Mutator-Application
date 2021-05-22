@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:text_mutator/functions/how_it_works_insatructions/view/widgets/instruction_page_indicator.dart';
+import 'instruction_page_indicator.dart';
 
 class InstructionWidget extends StatelessWidget {
   final String assetImagePath;

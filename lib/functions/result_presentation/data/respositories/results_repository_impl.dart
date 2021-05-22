@@ -2,15 +2,15 @@ import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:text_mutator/core/error/failures/failure.dart';
-import 'package:text_mutator/core/network/connection_checker.dart';
-import 'package:text_mutator/functions/result_presentation/data/datasources/network_data_source.dart';
-import 'package:text_mutator/functions/result_presentation/data/enteties/result_model.dart';
-import 'package:text_mutator/functions/result_presentation/domain/repositories/result_respository.dart';
-import 'package:text_mutator/functions/text_mutation/domain/models/mutated_text.dart';
-import 'package:text_mutator/functions/result_presentation/domain/models/result.dart';
-import 'package:text_mutator/functions/text_mutation/domain/models/word/clean_word.dart';
-import 'package:text_mutator/functions/text_mutation/domain/models/word/mutated_word.dart';
+import '../../../../core/error/failures/failure.dart';
+import '../../../../core/network/connection_checker.dart';
+import '../datasources/network_data_source.dart';
+import '../enteties/result_model.dart';
+import '../../domain/repositories/result_respository.dart';
+import '../../../text_mutation/domain/models/mutated_text.dart';
+import '../../domain/models/result.dart';
+import '../../../text_mutation/domain/models/word/clean_word.dart';
+import '../../../text_mutation/domain/models/word/mutated_word.dart';
 
 class ResultRepositoryImpl extends ResultRepository {
   //final DatabaseSource _databaseSource;
@@ -83,9 +83,9 @@ class ResultRepositoryImpl extends ResultRepository {
     if (await _connectionChecker.hasConnection) {
       try {
         final ResultModel _result = await calculateResult(mutatedText);
-        //TODO: UNCOMENT WHEN AUTHENTICATION FINISHED
-        // await _networkResultDataSource.saveResult(_result);
-        // _cashedResults.add(_result);
+
+        await _networkResultDataSource.saveResult(_result);
+        _cashedResults.add(_result);
         return Right(_result);
       } catch (err) {
         return Left(ServerFailure());

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:text_mutator/functions/text_evaluation/view/text_evaluation_bloc/textevaluation_bloc.dart';
-import 'package:text_mutator/functions/text_evaluation/view/widgets/checkbox_evaluation_row.dart';
+import '../text_evaluation_bloc/textevaluation_bloc.dart';
+import 'checkbox_evaluation_row.dart';
 
 class HardWordsOptionsWidget extends StatelessWidget {
   const HardWordsOptionsWidget({

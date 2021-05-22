@@ -1,5 +1,5 @@
-import 'package:text_mutator/functions/result_presentation/data/enteties/result_model.dart';
-import 'package:text_mutator/functions/text_load/data/enteties/text_model.dart';
+import '../result_presentation/data/enteties/result_model.dart';
+import '../text_load/data/enteties/text_model.dart';
 
 abstract class DatabaseSource {
   Future<Map<String, dynamic>> fetchText(String id);

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:text_mutator/functions/mutation_flow_managment/view/progress_animation_cubit/progress_animation_cubit.dart';
-import 'package:text_mutator/functions/mutation_flow_managment/view/widgets/progress_indicator/progress_animated_bar.dart';
-import 'package:text_mutator/functions/mutation_flow_managment/view/widgets/progress_indicator/progress_animated_circle.dart';
+import '../../progress_animation_cubit/progress_animation_cubit.dart';
+import 'progress_animated_bar.dart';
+import 'progress_animated_circle.dart';
 
 class ProgressIndicatorWidget extends StatefulWidget {
   final Size deviceSize;

@@ -1,11 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:text_mutator/core/constants/pages.dart';
-import 'package:text_mutator/core/widgets/app_button.dart';
-import 'package:text_mutator/core/widgets/circular_data_represetnation_widget.dart';
-import 'package:text_mutator/core/widgets/text_data_display_row_widget.dart';
-import 'package:text_mutator/functions/result_presentation/view/result_bloc/result_bloc.dart';
+import '../../../../core/constants/pages.dart';
+import '../../../../core/widgets/app_button.dart';
+import '../../../../core/widgets/circular_data_represetnation_widget.dart';
+import '../../../../core/widgets/text_data_display_row_widget.dart';
+import '../result_bloc/result_bloc.dart';
 
 class ResultFinishedPage extends StatelessWidget {
   const ResultFinishedPage({Key? key}) : super(key: key);

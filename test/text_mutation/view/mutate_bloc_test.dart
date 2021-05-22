@@ -103,7 +103,8 @@ void main() {
         ..add(UpdateWord(_testCleanWord)),
       expect: () => [
         MutateLoading(),
-        // MutateLoaded(mutateText: _testMutatedText),
+        MutateLoaded(mutateText: _testMutatedText),
+        MutateLoading(),
         MutateLoaded(mutateText: _testMutatedTextChanged)
       ],
     );

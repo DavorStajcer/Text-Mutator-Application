@@ -1,6 +1,8 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:text_mutator/functions/result_presentation/data/enteties/result_model.dart';
+import '../enteties/result_model.dart';
 
 abstract class NetworkResultDataSource {
   Future<List<Map<String, dynamic>>> fetchResults();
@@ -16,26 +18,39 @@ class NetworkResultDataSourceImpl extends NetworkResultDataSource {
   @override
   Future<List<Map<String, dynamic>>> fetchResults() async {
     final String _currentUserId = _firebaseAuth.currentUser!.uid;
-    final QuerySnapshot _querySnapshot = await instance
+    final DocumentSnapshot _documentSnapshot = await instance
         .collection('users')
         .doc('$_currentUserId')
         .collection('results')
+        .doc('results')
         .get();
 
-    return _querySnapshot.docs
-        .map((e) =>
-            (e.data() as Map<String, dynamic>)..putIfAbsent('id', () => e.id))
-        .toList();
+    //     .map((e) =>
+    //         (e.data() as Map<String, dynamic>)..putIfAbsent('id', () => e.id))
+    //     .toList();
+
+    return (_documentSnapshot.data() as Map<String, dynamic>)['list'];
   }
 
   @override
   Future<void> saveResult(ResultModel resultModel) async {
     final String _currentUserId = _firebaseAuth.currentUser!.uid;
     final Map<String, dynamic> _newResult = resultModel.toJson();
-    await instance
+
+    final _collection = instance
         .collection('users')
         .doc('$_currentUserId')
-        .collection('results')
-        .add(_newResult);
+        .collection('results');
+
+    try {
+      await _collection.doc("results").update({
+        'list': FieldValue.arrayUnion([_newResult])
+      });
+    } catch (err) {
+      log(err.toString());
+      await _collection.doc('results').set({
+        'list': [_newResult]
+      });
+    }
   }
 }

@@ -1,12 +1,14 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
-import 'package:text_mutator/core/constants/enums.dart';
-import 'package:text_mutator/core/error/exceptions/exceptions.dart';
-import 'package:text_mutator/core/network/connection_checker.dart';
-import 'package:text_mutator/core/error/failures/failure.dart';
-import 'package:text_mutator/functions/text_load/data/datasources/network_data_source.dart';
-import 'package:text_mutator/functions/text_load/data/enteties/text_model.dart';
-import 'package:text_mutator/functions/text_load/domain/models/text.dart';
-import 'package:text_mutator/functions/text_load/domain/repsositories/text_repository.dart';
+import '../../../../core/constants/enums.dart';
+import '../../../../core/error/exceptions/exceptions.dart';
+import '../../../../core/network/connection_checker.dart';
+import '../../../../core/error/failures/failure.dart';
+import '../datasources/network_data_source.dart';
+import '../enteties/text_model.dart';
+import '../../domain/models/text.dart';
+import '../../domain/repsositories/text_repository.dart';
 
 class TextRepositoryImpl extends TextRepository {
   // final DatabaseSource _databaseSource;
@@ -57,26 +59,28 @@ class TextRepositoryImpl extends TextRepository {
       return Left(NoConnetionFailure());
     try {
       String _textId = text.id;
+      log('saving...');
+      if (_textId.length < 8)
+        _textId = await _networkTextDataSource.saveText(
+            text, _assignDifficulty(text.textDifficulty));
 
-      //TODO: UNCOMENT WHEN MAKE AUTHENTICATION AVALIABLE
-      // if (_textId.length < 8)
-      //   _textId = await _networkTextDataSource.saveText(
-      //       text, _assignDifficulty(text.textDifficulty));
-
-      return Right(await addSolvedTextId(_textId));
+      log(_textId);
+      // await addSolvedTextId(_textId);
+      await _networkTextDataSource.saveSolvedText(_textId);
+      return Right(null);
     } catch (err) {
       return Left(ServerFailure());
     }
   }
 
-  @override
-  Future<Either<Failure, void>> addSolvedTextId(String id) async {
-    if (!await _connectionChecker.hasConnection)
-      return Left(NoConnetionFailure());
-    try {
-      return Right(await _networkTextDataSource.saveSolvedText(id));
-    } catch (err) {
-      return Left(ServerFailure());
-    }
-  }
+  // @override
+  // Future<Either<Failure, void>> addSolvedTextId(String id) async {
+  //   if (!await _connectionChecker.hasConnection)
+  //     return Left(NoConnetionFailure());
+  //   try {
+  //     return Right(await _networkTextDataSource.saveSolvedText(id));
+  //   } catch (err) {
+  //     return Left(ServerFailure());
+  //   }
+  // }
 }

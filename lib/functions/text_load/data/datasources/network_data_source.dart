@@ -1,6 +1,8 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:text_mutator/core/error/exceptions/exceptions.dart';
-import 'package:text_mutator/functions/text_load/data/enteties/text_model.dart';
+import '../../../../core/error/exceptions/exceptions.dart';
+import '../enteties/text_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class NetworkTextDataSource {
@@ -60,8 +62,9 @@ class NetworkTextDataSourceImpl extends NetworkTextDataSource {
 
   @override
   Future<void> saveSolvedText(String id) async {
+    log(_firebaseAuth.currentUser!.uid);
     await _firebaseFirestore
-        .collection('users/${_firebaseAuth.currentUser!.uid}')
+        .collection('users/${_firebaseAuth.currentUser!.uid}/solvedTexts')
         .add({'id': id});
   }
 }

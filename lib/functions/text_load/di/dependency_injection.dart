@@ -1,10 +1,10 @@
 import 'package:get_it/get_it.dart';
-import 'package:text_mutator/functions/text_load/data/datasources/network_data_source.dart';
-import 'package:text_mutator/functions/text_load/data/respositories/text_repository_impl.dart';
-import 'package:text_mutator/functions/text_load/domain/repsositories/text_repository.dart';
-import 'package:text_mutator/functions/text_load/view/text_load_bloc/text_bloc.dart';
-import 'package:text_mutator/functions/text_load/view/text_validation_bloc/text_validator.dart';
-import 'package:text_mutator/functions/text_load/view/text_validation_bloc/textvalidator_bloc.dart';
+import '../data/datasources/network_data_source.dart';
+import '../data/respositories/text_repository_impl.dart';
+import '../domain/repsositories/text_repository.dart';
+import '../view/text_load_bloc/text_bloc.dart';
+import '../view/text_validation_bloc/text_validator.dart';
+import '../view/text_validation_bloc/textvalidator_bloc.dart';
 
 void initiDependenciesTextLoad() {
   final _get = GetIt.instance;

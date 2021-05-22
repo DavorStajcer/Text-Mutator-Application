@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:text_mutator/functions/text_load/view/text_validation_bloc/text_validator.dart';
+import 'text_validator.dart';
 
 part 'textvalidator_event.dart';
 part 'textvalidator_state.dart';
