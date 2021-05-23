@@ -1,3 +1,4 @@
+import 'package:text_mutator/core/error/exceptions/exceptions.dart';
 import 'package:text_mutator/core/error/failures/failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:text_mutator/core/network/connection_checker.dart';
@@ -41,6 +42,8 @@ class UserDataRetriverImpl extends UserDataRetriver {
       await _userWebDataSource.saveUsername(appUser.username);
       await _userLocalDataSource.saveUsername(appUser.username);
       return Right(null);
+    } on LocalStorageException catch (_) {
+      return Left(UserDataRetrievalFailure());
     } catch (err) {
       return Left(ServerFailure());
     }

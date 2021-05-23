@@ -1,4 +1,7 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:text_mutator/functions/user_data_retrieval/view/user_data_bloc/user_data_bloc.dart';
 
 class TopLayoutText extends StatelessWidget {
   const TopLayoutText({Key? key}) : super(key: key);
@@ -15,15 +18,24 @@ class TopLayoutText extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Hello Ivan.',
-            style: _theme.textTheme.headline1,
-            textAlign: TextAlign.left,
+          BlocBuilder<UserDataBloc, UserDataState>(
+            builder: (context, state) {
+              late final String _username;
+              if (state is UserDataLoaded)
+                _username = state.user.username;
+              else
+                _username = 'user';
+              return AutoSizeText(
+                'Hello $_username.',
+                style: _theme.textTheme.headline1,
+                textAlign: TextAlign.left,
+              );
+            },
           ),
           SizedBox(
             height: 30,
           ),
-          Text(
+          AutoSizeText(
             'Practice reading and learn the better.',
             style: _theme.textTheme.headline2,
             textAlign: TextAlign.left,

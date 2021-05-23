@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:text_mutator/functions/user_data_retrieval/di/dependency_injection.dart';
 import 'core/local_storage_manager/dependency_injection.dart';
 import 'core/network/dependency_injection.dart';
 import 'functions/authenticating_user/di/dependency_injection.dart';
@@ -25,6 +26,7 @@ class DependencyInjector {
 }
 
 void _initializeAllDependencies(SharedPreferences sharedPreferences) {
+  initiDependenciesUserDataRetrieval();
   initiDependenciesAuthenticatingUser();
   initiDependenciesAuthenticationChecker();
   initiDependenciesCoreLocalStorageManager(sharedPreferences);

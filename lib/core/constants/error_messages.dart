@@ -28,3 +28,6 @@ const String ERROR_NO_CONNECTION = 'You are not connected to the internet.';
 const String TEXT_VALIDATION_SHORT = 'Text is too short.';
 const String TEXT_IS_NOT_DIVERSE_ENOUGH =
     'Text is not diverese enough, dont make it too easy.';
+
+const String INPUT_USERNAME_LONG = 'username maximum length of 10';
+const String INPUT_USERNAME_SHORT = 'username minimum length of 3';

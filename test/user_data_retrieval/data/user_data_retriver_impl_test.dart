@@ -3,6 +3,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:text_mutator/core/error/exceptions/exceptions.dart';
 import 'package:text_mutator/core/error/failures/failure.dart';
 import 'package:text_mutator/core/network/connection_checker.dart';
 import 'package:text_mutator/functions/user_data_retrieval/data/datasources/user_local_datasource.dart';
@@ -33,7 +34,7 @@ void main() {
   final String _testUsername = 'awsome_user';
   final AppUser _testUser = AppUser(_testUsername);
 
-  void _arrangeConnection({bool isConnected}) {
+  void _arrangeConnection({bool isConnected = true}) {
     when(_mockConnectionChecker.hasConnection)
         .thenAnswer((_) async => isConnected);
   }
@@ -105,9 +106,9 @@ void main() {
         _arraneLoadUserLocalDataSourceSuccess();
 
         // act
-        final _username = await _userDataRetriverImpl.getUserData();
+        final _res = await _userDataRetriverImpl.getUserData();
         // assert
-        expect(_username, Right(_testUser));
+        expect(_res, Right(_testUser));
       },
     );
 
@@ -139,9 +140,9 @@ void main() {
         _arraneLoadUserLocalDataSourceFail();
         _arraneLoadUserWebDataSourceSuccess();
         // act
-        final _username = await _userDataRetriverImpl.getUserData();
+        final _res = await _userDataRetriverImpl.getUserData();
         // assert
-        expect(_username, Right(_testUser));
+        expect(_res, Right(_testUser));
       },
     );
 
@@ -154,9 +155,9 @@ void main() {
         _arraneLoadUserLocalDataSourceFail();
         _arraneLoadUserWebDataSourceFail();
         // act
-        final _username = await _userDataRetriverImpl.getUserData();
+        final _res = await _userDataRetriverImpl.getUserData();
         // assert
-        expect(_username, Left(UserDataRetrievalFailure()));
+        expect(_res, Left(UserDataRetrievalFailure()));
       },
     );
   });
@@ -169,7 +170,7 @@ void main() {
 
     void _arraneSaveUserWebDataSourceFail() {
       when(_mockUserWebDataSource.saveUsername(_testUsername))
-          .thenAnswer((_) async => null);
+          .thenThrow(UnimplementedError());
     }
 
     void _arraneSaveUserLocalDataSourceSuccess() {
@@ -179,14 +180,14 @@ void main() {
 
     void _arraneSaveUserLocalDataSourceFail() {
       when(_mockUserLocalDataSource.saveUsername(_testUsername))
-          .thenAnswer((_) async => null);
+          .thenThrow(LocalStorageException());
     }
 
     test(
       'should return check if there is connection',
       () async {
         // act
-        await _userDataRetriverImpl.getUserData();
+        await _userDataRetriverImpl.saveUserData(_testUser);
         // assert
         verify(_mockConnectionChecker.hasConnection).called(1);
       },
@@ -198,9 +199,52 @@ void main() {
         // arrange
         _arrangeConnection(isConnected: false);
         // act
-        final _username = await _userDataRetriverImpl.getUserData();
+        final _res = await _userDataRetriverImpl.saveUserData(_testUser);
         // assert
-        expect(_username, Left(NoConnetionFailure()));
+        expect(_res, Left(NoConnetionFailure()));
+      },
+    );
+
+    test(
+      'should save username on web and locally when all succes',
+      () async {
+        // arrange
+        _arrangeConnection();
+        _arraneSaveUserLocalDataSourceSuccess();
+        _arraneSaveUserWebDataSourceSuccess();
+        // act
+        await _userDataRetriverImpl.saveUserData(_testUser);
+        // assert
+        verify(_mockUserWebDataSource.saveUsername(_testUsername)).called(1);
+        verify(_mockUserLocalDataSource.saveUsername(_testUsername)).called(1);
+      },
+    );
+
+    test(
+      'should ONLY call saveUsername on web if web fails, and return ServerFailure',
+      () async {
+        // arrange
+        _arrangeConnection();
+        _arraneSaveUserWebDataSourceFail();
+
+        // act
+        final _res = await _userDataRetriverImpl.saveUserData(_testUser);
+        // assert
+        expect(_res, Left(ServerFailure()));
+      },
+    );
+
+    test(
+      'should return UserDataRetreivalFailure when web savcing passses but local thros LocalStorageException',
+      () async {
+        // arrange
+        _arrangeConnection();
+        _arraneSaveUserWebDataSourceSuccess();
+        _arraneSaveUserLocalDataSourceFail();
+        // act
+        final _res = await _userDataRetriverImpl.saveUserData(_testUser);
+        // assert
+        expect(_res, Left(UserDataRetrievalFailure()));
       },
     );
   });

@@ -7,3 +7,5 @@ const String ROUTE_RESULT_FINISHED_PAGE = "/result_finished_page";
 const String ROUTE_RESULT_PREVIEW_PAGE = "/result_peview_page";
 
 const String ROUTE_AUTHENTICATION_PAGE = "/authentication_page";
+const String ROUTE_USERNAME_INPUT_PAGE = "/username_input_page";
+const String ROUTE_WELCOME_PAGE = "/welcome_page";

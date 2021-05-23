@@ -2,9 +2,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'app_button.dart';
 
-void showNotificationDialog(
-    BuildContext context, String text, ThemeData theme) {
-  showDialog(
+Future<T?> showNotificationDialog<T>(
+    BuildContext context, String text, ThemeData theme) async {
+  return showDialog<T>(
     context: context,
     builder: (ctx) => Dialog(
       shape: RoundedRectangleBorder(
