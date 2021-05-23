@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
 import '../../../../core/error/failures/failure.dart';
@@ -45,8 +43,6 @@ class ResultRepositoryImpl extends ResultRepository {
         mutatedText.resultDifficulty,
         '',
       );
-
-      log(_resultModel.score.toString());
 
       return _resultModel;
     });

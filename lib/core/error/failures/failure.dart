@@ -17,6 +17,11 @@ class NoConnetionFailure extends Failure {
   List<Object> get props => [];
 }
 
+class UserDataRetrievalFailure extends Failure {
+  @override
+  List<Object> get props => [];
+}
+
 class UserAuthenticationFailure extends Failure {
   final String message;
 

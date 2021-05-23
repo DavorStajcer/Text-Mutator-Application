@@ -18,18 +18,14 @@ class NetworkResultDataSourceImpl extends NetworkResultDataSource {
   @override
   Future<List<Map<String, dynamic>>> fetchResults() async {
     final String _currentUserId = _firebaseAuth.currentUser!.uid;
-    final DocumentSnapshot _documentSnapshot = await instance
-        .collection('users')
-        .doc('$_currentUserId')
-        .collection('results')
-        .doc('results')
-        .get();
+    final DocumentSnapshot _documentSnapshot =
+        await instance.collection('users').doc('$_currentUserId').get();
 
     //     .map((e) =>
     //         (e.data() as Map<String, dynamic>)..putIfAbsent('id', () => e.id))
     //     .toList();
 
-    return (_documentSnapshot.data() as Map<String, dynamic>)['list'];
+    return (_documentSnapshot.data() as Map<String, dynamic>)['results'];
   }
 
   @override
@@ -37,19 +33,16 @@ class NetworkResultDataSourceImpl extends NetworkResultDataSource {
     final String _currentUserId = _firebaseAuth.currentUser!.uid;
     final Map<String, dynamic> _newResult = resultModel.toJson();
 
-    final _collection = instance
-        .collection('users')
-        .doc('$_currentUserId')
-        .collection('results');
+    final _doc = instance.collection('users').doc('$_currentUserId');
 
     try {
-      await _collection.doc("results").update({
-        'list': FieldValue.arrayUnion([_newResult])
+      await _doc.update({
+        'results': FieldValue.arrayUnion([_newResult])
       });
     } catch (err) {
       log(err.toString());
-      await _collection.doc('results').set({
-        'list': [_newResult]
+      await _doc.set({
+        'results': [_newResult]
       });
     }
   }

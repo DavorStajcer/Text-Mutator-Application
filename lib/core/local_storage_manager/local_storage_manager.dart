@@ -2,12 +2,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 const String SHARED_PREF_THEME_KEY = 'isLight';
 const String SHARED_PREF_LAST_SOLVED_DATE_KEY = 'lastSolvedData';
+const String SHARED_PREF_USERNAME_KEY = 'lastSolvedData';
 
 abstract class LocalStorageManager {
   bool getUserThemeOptions();
   Future<bool> saveUserThemeOptions(bool isLight);
   Future<bool> saveLastSolvedDate();
   Future<bool> getIsLastSolvedDateMoreThenOneDay();
+
+  Future<bool> saveUsername(String username);
+  Future<String?> getUsername();
 }
 
 class LocalStorageManagerImpl extends LocalStorageManager {
@@ -41,5 +45,16 @@ class LocalStorageManagerImpl extends LocalStorageManager {
     if (_lastSolvedDate.month != _todayDate.month) return false;
 
     return (_todayDate.day - _lastSolvedDate.day < 2);
+  }
+
+  @override
+  Future<String?> getUsername() async {
+    return sharedPreferences.getString(SHARED_PREF_USERNAME_KEY);
+  }
+
+  @override
+  Future<bool> saveUsername(String username) async {
+    return await sharedPreferences.setString(
+        SHARED_PREF_USERNAME_KEY, username);
   }
 }

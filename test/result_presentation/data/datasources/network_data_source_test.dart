@@ -16,8 +16,8 @@ class MockCollectionReference extends Mock
 class MockDocumentReference extends Mock
     implements DocumentReference<Map<String, dynamic>> {}
 
-class MockQueryDocumentSnapshot extends Mock
-    implements QueryDocumentSnapshot<Map<String, dynamic>> {}
+class MockDocumentSnapshot extends Mock
+    implements DocumentSnapshot<Map<String, dynamic>> {}
 
 class MockQuerySnapshot extends Mock
     implements QuerySnapshot<Map<String, dynamic>> {}
@@ -25,7 +25,7 @@ class MockQuerySnapshot extends Mock
 void main() {
   MockFirestore _mockFirestore;
   MockFirebaseAuth _mockFirebaseAuth;
-  MockQueryDocumentSnapshot mockQueryDocumentSnapshot;
+  MockDocumentSnapshot mockDocumentSnapshot;
   MockCollectionReference mockCollectionReference;
   MockDocumentReference mockDocumentReference;
   MockQuerySnapshot mockQuerySnapshot;
@@ -43,7 +43,7 @@ void main() {
     // _mockFirebaseAuth = MockFirebaseAuth();
     mockCollectionReference = MockCollectionReference();
     mockDocumentReference = MockDocumentReference();
-    mockQueryDocumentSnapshot = MockQueryDocumentSnapshot();
+    mockDocumentSnapshot = MockDocumentSnapshot();
     mockQuerySnapshot = MockQuerySnapshot();
 
     _mockFirebaseAuth = MockFirebaseAuth();
@@ -65,7 +65,7 @@ void main() {
   ];
 
   final Map<String, dynamic> _testResultMap = {
-    'list': [
+    'results': [
       {
         'mutatedWords': 4,
         'wrongWords': 2,
@@ -79,12 +79,10 @@ void main() {
   void _setupFirestoreLoad() {
     when(_mockFirestore.collection(any)).thenReturn(mockCollectionReference);
     when(mockCollectionReference.doc(any)).thenReturn(mockDocumentReference);
-    when(mockDocumentReference.collection(any))
-        .thenReturn(mockCollectionReference);
-    when(mockDocumentReference.get())
-        .thenAnswer((_) async => mockQueryDocumentSnapshot);
 
-    when(mockQueryDocumentSnapshot.data()).thenReturn(_testResultMap);
+    when(mockDocumentReference.get())
+        .thenAnswer((_) async => mockDocumentSnapshot);
+    when(mockDocumentSnapshot.data()).thenReturn(_testResultMap);
   }
 
   test(

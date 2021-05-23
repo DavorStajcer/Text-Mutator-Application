@@ -27,7 +27,6 @@ class MockQuerySnapshot extends Mock
 
 void main() {
   MockFirestore _mockFirestore;
-  MockFirebaseAuth _mockFirebaseAuth;
 
   MockQueryDocumentSnapshot mockQueryDocumentSnapshot;
   MockCollectionReference mockCollectionReference;

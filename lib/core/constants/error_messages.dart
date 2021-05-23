@@ -15,6 +15,9 @@ const String ERROR_AUTH_UNKNOWN = 'Uknown error occured.';
 const String ERROR_TEXT_LOAD_ALL_TEXT_READ =
     'All available text read from this category, try another one.';
 
+const String ERROR_RETRIEVING_USER_DATA =
+    'An error occurred while retrieving user data.';
+
 //!network
 const String ERROR_SERVER_FAILURE =
     'Error occured while communicating with the server.';
