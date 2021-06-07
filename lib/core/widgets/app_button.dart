@@ -8,17 +8,23 @@ class AppButton extends StatelessWidget {
     required this.onTap,
     this.autoSizeGroup,
     this.widthSizeFactor = 2.2,
+    this.isAvailable = true,
   }) : super(key: key);
 
   final String text;
   final Function() onTap;
   final AutoSizeGroup? autoSizeGroup;
   final double widthSizeFactor;
+  final bool isAvailable;
 
   @override
   Widget build(BuildContext context) {
     final ThemeData _theme = Theme.of(context);
     final Size _deviceSize = MediaQuery.of(context).size;
+
+    final Color _buttonColor =
+        isAvailable ? _theme.accentColor : _theme.accentColor.withAlpha(100);
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -29,7 +35,7 @@ class AppButton extends StatelessWidget {
             Radius.circular(60),
           ),
           border: Border.all(
-            color: _theme.accentColor,
+            color: _buttonColor,
             width: 3,
           ),
         ),
@@ -41,7 +47,9 @@ class AppButton extends StatelessWidget {
             textAlign: TextAlign.center,
             group: autoSizeGroup,
             style: _theme.textTheme.bodyText1!.copyWith(
-                color: _theme.accentColor, fontWeight: FontWeight.w800),
+              color: _buttonColor,
+              fontWeight: FontWeight.w800,
+            ),
           ),
         ),
       ),

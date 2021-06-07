@@ -16,9 +16,15 @@ class AuthCredentials extends Equatable {
     bool _areAllInputsValid = (this.emailCredential.errorMessage == null &&
         this.passwordCredential.errorMessage == null);
 
-    if (isLogin)
+    _areAllInputsValid = _areAllInputsValid &&
+        this.emailCredential.email.isNotEmpty &&
+        this.passwordCredential.password.isNotEmpty;
+
+    if (!isLogin) {
       _areAllInputsValid = _areAllInputsValid &&
-          this.passwordConfirmCredential.errorMessage == null;
+          this.passwordConfirmCredential.errorMessage == null &&
+          this.passwordConfirmCredential.confirmPassword.isNotEmpty;
+    }
 
     print('form is valid?  :   ' + _areAllInputsValid.toString());
     return _areAllInputsValid;

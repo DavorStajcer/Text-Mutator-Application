@@ -32,40 +32,50 @@ class AuthFormButton extends StatelessWidget {
                 _isLogin ? ROUTE_WELCOME_PAGE : ROUTE_USERNAME_INPUT_PAGE);
         },
         builder: (context, authState) {
+          final bool _areAllInputsValid =
+              _areAllInputFieldsValid(authFormState, _isLogin);
           return authState is AuthLoading
               ? Center(
                   child: CircularProgressIndicator(),
                 )
               : AppButton(
                   text: _isLogin ? 'Login' : ' Signup',
-                  onTap: () {
-                    if (_areAllInputFieldsValid(authFormState, _isLogin)) {
-                      FocusScope.of(context).unfocus();
-                      final String _userEmail =
-                          authFormState.authCredentials.emailCredential.email;
-
-                      final String _userPassword = authFormState
-                          .authCredentials.passwordCredential.password;
-
-                      _isLogin
-                          ? _authenticationBloc.add(
-                              LogIn(
-                                _userEmail,
-                                _userPassword,
-                              ),
-                            )
-                          : _authenticationBloc.add(
-                              SignUp(
-                                _userEmail,
-                                _userPassword,
-                              ),
-                            );
-                    }
-                  },
+                  isAvailable: _areAllInputsValid,
+                  onTap: () => _tryToAuthenticateUser(
+                    _areAllInputsValid,
+                    context,
+                    _authenticationBloc,
+                  ),
                 );
         },
       ),
     );
+  }
+
+  void _tryToAuthenticateUser(bool _areAllInputsValid, BuildContext context,
+      AuthBloc _authenticationBloc) {
+    if (_areAllInputsValid) {
+      FocusScope.of(context).unfocus();
+      final String _userEmail =
+          authFormState.authCredentials.emailCredential.email;
+
+      final String _userPassword =
+          authFormState.authCredentials.passwordCredential.password;
+
+      _isLogin
+          ? _authenticationBloc.add(
+              LogIn(
+                _userEmail,
+                _userPassword,
+              ),
+            )
+          : _authenticationBloc.add(
+              SignUp(
+                _userEmail,
+                _userPassword,
+              ),
+            );
+    }
   }
 
   bool _areAllInputFieldsValid(AuthFormState authFormState, bool isLogin) {

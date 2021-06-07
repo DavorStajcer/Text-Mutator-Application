@@ -7,9 +7,11 @@ abstract class MutateEvent extends Equatable {
 
 class MutateText extends MutateEvent {
   final TextEvaluationModel textEvaluationModel;
+  final bool shouldSave;
 
   const MutateText(
     this.textEvaluationModel,
+    this.shouldSave,
   );
 
   @override

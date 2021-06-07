@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -38,10 +39,14 @@ class MutateBloc extends Bloc<MutateEvent, MutateState> {
       );
 
       if (_result is MutateLoaded) {
+        log(
+          'mutation: ' + event.textEvaluationModel.text.id,
+        );
         final _textSaveEither = await _textRepository.saveText(TextModel(
-            event.textEvaluationModel.text.text,
-            '',
-            event.textEvaluationModel.text.textDifficulty));
+          event.textEvaluationModel.text.text,
+          event.textEvaluationModel.text.id,
+          event.textEvaluationModel.text.textDifficulty,
+        ));
 
         yield _textSaveEither.fold(
           (failure) => MutateError(_errorMessage(failure)),

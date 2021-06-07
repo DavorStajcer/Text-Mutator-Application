@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:text_mutator/functions/user_data_retrieval/view/pages/welcome_page.dart';
 import 'functions/authenticating_user/view/pages/authetication_page.dart';
 import 'functions/authetication_checker/view/authentication_checker_bloc/authentication_checker_bloc.dart';
 import 'functions/home/view/pages/home_page.dart';
@@ -68,7 +69,7 @@ class MyApp extends StatelessWidget {
                       AuthenticationCheckerState>(
                     builder: (context, state) {
                       log(state.toString());
-                      if (state is UserAuthenticated) return HomePage();
+                      if (state is UserAuthenticated) return WelcomePage();
                       if (state is UserNotAuthenticated)
                         return AuthenticationPage();
                       return Scaffold(

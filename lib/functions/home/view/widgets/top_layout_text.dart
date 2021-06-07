@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:text_mutator/core/constants/theme.dart';
 
 import '../../../user_data_retrieval/view/user_data_bloc/user_data_bloc.dart';
 
@@ -29,6 +30,7 @@ class TopLayoutText extends StatelessWidget {
               return AutoSizeText(
                 'Hello $_username.',
                 style: _theme.textTheme.headline1,
+                maxLines: 1,
                 textAlign: TextAlign.left,
               );
             },
@@ -36,10 +38,31 @@ class TopLayoutText extends StatelessWidget {
           SizedBox(
             height: 30,
           ),
-          AutoSizeText(
-            'Practice reading and learn the better.',
-            style: _theme.textTheme.headline2,
-            textAlign: TextAlign.left,
+          ConstrainedBox(
+            constraints: BoxConstraints(
+                maxHeight: _deviceSize.height / 4,
+                maxWidth: _deviceSize.width * 0.82),
+            child: AutoSizeText.rich(
+              TextSpan(
+                text: 'Practice reading and learn ',
+                style: _theme.textTheme.headline2,
+                children: [
+                  TextSpan(
+                    text: 'the',
+                    style: _theme.textTheme.headline2!.copyWith(
+                      decoration: TextDecoration.lineThrough,
+                      decorationColor: Colors.red,
+                      decorationStyle: TextDecorationStyle.solid,
+                      decorationThickness: 2.5,
+                      color: FADED_TEXT,
+                    ),
+                  ),
+                  TextSpan(
+                    text: ' better.',
+                  )
+                ],
+              ),
+            ),
           ),
         ],
       ),

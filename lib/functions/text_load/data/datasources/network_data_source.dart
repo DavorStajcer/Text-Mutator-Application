@@ -55,12 +55,18 @@ class NetworkTextDataSourceImpl extends NetworkTextDataSource {
         .doc('users/${_firebaseAuth.currentUser!.uid}')
         .get();
     if (!_res.exists) return [];
-    return (_res.data() as Map<String, dynamic>)['solvedTexts'] as List<String>;
+    if (_res.data() == null) return [];
+
+    final _data = (_res.data() as Map<String, dynamic>);
+
+    return _data['solvedTexts'] == null
+        ? []
+        : (_data['solvedTexts'] as List<dynamic>).cast<String>();
   }
 
   @override
   Future<void> saveSolvedText(String id) async {
-    log(_firebaseAuth.currentUser!.uid);
+    log('user id:' + _firebaseAuth.currentUser!.uid);
     try {
       await _firebaseFirestore
           .doc('users/${_firebaseAuth.currentUser!.uid}')

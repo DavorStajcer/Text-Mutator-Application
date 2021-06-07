@@ -69,7 +69,7 @@ class UserAuthenticatorImpl extends UserAuthenticator {
       log('SIGNING UP');
       final UserCredential _userCredential = await _firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password);
-
+      log('SIGNED UP');
       return Right(null);
     } on FirebaseAuthException catch (err) {
       return Left(UserAuthenticationFailure(_pickFailureMessage(err.code)));

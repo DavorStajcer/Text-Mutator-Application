@@ -84,7 +84,7 @@ void main() {
         _setupSavingSuccess();
         return MutateBloc(_mockMutatedTextRepository, _mockTextRepository);
       },
-      act: (bl) => bl.add(MutateText(_testTextEvaluationModel)),
+      act: (bl) => bl.add(MutateText(_testTextEvaluationModel, true)),
       expect: () =>
           [MutateLoading(), MutateLoaded(mutateText: _testMutatedText)],
     );
@@ -99,7 +99,7 @@ void main() {
         return MutateBloc(_mockMutatedTextRepository, _mockTextRepository);
       },
       act: (bl) => bl
-        ..add(MutateText(_testTextEvaluationModel))
+        ..add(MutateText(_testTextEvaluationModel, true))
         ..add(UpdateWord(_testCleanWord)),
       expect: () => [
         MutateLoading(),
@@ -107,6 +107,23 @@ void main() {
         MutateLoading(),
         MutateLoaded(mutateText: _testMutatedTextChanged)
       ],
+    );
+
+    blocTest(
+      'should not save text when shouldSave flag is false',
+      build: () {
+        _setupMutatingSuccess();
+
+        when(_mockMutatedTextRepository.mutatedText)
+            .thenReturn(_testMutatedTextChanged);
+        return MutateBloc(_mockMutatedTextRepository, _mockTextRepository);
+      },
+      act: (bl) => bl..add(MutateText(_testTextEvaluationModel, false)),
+      expect: () => [
+        MutateLoading(),
+        MutateLoaded(mutateText: _testMutatedText),
+      ],
+      verify: (_) => verifyZeroInteractions(_mockTextRepository),
     );
   });
 
@@ -118,7 +135,7 @@ void main() {
         _setupSavingFail(ServerFailure());
         return MutateBloc(_mockMutatedTextRepository, _mockTextRepository);
       },
-      act: (bl) => bl.add(MutateText(_testTextEvaluationModel)),
+      act: (bl) => bl.add(MutateText(_testTextEvaluationModel, true)),
       expect: () => [MutateLoading(), MutateError(ERROR_SERVER_FAILURE)],
     );
 
@@ -129,7 +146,7 @@ void main() {
         _setupSavingFail(NoConnetionFailure());
         return MutateBloc(_mockMutatedTextRepository, _mockTextRepository);
       },
-      act: (bl) => bl.add(MutateText(_testTextEvaluationModel)),
+      act: (bl) => bl.add(MutateText(_testTextEvaluationModel, true)),
       expect: () => [MutateLoading(), MutateError(ERROR_NO_CONNECTION)],
     );
 
@@ -140,7 +157,7 @@ void main() {
         _setupSavingSuccess();
         return MutateBloc(_mockMutatedTextRepository, _mockTextRepository);
       },
-      act: (bl) => bl.add(MutateText(_testTextEvaluationModel)),
+      act: (bl) => bl.add(MutateText(_testTextEvaluationModel, true)),
       expect: () => [MutateLoading(), MutateError(ERROR_SERVER_FAILURE)],
     );
 
@@ -151,7 +168,7 @@ void main() {
         _setupSavingSuccess();
         return MutateBloc(_mockMutatedTextRepository, _mockTextRepository);
       },
-      act: (bl) => bl.add(MutateText(_testTextEvaluationModel)),
+      act: (bl) => bl.add(MutateText(_testTextEvaluationModel, true)),
       expect: () => [MutateLoading(), MutateError(ERROR_NO_CONNECTION)],
     );
   });

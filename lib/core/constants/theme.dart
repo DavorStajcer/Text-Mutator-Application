@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+const Color FADED_TEXT = Color.fromRGBO(112, 112, 112, 0.66);
+
 //!light
 const Color LIGHT_PRIMARY_COLOR = Color.fromRGBO(252, 252, 252, 1);
 const Color LIGHT_TEXT_COLOR = Color.fromRGBO(68, 68, 68, 1);

@@ -1,7 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:text_mutator/functions/text_load/view/text_load_bloc/text_bloc.dart';
 import '../../../../core/widgets/dialog.dart';
 import '../../../../core/constants/pages.dart';
 import '../../../../core/widgets/app_button.dart';
@@ -20,6 +19,7 @@ class TextReadPage extends StatelessWidget {
     final ProgressAnimationCubit _progressAnimationCubit =
         BlocProvider.of<ProgressAnimationCubit>(context);
     final MutateBloc _mutateBloc = BlocProvider.of<MutateBloc>(context);
+    final TextBloc _textBloc = BlocProvider.of<TextBloc>(context);
 
     return BlocBuilder<TextEvaluationBloc, TextEvaluationState>(
       builder: (context, evaluationState) {
@@ -65,6 +65,7 @@ class TextReadPage extends StatelessWidget {
                     onTap: () => _mutateBloc.add(
                       MutateText(
                         evaluationState.textEvaluationModel,
+                        _textBloc.state is! TextLoaded,
                       ),
                     ),
                     widthSizeFactor: 2.8,

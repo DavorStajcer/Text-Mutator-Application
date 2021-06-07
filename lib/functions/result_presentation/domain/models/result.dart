@@ -29,8 +29,6 @@ class Result extends Equatable {
     _tempScore = (1 - _tempScore) * 100;
     _tempScore = max(_tempScore, 0);
     score = _tempScore;
-    print('SCORE: $score');
-    print('SCORE: $_tempScore');
   }
 
   @override

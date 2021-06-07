@@ -34,7 +34,7 @@ void main() {
   );
 
   blocTest(
-    'should emit AuthFormChanged with correct credentials when password cofnirmed changed',
+    'should emit AuthFormChanged with correct credentials when password  changed',
     build: () => AuthFormBloc(),
     act: (bloc) => bloc.add(PasswordChanged(_testPassword)),
     wait: Duration(milliseconds: 120),
@@ -42,13 +42,13 @@ void main() {
       AuthFormChanged(AuthCredentials(
         emailCredential: EmailCredential.initial(),
         passwordCredential: _testPassCres,
-        passwordConfirmCredential: PasswordConfirmCredential.initial(),
+        passwordConfirmCredential: PasswordConfirmCredential(_testPassword, ''),
       ))
     ],
   );
 
   blocTest(
-    'should emit AuthFormChanged with correct credentials when password changed',
+    'should emit AuthFormChanged with correct credentials when password confirm changed',
     build: () => AuthFormBloc(),
     wait: Duration(milliseconds: 120),
     act: (bloc) =>

@@ -35,8 +35,17 @@ class AuthFormBloc extends Bloc<AuthFormEvent, AuthFormState> {
       yield AuthFormChanged(state.authCredentials
           .copyWith(emailCredential: EmailCredential(event.email)));
     } else if (event is PasswordChanged) {
-      yield AuthFormChanged(state.authCredentials
-          .copyWith(passwordCredential: PasswordCredential(event.password)));
+      yield AuthFormChanged(
+        state.authCredentials.copyWith(
+          passwordCredential: PasswordCredential(
+            event.password,
+          ),
+          passwordConfirmCredential: PasswordConfirmCredential(
+            event.password,
+            state.authCredentials.passwordConfirmCredential.confirmPassword,
+          ),
+        ),
+      );
     } else if (event is PasswordConfirmChanged) {
       yield AuthFormChanged(state.authCredentials.copyWith(
           passwordConfirmCredential: PasswordConfirmCredential(

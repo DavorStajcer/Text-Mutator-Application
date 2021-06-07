@@ -30,12 +30,14 @@ class TextRepositoryImpl extends TextRepository {
 
       final Map<String, dynamic> _text =
           await _networkTextDataSource.fetchText(_textDifficulty, _solvedIds);
+
       final TextModel _textModel = TextModel.fromJson(_text);
 
       return Right(_textModel);
     } on AllTextsSolvedException {
       return Left(AllTextsReadFailure());
     } catch (err) {
+      log(err.toString());
       return Left(ServerFailure());
     }
   }
@@ -55,33 +57,25 @@ class TextRepositoryImpl extends TextRepository {
   }
 
   @override
-  Future<Either<Failure, void>> saveText(TextModel text) async {
+  Future<Either<Failure, void>> saveText(
+    TextModel text,
+  ) async {
     if (!await _connectionChecker.hasConnection)
       return Left(NoConnetionFailure());
     try {
       String _textId = text.id;
-      log('saving...');
-      if (_textId.length < 8)
+
+      log('text id:' + _textId);
+      if (_textId.length < 8) {
+        log('saving text');
         _textId = await _networkTextDataSource.saveText(
             text, _assignDifficulty(text.textDifficulty));
+      }
 
-      log(_textId);
-      // await addSolvedTextId(_textId);
       await _networkTextDataSource.saveSolvedText(_textId);
       return Right(null);
     } catch (err) {
       return Left(ServerFailure());
     }
   }
-
-  // @override
-  // Future<Either<Failure, void>> addSolvedTextId(String id) async {
-  //   if (!await _connectionChecker.hasConnection)
-  //     return Left(NoConnetionFailure());
-  //   try {
-  //     return Right(await _networkTextDataSource.saveSolvedText(id));
-  //   } catch (err) {
-  //     return Left(ServerFailure());
-  //   }
-  // }
 }

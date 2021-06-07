@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import '../../../../core/constants/enums.dart';
@@ -16,6 +18,9 @@ class TextEvaluationBloc
     TextEvaluationEvent event,
   ) async* {
     if (event is TextEvaluationStarted) {
+      log(
+        'evalutation: ' + event.text.id,
+      );
       yield TextEvaluationLoaded(
           TextEvaluationModel(event.text, 1, false, false));
     } else if (event is TextMutationsChanged) {

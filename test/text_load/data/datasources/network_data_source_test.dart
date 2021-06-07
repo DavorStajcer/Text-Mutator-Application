@@ -34,7 +34,7 @@ void main() {
   MockFirebaseAuth mockFirebaseAuth;
   NetworkTextDataSourceImpl _networkTextDataSource;
 
-  setUp(() {
+  setUpAll(() {
     _mockFirestore = MockFirestore();
     mockCollectionReference = MockCollectionReference();
     mockDocumentReference = MockDocumentReference();
@@ -57,10 +57,14 @@ void main() {
     when(mockQueryDocumentSnapshot.data()).thenReturn(_testTextMap);
   }
 
-  void _setupSave() {
+  void _setUpSave(
+      MockFirestore _mockFirestore,
+      MockCollectionReference mockCollectionReference,
+      TextModel _testTextModel,
+      MockDocumentReference mockDocumentReference) {
     when(_mockFirestore.collection(any)).thenReturn(mockCollectionReference);
-    when(mockCollectionReference.add(_testTextMap))
-        .thenAnswer((realInvocation) async => mockDocumentReference);
+    when(mockCollectionReference.add(_testTextModel.toJson()))
+        .thenAnswer((_) async => mockDocumentReference);
   }
 
   test(
@@ -79,11 +83,12 @@ void main() {
     'should call add with right parameters',
     () async {
       // arrange
-      _setupSave();
+      _setUpSave(_mockFirestore, mockCollectionReference, _testTextModel,
+          mockDocumentReference);
       // act
       await _networkTextDataSource.saveText(_testTextModel, 'easy');
       // assert
-      verify(mockCollectionReference.add(_testTextMap)).called(1);
+      verify(mockCollectionReference.add(_testTextModel.toJson())).called(1);
     },
   );
 }

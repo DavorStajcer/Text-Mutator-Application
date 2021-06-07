@@ -11,8 +11,7 @@ class AuthenticationCheckerBloc
     extends Bloc<AuthenticationCheckerEvent, AuthenticationCheckerState> {
   AuthenticationCheckerBloc(FirebaseAuth firebaseAuth)
       : super(AuthenticationCheckerInitial()) {
-    firebaseAuth
-        .signOut(); //TODO: REMOVE THIS, ONLY FOR CONVINIENCE WHILE DEVELOPING
+    // firebaseAuth.signOut();
     if (firebaseAuth.currentUser != null)
       this.add(AuthenticationStateChanged(true));
 

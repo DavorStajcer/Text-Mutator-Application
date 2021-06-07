@@ -34,8 +34,10 @@ Widget buildSelectableText(
                   style: e.isSelected
                       ? defaultStyle!.copyWith(
                           decoration: TextDecoration.lineThrough,
-                          color: LIGHT_WRONGLY_SELECTED_COLOR,
-                          fontSize: defaultStyle.fontSize! - 2,
+                          decorationColor: DARK_WRONGLY_SELECTED_COLOR,
+                          decorationStyle: TextDecorationStyle.solid,
+                          decorationThickness: 2.5,
+                          color: FADED_TEXT,
                         )
                       : defaultStyle,
                   recognizer: TapGestureRecognizer()
