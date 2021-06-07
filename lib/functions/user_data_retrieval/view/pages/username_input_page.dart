@@ -1,13 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:text_mutator/core/constants/pages.dart';
-import 'package:text_mutator/core/widgets/app_button.dart';
-import 'package:text_mutator/core/widgets/dialog.dart';
-import 'package:text_mutator/functions/authenticating_user/view/widgets/auth_input_form/auth_input_field.dart';
-import 'package:text_mutator/functions/user_data_retrieval/domain/models/app_user.dart';
-import 'package:text_mutator/functions/user_data_retrieval/view/user_data_bloc/user_data_bloc.dart';
-import 'package:text_mutator/functions/user_data_retrieval/view/user_data_validator_cubit/user_data_validator_cubit.dart';
+import '../../../../core/constants/pages.dart';
+import '../../../../core/widgets/app_button.dart';
+import '../../../../core/widgets/dialog.dart';
+import '../../../authenticating_user/view/widgets/auth_input_form/auth_input_field.dart';
+import '../../domain/models/app_user.dart';
+import '../user_data_bloc/user_data_bloc.dart';
+import '../user_data_validator_cubit/user_data_validator_cubit.dart';
 
 class UsernameInputPage extends StatelessWidget {
   const UsernameInputPage({Key? key}) : super(key: key);

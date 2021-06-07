@@ -15,8 +15,6 @@ void main() {
   MockUserDataRetriver _mockUserDataRetriver;
   MockFirebaseAuth _mockFirebaseAuth;
 
-  final String _testEmail = 'sljivica@gmail.com';
-  final String _testPassword = 'jaka_sifra';
   final String _testUsername = 'awsome_user';
 
   final AppUser _testUser = AppUser(_testUsername);
@@ -156,6 +154,18 @@ void main() {
         final _res = await _userRepositoryImpl.saveUserData(_testUser);
         // assert
         expect(_res, Right(null));
+      },
+    );
+
+    test(
+      'should return Left(failure) if saving returns failure',
+      () async {
+        // arrange
+        _setupUserDataSavingFailure(NoConnetionFailure());
+        // act
+        final _res = await _userRepositoryImpl.saveUserData(_testUser);
+        // assert
+        expect(_res, Left(NoConnetionFailure()));
       },
     );
   });

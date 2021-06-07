@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:text_mutator/core/constants/error_messages.dart';
-import 'package:text_mutator/core/error/failures/failure.dart';
-import 'package:text_mutator/functions/user_data_retrieval/domain/models/app_user.dart';
-import 'package:text_mutator/functions/user_data_retrieval/domain/repositories/user_repository.dart';
+import '../../../../core/constants/error_messages.dart';
+import '../../../../core/error/failures/failure.dart';
+import '../../domain/models/app_user.dart';
+import '../../domain/repositories/user_repository.dart';
 
 part 'user_data_event.dart';
 part 'user_data_state.dart';

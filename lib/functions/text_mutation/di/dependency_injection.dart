@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+
 import '../data/datasources/network_data_source.dart';
 import '../data/repositories/mutated_text_repository_impl.dart';
 import '../domain/repositories/mutated_text_repository.dart';

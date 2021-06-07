@@ -1,8 +1,8 @@
-import 'package:vector_math/vector_math.dart' as math;
 import 'dart:ui' as ui;
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:vector_math/vector_math.dart' as math;
 
 class CircularDataRepresentationWidget extends StatelessWidget {
   final int data;

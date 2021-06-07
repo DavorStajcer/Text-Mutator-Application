@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:text_mutator/functions/authetication_checker/view/authentication_checker_bloc/authentication_checker_bloc.dart';
-import 'package:text_mutator/functions/authetication_checker/view/authetication_action_cubit/authentication_action_cubit.dart';
+import '../view/authentication_checker_bloc/authentication_checker_bloc.dart';
+import '../view/authetication_action_cubit/authentication_action_cubit.dart';
 import '../view/auth_form_bloc/auth_form_bloc.dart';
 
 void initiDependenciesAuthenticationChecker() {

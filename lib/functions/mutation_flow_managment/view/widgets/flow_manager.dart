@@ -2,14 +2,14 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import '../../../how_it_works_insatructions/view/instructions_cubit/instructions_cubit_cubit.dart';
+
 import '../../../how_it_works_insatructions/pages/how_it_works_page.dart';
-import '../progress_animation_cubit/progress_animation_cubit.dart';
-import 'progress_indicator/progress_indicator.dart';
+import '../../../how_it_works_insatructions/view/instructions_cubit/instructions_cubit_cubit.dart';
 import '../../../text_evaluation/view/pages/text_evaluation_page.dart';
 import '../../../text_evaluation/view/pages/text_read_page.dart';
 import '../../../text_load/view/pages/text_load_page.dart';
-import '../../../text_load/view/text_load_bloc/text_bloc.dart';
+import '../progress_animation_cubit/progress_animation_cubit.dart';
+import 'progress_indicator/progress_indicator.dart';
 
 class FlowManager extends StatefulWidget {
   FlowManager({Key? key}) : super(key: key);

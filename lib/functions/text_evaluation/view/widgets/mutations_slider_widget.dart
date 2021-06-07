@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+
 import '../text_evaluation_bloc/textevaluation_bloc.dart';
 
 class MutationsSliderWidget extends StatelessWidget {
@@ -9,7 +10,7 @@ class MutationsSliderWidget extends StatelessWidget {
     required TextEvaluationBloc textEvaluationBloc,
     required this.maximumSliderValue,
     required this.currentSliderValue,
-  })   : _theme = theme,
+  })  : _theme = theme,
         _textEvaluationBloc = textEvaluationBloc,
         super(key: key);
 

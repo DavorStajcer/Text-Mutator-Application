@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:text_mutator/functions/user_data_retrieval/domain/models/app_user.dart';
-import 'package:text_mutator/core/error/failures/failure.dart';
+import '../../domain/models/app_user.dart';
+import '../../../../core/error/failures/failure.dart';
 import 'package:dartz/dartz.dart';
-import 'package:text_mutator/functions/user_data_retrieval/domain/repositories/user_repository.dart';
-import 'package:text_mutator/functions/user_data_retrieval/domain/user_data_retriever.dart';
+import '../../domain/repositories/user_repository.dart';
+import '../../domain/user_data_retriever.dart';
 
 class UserRepositoryImpl extends UserDataRepository {
   final FirebaseAuth _firebaseAuth;

@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:text_mutator/core/widgets/dialog.dart';
+import '../../../../core/widgets/dialog.dart';
 import '../../../../core/constants/pages.dart';
 import '../../../../core/widgets/app_button.dart';
 import '../../../result_presentation/view/result_bloc/result_bloc.dart';

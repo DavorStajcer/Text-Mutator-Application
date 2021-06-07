@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:text_mutator/functions/authetication_checker/view/authetication_action_cubit/authentication_action_cubit.dart';
+
+import '../../../../authetication_checker/view/auth_form_bloc/auth_form_bloc.dart';
+import '../../../../authetication_checker/view/authetication_action_cubit/authentication_action_cubit.dart';
+import '../auth_text_button.dart';
 import 'auth_form_button.dart';
 import 'auth_input_field.dart';
 import 'confirm_password_field_animation.dart';
-import '../auth_text_button.dart';
-import '../../../../authetication_checker/view/auth_form_bloc/auth_form_bloc.dart';
 
 class AuthenticationInputForm extends StatefulWidget {
   const AuthenticationInputForm({Key? key, required this.theme})

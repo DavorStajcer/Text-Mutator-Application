@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:text_mutator/functions/user_data_retrieval/domain/models/app_user.dart';
-import 'package:text_mutator/functions/user_data_retrieval/domain/user_data_validator.dart';
+import '../../domain/models/app_user.dart';
+import '../../domain/user_data_validator.dart';
 
 part 'user_data_validator_state.dart';
 

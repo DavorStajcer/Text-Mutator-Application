@@ -1,14 +1,15 @@
 import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
+
 import '../../../../core/constants/enums.dart';
 import '../../../../core/error/exceptions/exceptions.dart';
-import '../../../../core/network/connection_checker.dart';
 import '../../../../core/error/failures/failure.dart';
-import '../datasources/network_data_source.dart';
-import '../enteties/text_model.dart';
+import '../../../../core/network/connection_checker.dart';
 import '../../domain/models/text.dart';
 import '../../domain/repsositories/text_repository.dart';
+import '../datasources/network_data_source.dart';
+import '../enteties/text_model.dart';
 
 class TextRepositoryImpl extends TextRepository {
   // final DatabaseSource _databaseSource;

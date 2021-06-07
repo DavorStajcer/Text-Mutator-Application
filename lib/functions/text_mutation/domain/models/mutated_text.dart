@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+
 import 'word/clean_word.dart';
 import 'word/mutated_word.dart';
 

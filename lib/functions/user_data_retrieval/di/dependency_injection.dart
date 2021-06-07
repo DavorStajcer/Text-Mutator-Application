@@ -1,14 +1,14 @@
 import 'package:get_it/get_it.dart';
-import 'package:text_mutator/functions/user_data_retrieval/data/datasources/user_local_datasource.dart';
-import 'package:text_mutator/functions/user_data_retrieval/data/datasources/user_web_datasource.dart';
-import 'package:text_mutator/functions/user_data_retrieval/data/repositories/user_repository_impl.dart';
-import 'package:text_mutator/functions/user_data_retrieval/data/user_data_retriver_impl.dart';
-import 'package:text_mutator/functions/user_data_retrieval/data/user_data_validator_impl.dart';
-import 'package:text_mutator/functions/user_data_retrieval/domain/repositories/user_repository.dart';
-import 'package:text_mutator/functions/user_data_retrieval/domain/user_data_retriever.dart';
-import 'package:text_mutator/functions/user_data_retrieval/domain/user_data_validator.dart';
-import 'package:text_mutator/functions/user_data_retrieval/view/user_data_bloc/user_data_bloc.dart';
-import 'package:text_mutator/functions/user_data_retrieval/view/user_data_validator_cubit/user_data_validator_cubit.dart';
+import '../data/datasources/user_local_datasource.dart';
+import '../data/datasources/user_web_datasource.dart';
+import '../data/repositories/user_repository_impl.dart';
+import '../data/user_data_retriver_impl.dart';
+import '../data/user_data_validator_impl.dart';
+import '../domain/repositories/user_repository.dart';
+import '../domain/user_data_retriever.dart';
+import '../domain/user_data_validator.dart';
+import '../view/user_data_bloc/user_data_bloc.dart';
+import '../view/user_data_validator_cubit/user_data_validator_cubit.dart';
 
 void initiDependenciesUserDataRetrieval() {
   final _get = GetIt.instance;

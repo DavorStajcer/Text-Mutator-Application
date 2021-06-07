@@ -1,9 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:text_mutator/core/constants/pages.dart';
-import 'package:text_mutator/core/widgets/dialog.dart';
-import 'package:text_mutator/functions/user_data_retrieval/view/user_data_bloc/user_data_bloc.dart';
+import '../../../../core/constants/pages.dart';
+import '../../../../core/widgets/dialog.dart';
+import '../user_data_bloc/user_data_bloc.dart';
 
 class WelcomePage extends StatefulWidget {
   final bool isDataAllreadyLoaded;

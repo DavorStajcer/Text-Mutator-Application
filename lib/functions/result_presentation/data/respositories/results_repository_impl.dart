@@ -1,14 +1,15 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
+
 import '../../../../core/error/failures/failure.dart';
 import '../../../../core/network/connection_checker.dart';
-import '../datasources/network_data_source.dart';
-import '../enteties/result_model.dart';
-import '../../domain/repositories/result_respository.dart';
 import '../../../text_mutation/domain/models/mutated_text.dart';
-import '../../domain/models/result.dart';
 import '../../../text_mutation/domain/models/word/clean_word.dart';
 import '../../../text_mutation/domain/models/word/mutated_word.dart';
+import '../../domain/models/result.dart';
+import '../../domain/repositories/result_respository.dart';
+import '../datasources/network_data_source.dart';
+import '../enteties/result_model.dart';
 
 class ResultRepositoryImpl extends ResultRepository {
   //final DatabaseSource _databaseSource;

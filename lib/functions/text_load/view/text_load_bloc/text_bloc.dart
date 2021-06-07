@@ -1,8 +1,7 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+
 import '../../../../core/constants/enums.dart';
 import '../../../../core/constants/error_messages.dart';
 import '../../../../core/error/failures/failure.dart';
@@ -10,6 +9,7 @@ import '../../data/enteties/text_model.dart';
 import '../../domain/models/text.dart';
 import '../../domain/repsositories/text_repository.dart';
 import '../text_validation_bloc/textvalidator_bloc.dart';
+
 part 'text_event.dart';
 part 'text_state.dart';
 

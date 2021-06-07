@@ -65,7 +65,7 @@ class NetworkTextDataSourceImpl extends NetworkTextDataSource {
       await _firebaseFirestore
           .doc('users/${_firebaseAuth.currentUser!.uid}')
           .update({
-        'list': FieldValue.arrayUnion([id])
+        'solvedTexts': FieldValue.arrayUnion([id])
       });
     } catch (err) {
       await _firebaseFirestore

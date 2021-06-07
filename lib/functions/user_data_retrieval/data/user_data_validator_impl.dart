@@ -1,5 +1,5 @@
-import 'package:text_mutator/core/constants/error_messages.dart';
-import 'package:text_mutator/functions/user_data_retrieval/domain/user_data_validator.dart';
+import '../../../core/constants/error_messages.dart';
+import '../domain/user_data_validator.dart';
 
 class UserDataValidatorImpl extends UserDataValidator {
   @override

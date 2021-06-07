@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:text_mutator/functions/user_data_retrieval/data/datasources/user_data_source.dart';
+import 'user_data_source.dart';
 
 class UserWebDataSource extends UserDataSource {
   final FirebaseFirestore _firebaseFirestore;

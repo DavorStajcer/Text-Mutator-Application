@@ -1,7 +1,6 @@
 //@dart=2.9
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -76,16 +75,15 @@ void main() {
     },
   );
 
-//**does not recognize that it is called good, for some reason O.o */
-  // test(
-  //   'should call add with right parameters',
-  //   () async {
-  //     // arrange
-  //     _setupSave();
-  //     // act
-  //     await _networkTextDataSource.saveText(_testTextModel, 'easy');
-  //     // assert
-  //     verify(mockCollectionReference.add(_testTextMap)).called(1);
-  //   },
-  // );
+  test(
+    'should call add with right parameters',
+    () async {
+      // arrange
+      _setupSave();
+      // act
+      await _networkTextDataSource.saveText(_testTextModel, 'easy');
+      // assert
+      verify(mockCollectionReference.add(_testTextMap)).called(1);
+    },
+  );
 }

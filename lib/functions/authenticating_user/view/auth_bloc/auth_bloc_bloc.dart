@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+
 import '../../../../core/constants/error_messages.dart';
 import '../../../../core/error/failures/failure.dart';
 import '../../domain/contracts/user_authenticator.dart';

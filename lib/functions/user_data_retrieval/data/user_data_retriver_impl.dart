@@ -1,11 +1,11 @@
-import 'package:text_mutator/core/error/exceptions/exceptions.dart';
-import 'package:text_mutator/core/error/failures/failure.dart';
+import '../../../core/error/exceptions/exceptions.dart';
+import '../../../core/error/failures/failure.dart';
 import 'package:dartz/dartz.dart';
-import 'package:text_mutator/core/network/connection_checker.dart';
-import 'package:text_mutator/functions/user_data_retrieval/data/datasources/user_local_datasource.dart';
-import 'package:text_mutator/functions/user_data_retrieval/data/datasources/user_web_datasource.dart';
-import 'package:text_mutator/functions/user_data_retrieval/domain/models/app_user.dart';
-import 'package:text_mutator/functions/user_data_retrieval/domain/user_data_retriever.dart';
+import '../../../core/network/connection_checker.dart';
+import 'datasources/user_local_datasource.dart';
+import 'datasources/user_web_datasource.dart';
+import '../domain/models/app_user.dart';
+import '../domain/user_data_retriever.dart';
 
 class UserDataRetriverImpl extends UserDataRetriver {
   final UserWebDataSource _userWebDataSource;

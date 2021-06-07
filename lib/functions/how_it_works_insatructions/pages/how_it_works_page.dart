@@ -1,13 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../core/constants/pages.dart';
 import '../../../core/constants/texts.dart';
 import '../../../core/widgets/bottom_page_navitator.dart';
+import '../../mutation_flow_managment/view/progress_animation_cubit/progress_animation_cubit.dart';
 import '../view/instructions_cubit/instructions_cubit_cubit.dart';
 import '../view/widgets/instruction_page_indicator.dart';
 import '../view/widgets/instruction_widget.dart';
-import '../../mutation_flow_managment/view/progress_animation_cubit/progress_animation_cubit.dart';
 
 class HowItWorksPage extends StatefulWidget {
   const HowItWorksPage({Key? key}) : super(key: key);
