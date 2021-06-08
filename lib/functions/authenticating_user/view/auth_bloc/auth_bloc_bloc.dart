@@ -36,13 +36,16 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
   }
 
   AuthBlocState _yieldState(Either<Failure, void> either) {
-    return either.fold((failure) {
-      if (failure is UserAuthenticationFailure) {
-        return AuthFailed(failure.message);
-      } else if (failure is NoConnetionFailure) {
-        return AuthFailed(ERROR_NO_CONNECTION);
-      }
-      return AuthFailed('Failed to sign in user.');
-    }, (r) => AuthSuccesfull());
+    return either.fold(
+      (failure) {
+        if (failure is UserAuthenticationFailure) {
+          return AuthFailed(failure.message);
+        } else if (failure is NoConnetionFailure) {
+          return AuthFailed(ERROR_NO_CONNECTION);
+        }
+        return AuthFailed('Failed to sign in user.');
+      },
+      (r) => AuthSuccesfull(),
+    );
   }
 }

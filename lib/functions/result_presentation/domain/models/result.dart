@@ -8,6 +8,7 @@ class Result extends Equatable {
   final int numberOfMarkedWords;
   final String id;
   final double difficulty;
+  late final DateTime date;
   late final double score;
 
   Result({
@@ -16,7 +17,10 @@ class Result extends Equatable {
     required this.numberOfMarkedWords,
     required this.difficulty,
     required this.id,
+    DateTime? dateOfResult,
   }) {
+    this.date = dateOfResult ?? DateTime.now();
+
     int _numberOfWrongWords = numberOfWrongWords;
     final int _numberOfMutatedWords = numberOfMutatedWords;
     double _tempScore = 0;

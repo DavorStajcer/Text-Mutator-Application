@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/widgets/dialog.dart';
 import '../../../../core/constants/pages.dart';
 import '../../../../core/widgets/app_button.dart';
-import '../../../result_presentation/view/result_bloc/result_bloc.dart';
+import '../../../result_presentation/view/blocs/result_bloc/result_bloc.dart';
 import '../mutate_bloc/mutate_bloc.dart';
 import '../widgets/build_selectable_text.dart';
 

@@ -108,23 +108,6 @@ void main() {
         MutateLoaded(mutateText: _testMutatedTextChanged)
       ],
     );
-
-    blocTest(
-      'should not save text when shouldSave flag is false',
-      build: () {
-        _setupMutatingSuccess();
-
-        when(_mockMutatedTextRepository.mutatedText)
-            .thenReturn(_testMutatedTextChanged);
-        return MutateBloc(_mockMutatedTextRepository, _mockTextRepository);
-      },
-      act: (bl) => bl..add(MutateText(_testTextEvaluationModel, false)),
-      expect: () => [
-        MutateLoading(),
-        MutateLoaded(mutateText: _testMutatedText),
-      ],
-      verify: (_) => verifyZeroInteractions(_mockTextRepository),
-    );
   });
 
   group('failure', () {

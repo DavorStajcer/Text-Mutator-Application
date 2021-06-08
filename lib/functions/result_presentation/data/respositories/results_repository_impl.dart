@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -54,8 +56,10 @@ class ResultRepositoryImpl extends ResultRepository {
     if (await _connectionChecker.hasConnection) {
       try {
         if (_isLastCashed) return Right(_cashedResults);
+
         return await _loadAllResultsForCurrentUser();
       } catch (err) {
+        log(err.toString());
         return Left(ServerFailure());
       }
     } else {
@@ -67,12 +71,14 @@ class ResultRepositoryImpl extends ResultRepository {
     final List<Map<String, dynamic>> _res =
         await _networkResultDataSource.fetchResults();
 
+    log(_res.toString());
+
     final List<ResultModel> _results = _res
         .map((Map<String, dynamic> map) => ResultModel.fromJson(map))
         .toList();
     _cashedResults = _results;
     _isLastCashed = true;
-    return Right(_results);
+    return Right(_results..sort((a, b) => a.date.compareTo(b.date)));
   }
 
   @override

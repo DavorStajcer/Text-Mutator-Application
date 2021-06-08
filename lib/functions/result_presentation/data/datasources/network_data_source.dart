@@ -21,11 +21,9 @@ class NetworkResultDataSourceImpl extends NetworkResultDataSource {
     final DocumentSnapshot _documentSnapshot =
         await instance.collection('users').doc('$_currentUserId').get();
 
-    //     .map((e) =>
-    //         (e.data() as Map<String, dynamic>)..putIfAbsent('id', () => e.id))
-    //     .toList();
-
-    return (_documentSnapshot.data() as Map<String, dynamic>)['results'];
+    return ((_documentSnapshot.data() as Map<String, dynamic>)['results']
+            as List<dynamic>)
+        .cast<Map<String, dynamic>>();
   }
 
   @override

@@ -1,9 +1,10 @@
 import 'package:get_it/get_it.dart';
+import 'package:text_mutator/functions/result_presentation/view/blocs/results_graph_bloc/results_graph_bloc.dart';
 
 import '../data/datasources/network_data_source.dart';
 import '../data/respositories/results_repository_impl.dart';
 import '../domain/repositories/result_respository.dart';
-import '../view/result_bloc/result_bloc.dart';
+import '../view/blocs/result_bloc/result_bloc.dart';
 
 void initiDependenciesResultResporesentation() {
   final _get = GetIt.instance;
@@ -23,4 +24,5 @@ void initiDependenciesResultResporesentation() {
 
 //!blocs
   _get.registerFactory(() => ResultBloc(_get()));
+  _get.registerFactory(() => ResultsGraphBloc(_get()));
 }

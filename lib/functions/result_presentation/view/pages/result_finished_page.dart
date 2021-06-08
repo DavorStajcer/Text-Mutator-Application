@@ -5,7 +5,7 @@ import '../../../../core/constants/pages.dart';
 import '../../../../core/widgets/app_button.dart';
 import '../../../../core/widgets/circular_data_represetnation_widget.dart';
 import '../../../../core/widgets/text_data_display_row_widget.dart';
-import '../result_bloc/result_bloc.dart';
+import '../blocs/result_bloc/result_bloc.dart';
 
 class ResultFinishedPage extends StatelessWidget {
   const ResultFinishedPage({Key? key}) : super(key: key);

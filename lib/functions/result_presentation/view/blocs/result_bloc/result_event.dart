@@ -12,15 +12,3 @@ class CreateResult extends ResultEvent {
   @override
   List<Object?> get props => [mutatedText];
 }
-
-class LoadResults extends ResultEvent {
-  @override
-  List<Object?> get props => [];
-}
-
-// class LoadText extends ResultEvent {
-//   final List<SelectableTextWidget> allText;
-//   const LoadText(this.allText);
-// }
-
-

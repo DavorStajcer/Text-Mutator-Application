@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../../domain/models/result.dart';
 
 class ResultModel extends Result {
@@ -6,13 +8,15 @@ class ResultModel extends Result {
     int wrongWords,
     int numberOfMarkedWords,
     double difficulty,
-    String id,
-  ) : super(
+    String id, {
+    DateTime? date,
+  }) : super(
           id: id,
           numberOfMutatedWords: mutatedWords,
           numberOfMarkedWords: numberOfMarkedWords,
           numberOfWrongWords: wrongWords,
           difficulty: difficulty,
+          dateOfResult: date ?? DateTime.now(),
         );
 
   factory ResultModel.fromJson(Map<String, dynamic> map) {
@@ -22,6 +26,7 @@ class ResultModel extends Result {
       map['numberOfMarkedWords'],
       map['difficulty'],
       map['id'],
+      date: map['date'] == null ? null : (map['date'] as Timestamp).toDate(),
     );
   }
 
@@ -31,6 +36,7 @@ class ResultModel extends Result {
       'wrongWords': this.numberOfWrongWords,
       'numberOfMarkedWords': this.numberOfMarkedWords,
       'difficulty': this.difficulty,
+      'date': this.date
     };
   }
 }

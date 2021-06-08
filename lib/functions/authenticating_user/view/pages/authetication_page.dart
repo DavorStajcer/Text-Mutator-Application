@@ -44,9 +44,6 @@ class AuthenticationPage extends StatelessWidget {
                       BlocProvider(
                         create: (context) => GetIt.I<AuthFormBloc>(),
                       ),
-                      BlocProvider(
-                        create: (context) => GetIt.I<AuthBloc>(),
-                      ),
                     ], child: AuthenticationInputForm(theme: _theme)),
                   ),
                   Flexible(

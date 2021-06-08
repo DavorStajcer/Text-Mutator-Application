@@ -5,16 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:text_mutator/functions/user_data_retrieval/view/pages/welcome_page.dart';
+import 'functions/authenticating_user/view/auth_bloc/auth_bloc_bloc.dart';
 import 'functions/authenticating_user/view/pages/authetication_page.dart';
 import 'functions/authetication_checker/view/authentication_checker_bloc/authentication_checker_bloc.dart';
 import 'functions/home/view/pages/home_page.dart';
 import 'dependency_injection.dart';
 import 'functions/authetication_checker/view/authetication_action_cubit/authentication_action_cubit.dart';
+import 'functions/result_presentation/view/blocs/results_graph_bloc/results_graph_bloc.dart';
 import 'functions/text_mutation/view/mutate_bloc/mutate_bloc.dart';
 import 'functions/theme_managment/cubit/theme_changing_cubit.dart';
 
 import 'core/navigation/route_generation.dart';
-import 'functions/result_presentation/view/result_bloc/result_bloc.dart';
+import 'functions/result_presentation/view/blocs/result_bloc/result_bloc.dart';
 import 'functions/user_data_retrieval/view/user_data_bloc/user_data_bloc.dart';
 import 'functions/user_data_retrieval/view/user_data_validator_cubit/user_data_validator_cubit.dart';
 
@@ -56,6 +58,12 @@ class MyApp extends StatelessWidget {
               ),
               BlocProvider(
                 create: (context) => GetIt.I<UserDataBloc>(),
+              ),
+              BlocProvider(
+                create: (context) => GetIt.I<AuthBloc>(),
+              ),
+              BlocProvider(
+                create: (context) => GetIt.I<ResultsGraphBloc>(),
               ),
             ],
             child: BlocBuilder<ThemeChangingCubit, ThemeChangingState>(

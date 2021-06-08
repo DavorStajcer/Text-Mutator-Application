@@ -8,7 +8,7 @@ import 'package:text_mutator/core/constants/error_messages.dart';
 import 'package:text_mutator/core/error/failures/failure.dart';
 import 'package:text_mutator/functions/result_presentation/domain/models/result.dart';
 import 'package:text_mutator/functions/result_presentation/domain/repositories/result_respository.dart';
-import 'package:text_mutator/functions/result_presentation/view/result_bloc/result_bloc.dart';
+import 'package:text_mutator/functions/result_presentation/view/blocs/result_bloc/result_bloc.dart';
 import 'package:text_mutator/functions/text_mutation/domain/models/mutated_text.dart';
 import 'package:text_mutator/functions/text_mutation/domain/models/word/clean_word.dart';
 import 'package:text_mutator/functions/text_mutation/domain/models/word/mutated_word.dart';
@@ -69,41 +69,6 @@ void main() {
         return ResultBloc(_mockResultRepository);
       },
       act: (bloc) => bloc.add(CreateResult(_testMutatedText)),
-      expect: () => [ResultLoading(), ResultError(ERROR_SERVER_FAILURE)],
-    );
-  });
-
-  group('loading resultS', () {
-    blocTest(
-      'should remit [ResultLoading, ReusltsLoaded] with right returned result',
-      build: () {
-        when(_mockResultRepository.loadResults())
-            .thenAnswer((_) async => Right(_testResults));
-        return ResultBloc(_mockResultRepository);
-      },
-      act: (bloc) => bloc.add(LoadResults()),
-      expect: () => [ResultLoading(), ResultsLoaded(_testResults)],
-    );
-
-    blocTest(
-      'should remit [ResultLoading, ResultErrro] with ERROR_NO_CONNECTON message when NoConnectionFailure',
-      build: () {
-        when(_mockResultRepository.loadResults())
-            .thenAnswer((_) async => Left(NoConnetionFailure()));
-        return ResultBloc(_mockResultRepository);
-      },
-      act: (bloc) => bloc.add(LoadResults()),
-      expect: () => [ResultLoading(), ResultError(ERROR_NO_CONNECTION)],
-    );
-
-    blocTest(
-      'should remit [ResultLoading, ResultErrro] with ERROR_SERVER_FAILURE message when loading goes wrong',
-      build: () {
-        when(_mockResultRepository.loadResults())
-            .thenAnswer((_) async => Left(ServerFailure()));
-        return ResultBloc(_mockResultRepository);
-      },
-      act: (bloc) => bloc.add(LoadResults()),
       expect: () => [ResultLoading(), ResultError(ERROR_SERVER_FAILURE)],
     );
   });

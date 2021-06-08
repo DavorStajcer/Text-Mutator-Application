@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:text_mutator/functions/result_presentation/view/pages/user_results_previw_page.dart';
 import '../../functions/user_data_retrieval/view/pages/username_input_page.dart';
 import '../../functions/user_data_retrieval/view/pages/welcome_page.dart';
 import '../constants/pages.dart';
@@ -23,6 +24,8 @@ Route? onGenerateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => ResultFinishedPage());
     case ROUTE_RESULT_PREVIEW_PAGE:
       return MaterialPageRoute(builder: (_) => PreviewPage());
+    case ROUTE_USER_RESULTS_PREVIEW_PAGE:
+      return MaterialPageRoute(builder: (_) => UserResultsPreviewPage());
     case ROUTE_AUTHENTICATION_PAGE:
       return MaterialPageRoute(builder: (_) => AuthenticationPage());
     case ROUTE_USERNAME_INPUT_PAGE:
