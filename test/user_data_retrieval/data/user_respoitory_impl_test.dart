@@ -23,17 +23,6 @@ void main() {
 
   final AppUser _testUser = AppUser(_testUsername);
 
-  _setupWithUsername() {
-    _mockFirebaseAuth = MockFirebaseAuth(
-        mockUser: MockUser(displayName: _testUsername), signedIn: true);
-    _mockUserDataRetriver = MockUserDataRetriver();
-    _mockSignedUserProvider = MockSignedUserProvider();
-    _userRepositoryImpl = UserRepositoryImpl(
-      _mockSignedUserProvider,
-      _mockUserDataRetriver,
-    );
-  }
-
   _setupNoUsername() {
     _mockFirebaseAuth = MockFirebaseAuth(mockUser: MockUser(), signedIn: true);
     _mockUserDataRetriver = MockUserDataRetriver();
@@ -54,18 +43,6 @@ void main() {
       when(_mockUserDataRetriver.getUserData())
           .thenAnswer((_) async => Left(fialure));
     }
-
-    test(
-      'should return correct AppUser if there is username available in firebase user',
-      () async {
-        // arrange
-        _setupWithUsername();
-        // act
-        final _res = await _userRepositoryImpl.getUserData();
-        // assert
-        expect(_res, Right(_testUser));
-      },
-    );
 
     test(
       'should call UserRetriver if there is no username avaliable',

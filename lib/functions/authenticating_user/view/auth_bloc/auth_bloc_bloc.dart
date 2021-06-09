@@ -26,7 +26,7 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
       yield _yieldState(either);
     } else if (event is LogInGoogle) {
       final either = await _userAuthenticator.authenticateUserWithGoogle();
-      yield _yieldState(either);
+      yield _yieldStateGoogleLogin(either);
     } else if (event is SignUp) {
       final either =
           await _userAuthenticator.signUp(event.email, event.password);
@@ -49,6 +49,20 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
         return AuthFailed('Failed to sign in user.');
       },
       (r) => AuthSuccesfull(),
+    );
+  }
+
+  AuthBlocState _yieldStateGoogleLogin(Either<Failure, bool> either) {
+    return either.fold(
+      (failure) {
+        if (failure is UserAuthenticationFailure) {
+          return AuthFailed(failure.message);
+        } else if (failure is NoConnetionFailure) {
+          return AuthFailed(ERROR_NO_CONNECTION);
+        }
+        return AuthFailed('Failed to sign in user.');
+      },
+      (bool failed) => failed ? AuthBlocInitial() : AuthSuccesfull(),
     );
   }
 }

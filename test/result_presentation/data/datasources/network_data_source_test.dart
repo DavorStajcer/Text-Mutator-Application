@@ -12,8 +12,6 @@ class MockFirestore extends Mock implements FirebaseFirestore {}
 
 class MockSignedUserProvider extends Mock implements SignedUserProvider {}
 
-class MockFirebaseAuth extends Mock implements FirebaseAuth {}
-
 class MockCollectionReference extends Mock
     implements CollectionReference<Map<String, dynamic>> {}
 
@@ -33,15 +31,7 @@ void main() {
   MockCollectionReference mockCollectionReference;
   MockDocumentReference mockDocumentReference;
   MockQuerySnapshot mockQuerySnapshot;
-  MockFirebaseAuth _mockFirebaseAuth;
   NetworkResultDataSourceImpl networkResultDataSourceImpl;
-
-  var user = MockUser(
-    isAnonymous: false,
-    uid: 'someuid',
-    email: 'bob@somedomain.com',
-    displayName: 'Bob',
-  );
 
   setUp(() async {
     _mockFirestore = MockFirestore();
@@ -50,13 +40,9 @@ void main() {
     mockDocumentReference = MockDocumentReference();
     mockDocumentSnapshot = MockDocumentSnapshot();
     mockQuerySnapshot = MockQuerySnapshot();
-    _mockFirebaseAuth = MockFirebaseAuth();
     _mockSignedUserProvider = MockSignedUserProvider();
     networkResultDataSourceImpl =
         NetworkResultDataSourceImpl(_mockFirestore, _mockSignedUserProvider);
-
-    final result = await _mockFirebaseAuth.signInAnonymously();
-    user = result.user;
   });
 
   final List<Map<String, dynamic>> _testResultList = [
@@ -88,6 +74,8 @@ void main() {
     when(mockDocumentReference.get())
         .thenAnswer((_) async => mockDocumentSnapshot);
     when(mockDocumentSnapshot.data()).thenReturn(_testResultMap);
+
+    when(_mockSignedUserProvider.getCurrentUserId()).thenReturn('someuid');
   }
 
   test(

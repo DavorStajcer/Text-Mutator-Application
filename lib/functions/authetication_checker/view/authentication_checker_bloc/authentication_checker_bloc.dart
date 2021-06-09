@@ -46,6 +46,7 @@ class AuthenticationCheckerBloc
   Stream<AuthenticationCheckerState> mapEventToState(
     AuthenticationCheckerEvent event,
   ) async* {
+    log(event.toString());
     if (event is AuthenticationStateChanged)
       yield event.isLogedIn ? UserAuthenticated() : UserNotAuthenticated();
   }

@@ -40,12 +40,13 @@ class UserAuthenticatorImpl extends UserAuthenticator {
   }
 
   @override
-  Future<Either<Failure, void>> authenticateUserWithGoogle() async {
+  Future<Either<Failure, bool>> authenticateUserWithGoogle() async {
     // if (!await _connectionChecker.hasConnection)
     //   return Left(NoConnetionFailure());
     try {
-      await _googleSignIn.signIn();
-      return Right(null);
+      final _acc = await _googleSignIn.signIn();
+      log('goolge user: ' + _acc.toString());
+      return Right(_acc == null);
     } on FirebaseAuthException catch (err) {
       return Left(UserAuthenticationFailure(_pickFailureMessage(err.code)));
     } catch (err) {

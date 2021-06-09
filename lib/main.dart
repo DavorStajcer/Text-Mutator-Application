@@ -81,7 +81,7 @@ class MyApp extends StatelessWidget {
                   home: BlocBuilder<AuthenticationCheckerBloc,
                       AuthenticationCheckerState>(
                     builder: (context, state) {
-                      log(state.toString());
+                      log('auth state:    ' + state.toString());
                       if (state is UserAuthenticated) return WelcomePage();
                       if (state is UserNotAuthenticated)
                         return AuthenticationPage();

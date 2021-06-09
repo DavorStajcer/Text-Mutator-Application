@@ -5,7 +5,7 @@ import '../../../../core/error/failures/failure.dart';
 abstract class UserAuthenticator {
   Future<Either<Failure, void>> authenticateUserWithEmailAndPassword(
       String email, String password);
-  Future<Either<Failure, void>> authenticateUserWithGoogle();
+  Future<Either<Failure, bool>> authenticateUserWithGoogle();
 
   Future<Either<Failure, void>> signUp(String email, String password);
 
