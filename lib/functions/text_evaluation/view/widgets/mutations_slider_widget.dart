@@ -36,7 +36,7 @@ class MutationsSliderWidget extends StatelessWidget {
           child: Slider(
             value: currentSliderValue,
             max: maximumSliderValue,
-            min: 1,
+            min: 8,
             activeColor: _theme.textTheme.bodyText1!.color,
             inactiveColor: _theme.textTheme.bodyText1!.color,
             onChanged: (newValue) => _textEvaluationBloc.add(

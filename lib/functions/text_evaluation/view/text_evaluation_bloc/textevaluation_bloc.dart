@@ -21,17 +21,13 @@ class TextEvaluationBloc
       log(
         'evalutation: ' + event.text.id,
       );
-      yield TextEvaluationLoaded(
-          TextEvaluationModel(event.text, 1, false, false));
+      yield TextEvaluationLoaded(TextEvaluationModel(event.text, 8, false));
     } else if (event is TextMutationsChanged) {
       yield TextEvaluationLoaded(state.textEvaluationModel
           .copyWith(numberOfMutations: event.numberOfMutations));
     } else if (event is TextConjuctionsChanged) {
       yield TextEvaluationLoaded(
           state.textEvaluationModel.copyWith(includeConjuctions: event.value));
-    } else if (event is TextSyncategorematicChanged) {
-      yield TextEvaluationLoaded(state.textEvaluationModel
-          .copyWith(includeSyncategorematic: event.value));
     }
   }
 }

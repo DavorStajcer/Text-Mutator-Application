@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:google_sign_in/google_sign_in.dart';
+
 import '../../../core/constants/error_messages.dart';
 import '../../../core/error/failures/failure.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,8 +12,13 @@ import '../domain/contracts/user_authenticator.dart';
 class UserAuthenticatorImpl extends UserAuthenticator {
   final FirebaseAuth _firebaseAuth;
   final ConnectionChecker _connectionChecker;
+  final GoogleSignIn _googleSignIn;
 
-  UserAuthenticatorImpl(this._firebaseAuth, this._connectionChecker);
+  UserAuthenticatorImpl(
+    this._firebaseAuth,
+    this._connectionChecker,
+    this._googleSignIn,
+  );
 
   @override
   Future<Either<Failure, void>> authenticateUserWithEmailAndPassword(
@@ -28,6 +35,21 @@ class UserAuthenticatorImpl extends UserAuthenticator {
     } on FirebaseAuthException catch (err) {
       return Left(UserAuthenticationFailure(_pickFailureMessage(err.code)));
     } catch (err) {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> authenticateUserWithGoogle() async {
+    // if (!await _connectionChecker.hasConnection)
+    //   return Left(NoConnetionFailure());
+    try {
+      await _googleSignIn.signIn();
+      return Right(null);
+    } on FirebaseAuthException catch (err) {
+      return Left(UserAuthenticationFailure(_pickFailureMessage(err.code)));
+    } catch (err) {
+      log(err.toString());
       return Left(ServerFailure());
     }
   }
@@ -58,6 +80,7 @@ class UserAuthenticatorImpl extends UserAuthenticator {
     if (!await _connectionChecker.hasConnection)
       return Left(NoConnetionFailure());
     await _firebaseAuth.signOut();
+    await _googleSignIn.disconnect();
     return Right(null);
   }
 
@@ -67,8 +90,8 @@ class UserAuthenticatorImpl extends UserAuthenticator {
       return Left(NoConnetionFailure());
     try {
       log('SIGNING UP');
-      final UserCredential _userCredential = await _firebaseAuth
-          .createUserWithEmailAndPassword(email: email, password: password);
+      await _firebaseAuth.createUserWithEmailAndPassword(
+          email: email, password: password);
       log('SIGNED UP');
       return Right(null);
     } on FirebaseAuthException catch (err) {

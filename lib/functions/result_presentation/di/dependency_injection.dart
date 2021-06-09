@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:text_mutator/functions/result_presentation/view/blocs/results_difficulty_representation_cubit/results_difficulty_representation_cubit.dart';
 import 'package:text_mutator/functions/result_presentation/view/blocs/results_graph_bloc/results_graph_bloc.dart';
 
 import '../data/datasources/network_data_source.dart';
@@ -25,4 +26,5 @@ void initiDependenciesResultResporesentation() {
 //!blocs
   _get.registerFactory(() => ResultBloc(_get()));
   _get.registerFactory(() => ResultsGraphBloc(_get()));
+  _get.registerFactory(() => ResultsDifficultyRepresentationCubit());
 }

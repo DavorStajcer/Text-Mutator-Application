@@ -9,11 +9,13 @@ abstract class TextEvaluationState extends Equatable {
 
 class TextEvaluationInitial extends TextEvaluationState {
   TextEvaluationInitial()
-      : super(TextEvaluationModel(
+      : super(
+          TextEvaluationModel(
             Text(id: '', text: '', textDifficulty: TextDifficulty.Easy),
             1,
             false,
-            false));
+          ),
+        );
 
   @override
   List<Object> get props => [];

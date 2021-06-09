@@ -9,6 +9,7 @@ class AppButton extends StatelessWidget {
     this.autoSizeGroup,
     this.widthSizeFactor = 2.2,
     this.isAvailable = true,
+    this.includeTopMaring = true,
   }) : super(key: key);
 
   final String text;
@@ -16,6 +17,7 @@ class AppButton extends StatelessWidget {
   final AutoSizeGroup? autoSizeGroup;
   final double widthSizeFactor;
   final bool isAvailable;
+  final bool includeTopMaring;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,7 @@ class AppButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: _deviceSize.width / widthSizeFactor,
-        margin: EdgeInsets.only(top: 30),
+        margin: includeTopMaring ? EdgeInsets.only(top: 30) : null,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(
             Radius.circular(60),

@@ -24,6 +24,9 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
       final either = await _userAuthenticator
           .authenticateUserWithEmailAndPassword(event.email, event.password);
       yield _yieldState(either);
+    } else if (event is LogInGoogle) {
+      final either = await _userAuthenticator.authenticateUserWithGoogle();
+      yield _yieldState(either);
     } else if (event is SignUp) {
       final either =
           await _userAuthenticator.signUp(event.email, event.password);

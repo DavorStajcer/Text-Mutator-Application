@@ -66,7 +66,6 @@ void main() {
     _testText,
     _testNumberOfMutations,
     true,
-    true,
   );
 
   test(

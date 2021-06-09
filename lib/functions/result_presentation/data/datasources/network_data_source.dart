@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:text_mutator/core/authentication/signed_user_provider.dart';
 import '../enteties/result_model.dart';
 
 abstract class NetworkResultDataSource {
@@ -11,24 +13,29 @@ abstract class NetworkResultDataSource {
 
 class NetworkResultDataSourceImpl extends NetworkResultDataSource {
   final FirebaseFirestore instance;
-  final FirebaseAuth _firebaseAuth;
+  final SignedUserProvider _signedUserProvider;
 
-  NetworkResultDataSourceImpl(this.instance, this._firebaseAuth);
+  NetworkResultDataSourceImpl(this.instance, this._signedUserProvider);
 
   @override
   Future<List<Map<String, dynamic>>> fetchResults() async {
-    final String _currentUserId = _firebaseAuth.currentUser!.uid;
+    final String _currentUserId = _signedUserProvider.getCurrentUserId();
     final DocumentSnapshot _documentSnapshot =
         await instance.collection('users').doc('$_currentUserId').get();
 
-    return ((_documentSnapshot.data() as Map<String, dynamic>)['results']
-            as List<dynamic>)
-        .cast<Map<String, dynamic>>();
+    final _responseRes =
+        (_documentSnapshot.data() as Map<String, dynamic>)['results'];
+
+    if (_responseRes == null) return [];
+
+    final _list = (_responseRes as List<dynamic>).cast<Map<String, dynamic>>();
+
+    return _list;
   }
 
   @override
   Future<void> saveResult(ResultModel resultModel) async {
-    final String _currentUserId = _firebaseAuth.currentUser!.uid;
+    final String _currentUserId = _signedUserProvider.getCurrentUserId();
     final Map<String, dynamic> _newResult = resultModel.toJson();
 
     final _doc = instance.collection('users').doc('$_currentUserId');

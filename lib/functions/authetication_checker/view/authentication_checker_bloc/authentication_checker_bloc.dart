@@ -1,31 +1,45 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 part 'authentication_checker_event.dart';
 part 'authentication_checker_state.dart';
 
 class AuthenticationCheckerBloc
     extends Bloc<AuthenticationCheckerEvent, AuthenticationCheckerState> {
-  AuthenticationCheckerBloc(FirebaseAuth firebaseAuth)
+  final GoogleSignIn _googleSignIn;
+
+  AuthenticationCheckerBloc(FirebaseAuth firebaseAuth, this._googleSignIn)
       : super(AuthenticationCheckerInitial()) {
     // firebaseAuth.signOut();
-    if (firebaseAuth.currentUser != null)
-      this.add(AuthenticationStateChanged(true));
+
+    // if (firebaseAuth.currentUser != null)
+    //   this.add(AuthenticationStateChanged(true));
 
     firebaseAuth.userChanges().listen(
       (User? user) {
+        log('user changed');
         if (user == null)
           this.add(AuthenticationStateChanged(false));
         else
-          AuthenticationStateChanged(true);
+          this.add(AuthenticationStateChanged(true));
       },
       onError: (_) {
         this.add(AuthenticationStateChanged(false));
       },
     );
+
+    _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
+      log('google sign in changed');
+      if (account != null) {
+        this.add(AuthenticationStateChanged(true));
+      }
+    });
+    _googleSignIn.signInSilently();
   }
 
   @override

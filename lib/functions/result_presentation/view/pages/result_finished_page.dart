@@ -1,6 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:text_mutator/functions/theme_managment/cubit/theme_changing_cubit.dart';
 import '../../../../core/constants/pages.dart';
 import '../../../../core/widgets/app_button.dart';
 import '../../../../core/widgets/circular_data_represetnation_widget.dart';
@@ -28,13 +30,26 @@ class ResultFinishedPage extends StatelessWidget {
                   children: [
                     Flexible(
                       flex: 1,
-                      child: CircularDataRepresentationWidget(
-                        data: resultState.result.score.toInt(),
-                        innerCircleRadialGradientColor: _theme.primaryColor,
-                        outerCircleRadialGradiantColor: _theme.accentColor,
-                        textStyle: _theme.textTheme.headline3!,
-                        circleRepresentationColor: _theme.accentColor,
-                        dataRepresentationTitle: 'YOUR   RESULT',
+                      child: Stack(
+                        children: [
+                          BlocBuilder<ThemeChangingCubit, ThemeChangingState>(
+                            builder: (context, state) {
+                              return SvgPicture.asset(
+                                'assetSvgPath',
+                                color:
+                                    state.isLight ? Colors.black : Colors.blue,
+                              );
+                            },
+                          ),
+                          CircularDataRepresentationWidget(
+                            data: resultState.result.score.toInt(),
+                            innerCircleRadialGradientColor: _theme.primaryColor,
+                            outerCircleRadialGradiantColor: _theme.accentColor,
+                            textStyle: _theme.textTheme.headline3!,
+                            circleRepresentationColor: _theme.accentColor,
+                            dataRepresentationTitle: 'YOUR   RESULT',
+                          ),
+                        ],
                       ),
                     ),
                     Flexible(

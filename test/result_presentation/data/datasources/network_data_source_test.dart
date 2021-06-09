@@ -1,14 +1,18 @@
 //@dart=2.9
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
+import 'package:text_mutator/core/authentication/signed_user_provider.dart';
 import 'package:text_mutator/functions/result_presentation/data/datasources/network_data_source.dart';
 
 class MockFirestore extends Mock implements FirebaseFirestore {}
 
-// class MockFirebaseAuth extends Mock implements FirebaseAuth {}
+class MockSignedUserProvider extends Mock implements SignedUserProvider {}
+
+class MockFirebaseAuth extends Mock implements FirebaseAuth {}
 
 class MockCollectionReference extends Mock
     implements CollectionReference<Map<String, dynamic>> {}
@@ -24,11 +28,12 @@ class MockQuerySnapshot extends Mock
 
 void main() {
   MockFirestore _mockFirestore;
-  MockFirebaseAuth _mockFirebaseAuth;
   MockDocumentSnapshot mockDocumentSnapshot;
+  MockSignedUserProvider _mockSignedUserProvider;
   MockCollectionReference mockCollectionReference;
   MockDocumentReference mockDocumentReference;
   MockQuerySnapshot mockQuerySnapshot;
+  MockFirebaseAuth _mockFirebaseAuth;
   NetworkResultDataSourceImpl networkResultDataSourceImpl;
 
   var user = MockUser(
@@ -45,10 +50,10 @@ void main() {
     mockDocumentReference = MockDocumentReference();
     mockDocumentSnapshot = MockDocumentSnapshot();
     mockQuerySnapshot = MockQuerySnapshot();
-
     _mockFirebaseAuth = MockFirebaseAuth();
+    _mockSignedUserProvider = MockSignedUserProvider();
     networkResultDataSourceImpl =
-        NetworkResultDataSourceImpl(_mockFirestore, _mockFirebaseAuth);
+        NetworkResultDataSourceImpl(_mockFirestore, _mockSignedUserProvider);
 
     final result = await _mockFirebaseAuth.signInAnonymously();
     user = result.user;

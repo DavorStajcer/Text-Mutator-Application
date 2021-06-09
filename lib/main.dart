@@ -11,6 +11,7 @@ import 'functions/authetication_checker/view/authentication_checker_bloc/authent
 import 'functions/home/view/pages/home_page.dart';
 import 'dependency_injection.dart';
 import 'functions/authetication_checker/view/authetication_action_cubit/authentication_action_cubit.dart';
+import 'functions/result_presentation/view/blocs/results_difficulty_representation_cubit/results_difficulty_representation_cubit.dart';
 import 'functions/result_presentation/view/blocs/results_graph_bloc/results_graph_bloc.dart';
 import 'functions/text_mutation/view/mutate_bloc/mutate_bloc.dart';
 import 'functions/theme_managment/cubit/theme_changing_cubit.dart';
@@ -64,6 +65,10 @@ class MyApp extends StatelessWidget {
               ),
               BlocProvider(
                 create: (context) => GetIt.I<ResultsGraphBloc>(),
+              ),
+              BlocProvider(
+                create: (context) =>
+                    GetIt.I<ResultsDifficultyRepresentationCubit>(),
               ),
             ],
             child: BlocBuilder<ThemeChangingCubit, ThemeChangingState>(

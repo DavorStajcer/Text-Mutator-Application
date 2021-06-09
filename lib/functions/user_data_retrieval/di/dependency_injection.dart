@@ -21,10 +21,15 @@ void initiDependenciesUserDataRetrieval() {
       () => UserLocalDataSource(_get()));
 
   //!repositories/services
-  _get.registerLazySingleton<UserDataRetriver>(
-      () => UserDataRetriverImpl(_get(), _get(), _get()));
-  _get.registerLazySingleton<UserDataRepository>(
-      () => UserRepositoryImpl(_get(), _get()));
+  _get.registerLazySingleton<UserDataRetriver>(() => UserDataRetriverImpl(
+        _get(),
+        _get(),
+        _get(),
+      ));
+  _get.registerLazySingleton<UserDataRepository>(() => UserRepositoryImpl(
+        _get(),
+        _get(),
+      ));
   _get.registerLazySingleton<UserDataValidator>(() => UserDataValidatorImpl());
 
 //!blocs

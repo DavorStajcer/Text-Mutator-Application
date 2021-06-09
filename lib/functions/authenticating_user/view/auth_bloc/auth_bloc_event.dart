@@ -14,6 +14,10 @@ class LogIn extends AuthBlocEvent {
   LogIn(this.email, this.password);
 }
 
+class LogInGoogle extends AuthBlocEvent {
+  LogInGoogle();
+}
+
 class SignUp extends AuthBlocEvent {
   final String email;
   final String password;

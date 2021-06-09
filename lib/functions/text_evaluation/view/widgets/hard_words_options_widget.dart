@@ -8,15 +8,13 @@ class HardWordsOptionsWidget extends StatelessWidget {
     required TextEvaluationBloc textEvaluationBloc,
     required ThemeData theme,
     required this.includeConjuctions,
-    required this.includeSynccategorematic,
-  })   : _textEvaluationBloc = textEvaluationBloc,
+  })  : _textEvaluationBloc = textEvaluationBloc,
         _theme = theme,
         super(key: key);
 
   final TextEvaluationBloc _textEvaluationBloc;
   final ThemeData _theme;
   final bool includeConjuctions;
-  final bool includeSynccategorematic;
 
   @override
   Widget build(BuildContext context) {
@@ -30,15 +28,6 @@ class HardWordsOptionsWidget extends StatelessWidget {
             theme: _theme,
             value: includeConjuctions,
             valueName: 'Conjuctions',
-          ),
-        ),
-        Expanded(
-          child: CheckBoxEvaluationRow(
-            onChanged: (bool? value) =>
-                _textEvaluationBloc.add(TextSyncategorematicChanged(value!)),
-            theme: _theme,
-            value: includeSynccategorematic,
-            valueName: 'Synccategorematic',
           ),
         ),
       ],

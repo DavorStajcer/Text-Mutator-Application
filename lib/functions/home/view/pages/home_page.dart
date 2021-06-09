@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:text_mutator/functions/home/view/widgets/top_layout_theme_button.dart';
 import '../widgets/bottom_layout.dart';
 import '../widgets/top_layout_buttons.dart';
 import '../widgets/top_layout_text.dart';
@@ -14,9 +15,18 @@ class HomePage extends StatelessWidget {
       backgroundColor: _theme.primaryColor,
       body: Stack(
         children: [
-          BottomLayout(),
+          Positioned(
+            bottom: 0,
+            left: -30,
+            child: BottomLayout(),
+          ),
           TopLayoutText(),
           TopLayoutButtons(),
+          Positioned(
+            top: 40,
+            right: 20,
+            child: TopLayoutThemeButton(),
+          ),
         ],
       ),
     );

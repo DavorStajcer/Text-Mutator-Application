@@ -13,18 +13,26 @@ void main() {
     'should calculate result difficulty  to be 35',
     () async {
       // arrange
-      textEvaluationModel = TextEvaluationModel(_testText, 1, true, false);
+      textEvaluationModel = TextEvaluationModel(
+        _testText,
+        1,
+        false,
+      );
       // act
-      expect(textEvaluationModel.resultDifficulty, 40.0);
+      expect(textEvaluationModel.resultDifficulty, 35.0);
       // assert
     },
   );
 
   test(
-    'should calculate result difficulty  to be 32.5',
+    'should calculate result difficulty  to be 50',
     () async {
       // arrange
-      textEvaluationModel = TextEvaluationModel(_testText, 1, true, true);
+      textEvaluationModel = TextEvaluationModel(
+        _testText,
+        1,
+        true,
+      );
       // act
       expect(textEvaluationModel.resultDifficulty, 50.0);
       // assert

@@ -1,5 +1,8 @@
 //@dart=2.9
 
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -75,6 +78,8 @@ void main() {
   //   },
   // );
 
+  final _testTimeStamp = Timestamp(1000, 1000);
+  final _testDate = _testTimeStamp.toDate();
   group('Connected', () {
     final List<Map<String, dynamic>> _testMapResults = [
       {
@@ -82,12 +87,14 @@ void main() {
         'wrongWords': 1,
         'numberOfMarkedWords': 2,
         'id': '1',
+        'date': _testTimeStamp,
       },
       {
         'mutatedWords': 1,
         'wrongWords': 1,
         'numberOfMarkedWords': 2,
         'id': '2',
+        'date': _testTimeStamp,
       }
     ];
 
@@ -97,18 +104,21 @@ void main() {
         1,
         2,
         _testResultDifficulty,
-        '1',
+        '',
+        date: _testDate,
       ),
       ResultModel(
         1,
         1,
         2,
         _testResultDifficulty,
-        '2',
+        '',
+        date: _testDate,
       ),
     ];
 
-    final List<Result> _testResults = _testResultModels;
+    final List<Result> _testResults = _testResultModels
+      ..sort((a, b) => a.date.compareTo(b.date));
     final ResultModel _testResultModel = ResultModel(
       2,
       1,
@@ -136,6 +146,7 @@ void main() {
         final res = await _resultRepositoryImpl.loadResults();
         // assert
         bool isEqual = listEquals(res.getOrElse(() => null), _testResults);
+
         expect(isEqual, true);
         verify(_mockNetworkDataSource.fetchResults()).called(1);
         _verifyCheckConnection();

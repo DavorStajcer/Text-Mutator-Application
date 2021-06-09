@@ -3,6 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:mockito/mockito.dart';
+import 'package:text_mutator/core/authentication/signed_user_provider.dart';
 import 'package:text_mutator/core/error/failures/failure.dart';
 import 'package:text_mutator/functions/user_data_retrieval/data/repositories/user_repository_impl.dart';
 import 'package:text_mutator/functions/user_data_retrieval/domain/models/app_user.dart';
@@ -10,10 +11,13 @@ import 'package:text_mutator/functions/user_data_retrieval/domain/user_data_retr
 
 class MockUserDataRetriver extends Mock implements UserDataRetriver {}
 
+class MockSignedUserProvider extends Mock implements SignedUserProvider {}
+
 void main() {
   UserRepositoryImpl _userRepositoryImpl;
   MockUserDataRetriver _mockUserDataRetriver;
   MockFirebaseAuth _mockFirebaseAuth;
+  MockSignedUserProvider _mockSignedUserProvider;
 
   final String _testUsername = 'awsome_user';
 
@@ -23,15 +27,21 @@ void main() {
     _mockFirebaseAuth = MockFirebaseAuth(
         mockUser: MockUser(displayName: _testUsername), signedIn: true);
     _mockUserDataRetriver = MockUserDataRetriver();
-    _userRepositoryImpl =
-        UserRepositoryImpl(_mockFirebaseAuth, _mockUserDataRetriver);
+    _mockSignedUserProvider = MockSignedUserProvider();
+    _userRepositoryImpl = UserRepositoryImpl(
+      _mockSignedUserProvider,
+      _mockUserDataRetriver,
+    );
   }
 
   _setupNoUsername() {
     _mockFirebaseAuth = MockFirebaseAuth(mockUser: MockUser(), signedIn: true);
     _mockUserDataRetriver = MockUserDataRetriver();
-    _userRepositoryImpl =
-        UserRepositoryImpl(_mockFirebaseAuth, _mockUserDataRetriver);
+    _mockSignedUserProvider = MockSignedUserProvider();
+    _userRepositoryImpl = UserRepositoryImpl(
+      _mockSignedUserProvider,
+      _mockUserDataRetriver,
+    );
   }
 
   group('loading user data', () {
@@ -116,8 +126,11 @@ void main() {
       _mockFirebaseAuth = MockFirebaseAuth(
           mockUser: MockUser(displayName: _testUsername), signedIn: true);
       _mockUserDataRetriver = MockUserDataRetriver();
-      _userRepositoryImpl =
-          UserRepositoryImpl(_mockFirebaseAuth, _mockUserDataRetriver);
+      _mockSignedUserProvider = MockSignedUserProvider();
+      _userRepositoryImpl = UserRepositoryImpl(
+        _mockSignedUserProvider,
+        _mockUserDataRetriver,
+      );
       when(_mockUserDataRetriver.saveUserData(_testUser))
           .thenAnswer((_) async => Right(null));
     }
@@ -126,8 +139,11 @@ void main() {
       _mockFirebaseAuth = MockFirebaseAuth(
           mockUser: MockUser(displayName: _testUsername), signedIn: true);
       _mockUserDataRetriver = MockUserDataRetriver();
-      _userRepositoryImpl =
-          UserRepositoryImpl(_mockFirebaseAuth, _mockUserDataRetriver);
+      _mockSignedUserProvider = MockSignedUserProvider();
+      _userRepositoryImpl = UserRepositoryImpl(
+        _mockSignedUserProvider,
+        _mockUserDataRetriver,
+      );
       when(_mockUserDataRetriver.saveUserData(_testUser))
           .thenAnswer((_) async => Left(fialure));
     }

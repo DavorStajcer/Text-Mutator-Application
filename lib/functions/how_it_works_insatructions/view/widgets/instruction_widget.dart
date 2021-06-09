@@ -1,13 +1,15 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'instruction_page_indicator.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:text_mutator/functions/theme_managment/cubit/theme_changing_cubit.dart';
 
 class InstructionWidget extends StatelessWidget {
-  final String assetImagePath;
+  final String assetSvgPath;
   final String textInstruction;
   const InstructionWidget({
     Key? key,
-    required this.assetImagePath,
+    required this.assetSvgPath,
     required this.textInstruction,
   }) : super(key: key);
 
@@ -17,7 +19,14 @@ class InstructionWidget extends StatelessWidget {
       children: [
         Flexible(
           flex: 3,
-          child: Image.asset(assetImagePath),
+          child: BlocBuilder<ThemeChangingCubit, ThemeChangingState>(
+            builder: (context, state) {
+              return SvgPicture.asset(
+                assetSvgPath,
+                color: state.isLight ? Colors.black : Colors.blue,
+              );
+            },
+          ),
         ),
         Flexible(
           flex: 1,

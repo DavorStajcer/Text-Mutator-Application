@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:text_mutator/core/authentication/signed_user_provider.dart';
 import '../../../../core/error/exceptions/exceptions.dart';
 import '../enteties/text_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -15,9 +17,11 @@ abstract class NetworkTextDataSource {
 
 class NetworkTextDataSourceImpl extends NetworkTextDataSource {
   final FirebaseFirestore _firebaseFirestore;
-  final FirebaseAuth _firebaseAuth;
+  // final GoogleSignIn _googleSignIn;
+  final SignedUserProvider _signedUserProvider;
 
-  NetworkTextDataSourceImpl(this._firebaseFirestore, this._firebaseAuth);
+  // final FirebaseAuth _firebaseAuth;
+  NetworkTextDataSourceImpl(this._signedUserProvider, this._firebaseFirestore);
 
   @override
   Future<Map<String, dynamic>> fetchText(
@@ -52,7 +56,7 @@ class NetworkTextDataSourceImpl extends NetworkTextDataSource {
   @override
   Future<List<String>> fetchSolvedTextIds() async {
     final DocumentSnapshot _res = await _firebaseFirestore
-        .doc('users/${_firebaseAuth.currentUser!.uid}')
+        .doc('users/${_signedUserProvider.getCurrentUserId()}')
         .get();
     if (!_res.exists) return [];
     if (_res.data() == null) return [];
@@ -66,16 +70,16 @@ class NetworkTextDataSourceImpl extends NetworkTextDataSource {
 
   @override
   Future<void> saveSolvedText(String id) async {
-    log('user id:' + _firebaseAuth.currentUser!.uid);
+    log('user id:' + _signedUserProvider.getCurrentUserId());
     try {
       await _firebaseFirestore
-          .doc('users/${_firebaseAuth.currentUser!.uid}')
+          .doc('users/${_signedUserProvider.getCurrentUserId()}')
           .update({
         'solvedTexts': FieldValue.arrayUnion([id])
       });
     } catch (err) {
       await _firebaseFirestore
-          .doc('users/${_firebaseAuth.currentUser!.uid}')
+          .doc('users/${_signedUserProvider.getCurrentUserId()}')
           .set({
         'solvedTexts': [id]
       });

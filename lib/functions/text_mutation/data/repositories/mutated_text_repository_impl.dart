@@ -59,14 +59,35 @@ class MutatedTextRepositoryImpl extends MutatedTextRepository {
     return _words;
   }
 
+  final List<String> conjuctions = [
+    'for',
+    'and',
+    'nor',
+    'but',
+    'or',
+    'yet',
+    'and',
+    'so'
+  ];
+
   //Ubacuje se broj mutiranih riječi po min(brojMutacija, duzinaTekstaZaMutiranje)
   Future<Either<Failure, MutatedText>> mutateText(
       TextEvaluationModel textEvaluationModel) async {
     if (!await _connectionChecker.hasConnection)
       return Left(NoConnetionFailure());
     try {
-      final List<String> _mutations = await _networkMutatedWordsSource
-          .getWords(textEvaluationModel.numberOfMutations);
+      final List<String> _mutations = [];
+      int _numberOfMutationsFromServer =
+          textEvaluationModel.maxNumberOfMutations;
+
+      if (textEvaluationModel.includeConjuctions) {
+        _numberOfMutationsFromServer = _calculateNumberOfConjuctionMutations(
+            _numberOfMutationsFromServer, _mutations);
+      }
+
+      dev.log(_mutations.toString());
+      _mutations.addAll(await _networkMutatedWordsSource
+          .getWords(_numberOfMutationsFromServer));
 
       dev.log(_mutations.toString());
       _mutatedText = _mutateText(
@@ -79,6 +100,23 @@ class MutatedTextRepositoryImpl extends MutatedTextRepository {
     } catch (err) {
       return Left(ServerFailure());
     }
+  }
+
+  int _calculateNumberOfConjuctionMutations(
+      int _numberOfMutationsFromServer, List<String> _mutations) {
+    final int _numberOfMutationsFromConjuctions =
+        (_numberOfMutationsFromServer * 0.1).ceil();
+    final Random _rand = Random();
+    for (var i = 0; i < _numberOfMutationsFromConjuctions; i++) {
+      _mutations.add(
+        conjuctions.elementAt(
+          _rand.nextInt(conjuctions.length),
+        ),
+      );
+    }
+
+    _numberOfMutationsFromServer -= _numberOfMutationsFromConjuctions;
+    return _numberOfMutationsFromServer;
   }
 
   MutatedText _mutateText(

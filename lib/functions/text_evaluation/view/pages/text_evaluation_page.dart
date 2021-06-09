@@ -61,12 +61,10 @@ class TextEvaluationPage extends StatelessWidget {
                               textEvaluationBloc: _textEvaluationBloc),
                         ),
                         Expanded(
-                          flex: 3,
+                          flex: 2,
                           child: HardWordsOptionsWidget(
                               includeConjuctions:
                                   state.textEvaluationModel.includeConjuctions,
-                              includeSynccategorematic: state
-                                  .textEvaluationModel.includeSyncategorematic,
                               textEvaluationBloc: _textEvaluationBloc,
                               theme: _theme),
                         ),

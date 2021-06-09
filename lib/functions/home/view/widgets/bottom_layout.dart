@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:text_mutator/functions/theme_managment/cubit/theme_changing_cubit.dart';
 
 class BottomLayout extends StatelessWidget {
   const BottomLayout({
@@ -7,22 +10,16 @@ class BottomLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Spacer(),
-        Image.asset(
-          'assets/png/lady.png',
-          fit: BoxFit.fitWidth,
-          frameBuilder: (BuildContext context, Widget child, int? frame,
-              bool wasSynchronouslyLoaded) {
-            return AnimatedOpacity(
-              duration: Duration(milliseconds: 1000),
-              opacity: frame == null ? 0 : 1,
-              child: child,
-            );
-          },
-        ),
-      ],
+    final Size _deviceSize = MediaQuery.of(context).size;
+
+    return BlocBuilder<ThemeChangingCubit, ThemeChangingState>(
+      builder: (context, state) {
+        return SvgPicture.asset(
+          'assets/svg/lady.svg',
+          height: _deviceSize.height / 1.5,
+          color: state.isLight ? Colors.black : Colors.blue,
+        );
+      },
     );
   }
 }

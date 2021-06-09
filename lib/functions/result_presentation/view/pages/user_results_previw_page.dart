@@ -5,60 +5,28 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:text_mutator/functions/result_presentation/domain/models/result.dart';
+import 'package:text_mutator/functions/result_presentation/view/blocs/results_difficulty_representation_cubit/results_difficulty_representation_cubit.dart';
 import 'package:text_mutator/functions/result_presentation/view/blocs/results_graph_bloc/results_graph_bloc.dart';
-
-int getDayDateDifference(DateTime date, DateTime referenceDate) {
-  final Duration _difference = date.difference(referenceDate);
-  return _difference.inDays;
-}
+import 'package:text_mutator/functions/result_presentation/view/widgets/graph_difficulty_selection.dart';
+import 'package:text_mutator/functions/result_presentation/view/widgets/user_results_preview_list.dart';
 
 class UserResultsPreviewPage extends StatelessWidget {
   UserResultsPreviewPage({Key? key}) : super(key: key);
-
-  final List<Result> _dummyResults = [
-    Result(
-      numberOfMutatedWords: 4,
-      numberOfWrongWords: 2,
-      numberOfMarkedWords: 4,
-      dateOfResult: DateTime(2021, 4, 26),
-      difficulty: 50,
-      id: 'id1',
-    ),
-    Result(
-      numberOfMutatedWords: 10,
-      numberOfWrongWords: 2,
-      numberOfMarkedWords: 10,
-      difficulty: 70,
-      dateOfResult: DateTime(2021, 8, 26),
-      id: 'id2',
-    ),
-    Result(
-      numberOfMutatedWords: 43,
-      numberOfWrongWords: 10,
-      numberOfMarkedWords: 38,
-      difficulty: 68,
-      dateOfResult: DateTime(2021, 10, 26),
-      id: 'id4',
-    ),
-    Result(
-      numberOfMutatedWords: 44,
-      numberOfWrongWords: 24,
-      numberOfMarkedWords: 44,
-      difficulty: 100,
-      dateOfResult: DateTime(2021, 12, 26),
-      id: 'id3',
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {
     final ThemeData _theme = Theme.of(context);
 
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [ResultsGraph()],
-        ),
+      backgroundColor: _theme.primaryColor,
+      appBar: AppBar(),
+      body: Column(
+        children: [
+          ResultsGraph(),
+          Expanded(
+            child: UserResultsPreviewList(),
+          ),
+        ],
       ),
     );
   }
@@ -76,31 +44,17 @@ class ResultsGraph extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeData _theme = Theme.of(context);
 
-    return BlocBuilder<ResultsGraphBloc, ResultsGraphState>(
+    return BlocConsumer<ResultsGraphBloc, ResultsGraphState>(
+      listener: (context, resultsState) {
+        if (resultsState is ResultsGraphLoaded)
+          BlocProvider.of<ResultsDifficultyRepresentationCubit>(context)
+              .initializeResults(resultsState.results);
+      },
       builder: (context, resultsState) {
         if (resultsState is ResultsGraphLoaded) {
           if (resultsState.results.isEmpty) {
-            return Center(
-              child: AutoSizeText(
-                'No reuslts yet to show.\n Try out practice to achieve a result!',
-                style: _theme.textTheme.headline2,
-              ),
-            );
+            return _buildNoResultsToShow(_theme);
           }
-
-          int _maxResultDay = 1;
-
-          resultsState.results.forEach((element) {
-            final int _tempMaxDay = getDayDateDifference(
-              element.date,
-              resultsState.results.first.date,
-            );
-            if (_tempMaxDay > _maxResultDay) {
-              _maxResultDay = _tempMaxDay;
-            }
-          });
-
-          log(_maxResultDay.toString());
 
           return Column(
             children: <Widget>[
@@ -116,28 +70,27 @@ class ResultsGraph extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(
                         right: 18.0, left: 12.0, top: 24, bottom: 12),
-                    child: LineChart(
-                      mainData(
-                        _theme,
-                        _maxResultDay,
-                        resultsState.results,
-                        resultsState.results.first.date,
-                      ),
+                    child: BlocBuilder<ResultsDifficultyRepresentationCubit,
+                        ResultsDifficultyRepresentationState>(
+                      builder: (context, representationState) {
+                        return LineChart(
+                          mainData(
+                            _theme,
+                            representationState.resultsToShow,
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ),
               ),
+              GrapDifficultySelecetion(),
             ],
           );
         }
 
         if (resultsState is ResultsGraphError) {
-          return Center(
-            child: AutoSizeText(
-              resultsState.message,
-              style: _theme.textTheme.headline2,
-            ),
-          );
+          return _buildResultsGraphError(resultsState, _theme);
         }
 
         return Center(
@@ -147,8 +100,36 @@ class ResultsGraph extends StatelessWidget {
     );
   }
 
-  LineChartData mainData(ThemeData theme, int maxDay, List<Result> results,
-      DateTime referenceDate) {
+  Center _buildResultsGraphError(
+      ResultsGraphError resultsState, ThemeData _theme) {
+    return Center(
+      child: AutoSizeText(
+        resultsState.message,
+        textAlign: TextAlign.center,
+        style: _theme.textTheme.headline2,
+      ),
+    );
+  }
+
+  Center _buildNoResultsToShow(ThemeData _theme) {
+    return Center(
+      child: AutoSizeText(
+        'No reuslts yet to show.\nTry out practice to achieve a result!',
+        style: _theme.textTheme.headline2,
+      ),
+    );
+  }
+
+  LineChartData mainData(ThemeData theme, List<Result> resultsToShow) {
+    final List<FlSpot> _graphSpots = [
+      resultsToShow.isEmpty
+          ? FlSpot(1, 0)
+          : FlSpot(1, resultsToShow.first.score)
+    ];
+    for (var i = 0; i < resultsToShow.length; i++) {
+      _graphSpots.add(FlSpot(i.toDouble() + 1, resultsToShow[i].score));
+    }
+
     return LineChartData(
       gridData: FlGridData(
         show: false,
@@ -168,6 +149,7 @@ class ResultsGraph extends StatelessWidget {
       ),
       titlesData: FlTitlesData(
         show: true,
+        bottomTitles: SideTitles(rotateAngle: 60, showTitles: false),
         leftTitles: SideTitles(
           showTitles: true,
           getTextStyles: (value) => const TextStyle(
@@ -190,31 +172,24 @@ class ResultsGraph extends StatelessWidget {
           margin: 12,
         ),
       ),
-      borderData: FlBorderData(
-          show: false,
-          border: Border.all(color: const Color(0xff37434d), width: 1)),
       minX: 1,
-      maxX: maxDay.toDouble(),
+      maxX: resultsToShow.length.toDouble(),
       minY: 0,
       maxY: 100,
+      borderData: FlBorderData(show: false),
+      axisTitleData: FlAxisTitleData(show: false),
       lineBarsData: [
         LineChartBarData(
-          spots: results
-              .map((e) => FlSpot(
-                  getDayDateDifference(e.date, referenceDate).toDouble(),
-                  e.score))
-              .toList(),
+          spots: _graphSpots,
           isCurved: true,
           colors: gradientColors,
           barWidth: 5,
           isStrokeCapRound: true,
           dotData: FlDotData(
-            show: false,
+            show: true,
           ),
           belowBarData: BarAreaData(
             show: false,
-            colors:
-                gradientColors.map((color) => color.withOpacity(0.3)).toList(),
           ),
         ),
       ],

@@ -11,5 +11,5 @@ void initiDependenciesAuthenticationChecker() {
 
   _get.registerFactory(() => AuthenticationActionCubit());
 
-  _get.registerLazySingleton(() => AuthenticationCheckerBloc(_get()));
+  _get.registerLazySingleton(() => AuthenticationCheckerBloc(_get(), _get()));
 }

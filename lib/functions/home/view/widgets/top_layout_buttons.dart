@@ -42,8 +42,8 @@ class TopLayoutButtons extends StatelessWidget {
                       onTap: () {
                         BlocProvider.of<ResultsGraphBloc>(context)
                             .add(LoadResults());
-                        Navigator.of(context).pushReplacementNamed(
-                            ROUTE_USER_RESULTS_PREVIEW_PAGE);
+                        Navigator.of(context)
+                            .pushNamed(ROUTE_USER_RESULTS_PREVIEW_PAGE);
                       }),
                 ],
               ),

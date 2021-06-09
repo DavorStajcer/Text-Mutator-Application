@@ -38,9 +38,10 @@ class Result extends Equatable {
   @override
   List<Object?> get props => [
         id,
+        score,
         numberOfMutatedWords,
         numberOfWrongWords,
         numberOfMarkedWords,
-        score
+        date
       ];
 }

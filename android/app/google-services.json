@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "978003045031-pm43lsqqrq58uv6jrrrf9jala5bl7em4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.focus_app_mutator",
+            "certificate_hash": "14df5ad98f881112e798503562612d1cbd0e9707"
+          }
+        },
+        {
+          "client_id": "978003045031-tsdnid89v4b4bb9u1f1fo2jlb2g0sfke.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.focus_app_mutator",
+            "certificate_hash": "ac70cdbce4e6a9bd797303dda71d667ab4db124a"
+          }
+        },
+        {
           "client_id": "978003045031-00jd7nqh5u7bjg405m3h4um7rdukajr4.apps.googleusercontent.com",
           "client_type": 3
         }

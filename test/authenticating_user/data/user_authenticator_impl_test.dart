@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:text_mutator/core/constants/error_messages.dart';
@@ -18,17 +19,22 @@ class MockConnectionChecker extends Mock implements ConnectionChecker {}
 
 class MockFirebaseAuth extends Mock implements FirebaseAuth {}
 
+class MockGoogleSingIn extends Mock implements GoogleSignIn {}
+
 void main() {
   MockFirebaseAuth _mockFirebaseAuth;
   UserAuthenticatorImpl userAuthenticatorImpl;
   MockConnectionChecker _mockConnectionChecker;
+  MockGoogleSingIn _mockGoogleSingIn;
 
   setUp(() async {
     _mockFirebaseAuth = MockFirebaseAuth();
     _mockConnectionChecker = MockConnectionChecker();
+    _mockGoogleSingIn = MockGoogleSingIn();
     userAuthenticatorImpl = UserAuthenticatorImpl(
       _mockFirebaseAuth,
       _mockConnectionChecker,
+      _mockGoogleSingIn,
     );
   });
 

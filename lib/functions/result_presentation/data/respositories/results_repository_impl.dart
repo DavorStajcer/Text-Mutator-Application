@@ -19,9 +19,6 @@ class ResultRepositoryImpl extends ResultRepository {
   final ConnectionChecker _connectionChecker;
   ResultRepositoryImpl(this._connectionChecker, this._networkResultDataSource);
 
-  bool _isLastCashed = false;
-  List<ResultModel> _cashedResults = [];
-
   @visibleForTesting
   Future<ResultModel> calculateResult(MutatedText mutatedText) {
     return Future(() {
@@ -55,8 +52,6 @@ class ResultRepositoryImpl extends ResultRepository {
   Future<Either<Failure, List<Result>>> loadResults() async {
     if (await _connectionChecker.hasConnection) {
       try {
-        if (_isLastCashed) return Right(_cashedResults);
-
         return await _loadAllResultsForCurrentUser();
       } catch (err) {
         log(err.toString());
@@ -71,13 +66,10 @@ class ResultRepositoryImpl extends ResultRepository {
     final List<Map<String, dynamic>> _res =
         await _networkResultDataSource.fetchResults();
 
-    log(_res.toString());
-
     final List<ResultModel> _results = _res
         .map((Map<String, dynamic> map) => ResultModel.fromJson(map))
         .toList();
-    _cashedResults = _results;
-    _isLastCashed = true;
+
     return Right(_results..sort((a, b) => a.date.compareTo(b.date)));
   }
 
@@ -88,7 +80,6 @@ class ResultRepositoryImpl extends ResultRepository {
         final ResultModel _result = await calculateResult(mutatedText);
 
         await _networkResultDataSource.saveResult(_result);
-        _cashedResults.add(_result);
         return Right(_result);
       } catch (err) {
         return Left(ServerFailure());

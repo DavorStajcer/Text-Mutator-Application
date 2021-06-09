@@ -34,10 +34,12 @@ dependencies:
   fl_chart: ^0.36.1
   flutter_bloc: ^7.0.0
   flutter_svg: ^0.22.0
+  flutter_switch: ^0.3.1
   get_it: ^7.1.3
-  google_sign_in: ^5.0.3
+  google_sign_in: ^5.0.4
   http: ^0.13.3
   internet_connection_checker: ^0.0.1
+  intl: ^0.17.0
   shared_preferences: ^2.0.5
   sqflite: ^2.0.0+3
   stream_transform: ^2.0.0
@@ -60,7 +62,11 @@ flutter:
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
   assets:
-    - 'assets/png/lady.png'
+    - 'assets/svg/lady.svg'
+    - 'assets/svg/coffie_on_book.svg'
+    - 'assets/svg/progress.svg'
+    - 'assets/svg/woman_reading.svg'
+    - 'assets/svg/result.svg'
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see

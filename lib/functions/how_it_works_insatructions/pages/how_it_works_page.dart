@@ -39,20 +39,20 @@ class _HowItWorksPageState extends State<HowItWorksPage> {
                       .changePage(currentPageIndex),
               children: [
                 InstructionWidget(
-                  assetImagePath: 'assets/png/lady.png',
+                  assetSvgPath: 'assets/svg/coffie_on_book.svg',
                   textInstruction: TEXT_INSTRUCTION_LOAD_TEXT,
                 ),
                 InstructionWidget(
-                  assetImagePath: 'assets/png/lady.png',
-                  textInstruction: TEXT_INSTRUCTION_LOAD_TEXT,
+                  assetSvgPath: 'assets/svg/progress.svg',
+                  textInstruction: TEXT_INSTRUCTION_EVALUATION,
                 ),
                 InstructionWidget(
-                  assetImagePath: 'assets/png/lady.png',
-                  textInstruction: TEXT_INSTRUCTION_LOAD_TEXT,
+                  assetSvgPath: 'assets/svg/woman_reading.svg',
+                  textInstruction: TEXT_INSTRUCTION_MUTATE,
                 ),
                 InstructionWidget(
-                  assetImagePath: 'assets/png/lady.png',
-                  textInstruction: TEXT_INSTRUCTION_LOAD_TEXT,
+                  assetSvgPath: 'assets/svg/result.svg',
+                  textInstruction: TEXT_INSTRUCTION_RESULT,
                 ),
               ],
             ),

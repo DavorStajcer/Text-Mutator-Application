@@ -14,7 +14,7 @@ void main() {
   );
 
   final TextEvaluationModel _testTextEvaluationModel =
-      TextEvaluationModel(_testText, 1, false, false);
+      TextEvaluationModel(_testText, 8, false);
 
   final int _testTextMutationsChanged = 4;
   final bool _testIncludeConjustionsChanged = true;
@@ -37,20 +37,6 @@ void main() {
       TextEvaluationLoaded(_testTextEvaluationModel),
       TextEvaluationLoaded(_testTextEvaluationModel.copyWith(
           includeConjuctions: _testIncludeConjustionsChanged))
-    ],
-  );
-
-  blocTest(
-    'should emit TextEvaluationLoaded with right TextEvaluationModel on TextSyncategorematicChanged event',
-    build: () => TextEvaluationBloc(),
-    act: (bl) => bl
-      ..add(TextEvaluationStarted(_testText))
-      ..add(TextSyncategorematicChanged(_testIncludeSyncategorematicChanged)),
-    expect: () => [
-      TextEvaluationLoaded(_testTextEvaluationModel),
-      TextEvaluationLoaded(_testTextEvaluationModel.copyWith(
-        includeSyncategorematic: _testIncludeSyncategorematicChanged,
-      ))
     ],
   );
 }

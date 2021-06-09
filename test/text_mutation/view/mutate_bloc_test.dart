@@ -36,8 +36,11 @@ void main() {
     '',
     TextDifficulty.Easy,
   );
-  final TextEvaluationModel _testTextEvaluationModel =
-      TextEvaluationModel(_testText, 4, false, false);
+  final TextEvaluationModel _testTextEvaluationModel = TextEvaluationModel(
+    _testText,
+    4,
+    false,
+  );
 
   final Word _testCleanWord = CleanWord(word: 'a', index: 0);
   final Word _testMutatedWord = MutatedWord(word: 'b', index: 0);
