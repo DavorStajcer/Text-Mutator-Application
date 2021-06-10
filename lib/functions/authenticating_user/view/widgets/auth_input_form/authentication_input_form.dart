@@ -68,6 +68,8 @@ class _AuthenticationInputFormState extends State<AuthenticationInputForm>
                 highlitedBorder: _getNFocusedBorder(),
                 normalBorder: _getNormalBorder(),
                 title: 'email',
+                textInputAction: TextInputAction.next,
+                textInputType: TextInputType.emailAddress,
               ),
               AuthInputField(
                 obscureText: true,

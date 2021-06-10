@@ -33,6 +33,7 @@ dependencies:
   firebase_core: ^1.1.0
   fl_chart: ^0.36.1
   flutter_bloc: ^7.0.0
+  flutter_native_splash: ^1.2.0
   flutter_signin_button: ^2.0.0
   flutter_svg: ^0.22.0
   flutter_switch: ^0.3.1
@@ -68,6 +69,8 @@ flutter:
     - 'assets/svg/progress.svg'
     - 'assets/svg/woman_reading.svg'
     - 'assets/svg/result.svg'
+    - 'assets/svg/no_results.svg'
+    - 'assets/svg/virus_background_new.svg'
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see

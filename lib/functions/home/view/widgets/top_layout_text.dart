@@ -15,8 +15,7 @@ class TopLayoutText extends StatelessWidget {
 
     return Padding(
       padding: EdgeInsets.symmetric(
-          vertical: _deviceSize.height / 10,
-          horizontal: _deviceSize.width / 10),
+          vertical: _deviceSize.height / 7, horizontal: _deviceSize.width / 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

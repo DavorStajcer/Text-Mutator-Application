@@ -12,6 +12,7 @@ class AuthInputField extends StatelessWidget {
     this.errorMessage,
     this.obscureText = false,
     this.textInputAction = TextInputAction.next,
+    this.textInputType,
   })  : _highlitedBorder = highlitedBorder,
         _normalBorder = normalBorder,
         super(key: key);
@@ -24,6 +25,7 @@ class AuthInputField extends StatelessWidget {
   final String? errorMessage;
   final bool obscureText;
   final TextInputAction textInputAction;
+  final TextInputType? textInputType;
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +64,7 @@ class AuthInputField extends StatelessWidget {
                     EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               ),
               textInputAction: textInputAction,
+              keyboardType: textInputType,
             ),
           ),
         ],
