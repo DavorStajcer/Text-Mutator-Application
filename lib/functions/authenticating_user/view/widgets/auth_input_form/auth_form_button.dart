@@ -27,9 +27,14 @@ class AuthFormButton extends StatelessWidget {
           if (authState is AuthFailed)
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(authState.message)));
-          else if (authState is AuthSuccesfull)
-            Navigator.of(context).pushReplacementNamed(
-                _isLogin ? ROUTE_WELCOME_PAGE : ROUTE_USERNAME_INPUT_PAGE);
+          else if (authState is AuthSuccesfull) {
+            if (authState.isEmailSignIn) {
+              Navigator.of(context).pushReplacementNamed(
+                  _isLogin ? ROUTE_WELCOME_PAGE : ROUTE_USERNAME_INPUT_PAGE);
+            } else {
+              Navigator.of(context).pushReplacementNamed(ROUTE_WELCOME_PAGE);
+            }
+          }
         },
         builder: (context, authState) {
           final bool _areAllInputsValid =

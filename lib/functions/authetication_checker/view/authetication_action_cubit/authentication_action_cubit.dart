@@ -9,4 +9,6 @@ class AuthenticationActionCubit extends Cubit<AuthenticationActionState> {
   void changeAuthenitcationAction() => emit(state is AuthenticationActionLogin
       ? AuthenticationActionSignup()
       : AuthenticationActionLogin());
+
+  void setInitial() => emit(AuthenticationActionLogin());
 }

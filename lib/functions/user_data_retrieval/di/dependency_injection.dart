@@ -1,5 +1,4 @@
 import 'package:get_it/get_it.dart';
-import '../data/datasources/user_local_datasource.dart';
 import '../data/datasources/user_web_datasource.dart';
 import '../data/repositories/user_repository_impl.dart';
 import '../data/user_data_retriver_impl.dart';
@@ -17,12 +16,9 @@ void initiDependenciesUserDataRetrieval() {
 
   _get.registerLazySingleton<UserWebDataSource>(
       () => UserWebDataSource(_get(), _get()));
-  _get.registerLazySingleton<UserLocalDataSource>(
-      () => UserLocalDataSource(_get()));
 
   //!repositories/services
   _get.registerLazySingleton<UserDataRetriver>(() => UserDataRetriverImpl(
-        _get(),
         _get(),
         _get(),
       ));

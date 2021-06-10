@@ -33,8 +33,7 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
       yield _yieldState(either);
     } else if (event is SignOut) {
       final either = await _userAuthenticator.signOut();
-      yield either.fold(
-          (l) => AuthFailed(ERROR_NO_CONNECTION), (r) => AuthBlocInitial());
+      yield _yieldStateSignOut(either);
     }
   }
 
@@ -48,7 +47,7 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
         }
         return AuthFailed('Failed to sign in user.');
       },
-      (r) => AuthSuccesfull(),
+      (r) => AuthSuccesfull(true),
     );
   }
 
@@ -62,7 +61,21 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
         }
         return AuthFailed('Failed to sign in user.');
       },
-      (bool failed) => failed ? AuthBlocInitial() : AuthSuccesfull(),
+      (bool failed) => failed ? AuthBlocInitial() : AuthSuccesfull(false),
+    );
+  }
+
+  AuthBlocState _yieldStateSignOut(Either<Failure, void> either) {
+    return either.fold(
+      (failure) {
+        if (failure is UserAuthenticationFailure) {
+          return AuthFailed(failure.message);
+        } else if (failure is NoConnetionFailure) {
+          return AuthFailed(ERROR_NO_CONNECTION);
+        }
+        return AuthFailed('Failed to sign out user.');
+      },
+      (r) => AuthBlocInitial(),
     );
   }
 }

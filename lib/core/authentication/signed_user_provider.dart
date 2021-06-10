@@ -16,7 +16,7 @@ class SignedUserProviderImpl extends SignedUserProvider {
 
   String? getCurrentUserUsername() {
     String? _userDisplayName = _firebaseAuth.currentUser?.displayName;
-    log('firebase auth' + _userDisplayName.toString());
+    log('firebase auth: ' + _userDisplayName.toString());
     _userDisplayName = _googleSignIn.currentUser?.displayName;
     log('google sign in:' + _userDisplayName.toString());
     return _userDisplayName;

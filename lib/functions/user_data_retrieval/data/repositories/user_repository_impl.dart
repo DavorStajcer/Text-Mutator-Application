@@ -1,7 +1,5 @@
 import 'dart:developer';
 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:text_mutator/core/authentication/signed_user_provider.dart';
 import '../../domain/models/app_user.dart';
 import '../../../../core/error/failures/failure.dart';

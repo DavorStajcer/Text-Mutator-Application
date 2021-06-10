@@ -22,11 +22,12 @@ class AuthenticationCheckerBloc
 
     firebaseAuth.userChanges().listen(
       (User? user) {
-        log('user changed');
-        if (user == null)
+        log('user changed: ' + user.toString());
+        if (user == null) {
           this.add(AuthenticationStateChanged(false));
-        else
+        } else {
           this.add(AuthenticationStateChanged(true));
+        }
       },
       onError: (_) {
         this.add(AuthenticationStateChanged(false));

@@ -18,7 +18,7 @@ void main() {
     _mockUserAuthenticator = MockUserAuthenticator();
   });
 
-  final String _testEmail = 'test@email.com';
+  final String _testEmail = 'test@gmail.com';
   final String _testPass = 'test_pass';
 
   void _setupMockLogin(bool outcome) {
@@ -49,7 +49,7 @@ void main() {
         return AuthBloc(_mockUserAuthenticator);
       },
       act: (ab) => ab.add(LogIn(_testEmail, _testPass)),
-      expect: () => [AuthLoading(), AuthSuccesfull()],
+      expect: () => [AuthLoading(), AuthSuccesfull(true)],
     );
 
     blocTest(
@@ -68,7 +68,6 @@ void main() {
         when(_mockUserAuthenticator.authenticateUserWithEmailAndPassword(
                 _testEmail, _testPass))
             .thenAnswer((_) async => Left(NoConnetionFailure()));
-        _setupMockLogin(false);
         return AuthBloc(_mockUserAuthenticator);
       },
       act: (ab) => ab.add(LogIn(_testEmail, _testPass)),
@@ -86,7 +85,7 @@ void main() {
         return AuthBloc(_mockUserAuthenticator);
       },
       act: (ab) => ab.add(SignUp(_testEmail, _testPass)),
-      expect: () => [AuthLoading(), AuthSuccesfull()],
+      expect: () => [AuthLoading(), AuthSuccesfull(true)],
       verify: (ab) => _mockUserAuthenticator.signUp(_testEmail, _testPass),
     );
     blocTest(

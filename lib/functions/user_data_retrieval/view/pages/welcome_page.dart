@@ -5,30 +5,21 @@ import '../../../../core/constants/pages.dart';
 import '../../../../core/widgets/dialog.dart';
 import '../user_data_bloc/user_data_bloc.dart';
 
-class WelcomePage extends StatefulWidget {
+class WelcomePage extends StatelessWidget {
   final bool isDataAllreadyLoaded;
   const WelcomePage({Key? key, this.isDataAllreadyLoaded = false})
       : super(key: key);
 
   @override
-  _WelcomePageState createState() => _WelcomePageState();
-}
+  Widget build(BuildContext context) {
+    final ThemeData _theme = Theme.of(context);
+    // final UserDataBloc _userDataBloc = BlocProvider.of<UserDataBloc>(context);
 
-class _WelcomePageState extends State<WelcomePage> {
-  @override
-  void initState() {
-    super.initState();
-    if (!widget.isDataAllreadyLoaded)
+    if (!isDataAllreadyLoaded)
       BlocProvider.of<UserDataBloc>(context).add(LoadUserData());
     else
       Future.delayed(Duration(milliseconds: 800),
           () => Navigator.of(context).pushReplacementNamed(ROUTE_HOME_PAGE));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final ThemeData _theme = Theme.of(context);
-    // final UserDataBloc _userDataBloc = BlocProvider.of<UserDataBloc>(context);
 
     return BlocListener<UserDataBloc, UserDataState>(
       listener: (context, userDataState) {

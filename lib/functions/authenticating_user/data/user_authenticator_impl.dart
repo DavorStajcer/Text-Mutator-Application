@@ -80,9 +80,17 @@ class UserAuthenticatorImpl extends UserAuthenticator {
   Future<Either<Failure, void>> signOut() async {
     if (!await _connectionChecker.hasConnection)
       return Left(NoConnetionFailure());
-    await _firebaseAuth.signOut();
-    await _googleSignIn.disconnect();
-    return Right(null);
+    try {
+      if (_firebaseAuth.currentUser != null) {
+        await _firebaseAuth.signOut();
+      } else {
+        await _googleSignIn.disconnect();
+      }
+      return Right(null);
+    } catch (err) {
+      log(err.toString());
+      return Left(ServerFailure());
+    }
   }
 
   @override
