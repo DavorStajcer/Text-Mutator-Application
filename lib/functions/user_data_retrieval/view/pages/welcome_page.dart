@@ -40,22 +40,9 @@ class WelcomePage extends StatelessWidget {
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  'assets/svg/virus_background_new.svg',
-                  height: _deviceSize.height / 4,
-                  width: _deviceSize.width * 0.7,
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                AutoSizeText(
-                  'Mutext',
-                  style: _theme.textTheme.headline1,
-                ),
-              ],
+            child: AutoSizeText(
+              'Mutext',
+              style: _theme.textTheme.headline1,
             ),
           ),
         ),

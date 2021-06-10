@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:text_mutator/core/constants/error_messages.dart';
-import 'package:text_mutator/core/error/failures/failure.dart';
-import 'package:text_mutator/functions/result_presentation/domain/models/result.dart';
-import 'package:text_mutator/functions/result_presentation/domain/repositories/result_respository.dart';
+import '../../../../../core/constants/error_messages.dart';
+import '../../../../../core/error/failures/failure.dart';
+import '../../../domain/models/result.dart';
+import '../../../domain/repositories/result_respository.dart';
 
 part 'results_graph_event.dart';
 part 'results_graph_state.dart';

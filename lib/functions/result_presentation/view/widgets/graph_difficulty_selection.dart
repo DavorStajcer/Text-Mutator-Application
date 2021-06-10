@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:text_mutator/core/widgets/app_button.dart';
-import 'package:text_mutator/functions/result_presentation/view/blocs/results_difficulty_representation_cubit/results_difficulty_representation_cubit.dart';
+import '../../../../core/widgets/app_button.dart';
+import '../blocs/results_difficulty_representation_cubit/results_difficulty_representation_cubit.dart';
 
 class GrapDifficultySelecetion extends StatelessWidget {
   const GrapDifficultySelecetion({

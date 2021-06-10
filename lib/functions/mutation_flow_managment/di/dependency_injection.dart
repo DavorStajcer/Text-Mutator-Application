@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+
 import '../view/progress_animation_cubit/progress_animation_cubit.dart';
 
 void initiDependenciesMuatationFlowManagment() {

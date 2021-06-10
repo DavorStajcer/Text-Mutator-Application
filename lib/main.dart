@@ -4,11 +4,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:text_mutator/functions/user_data_retrieval/view/pages/welcome_page.dart';
+import 'functions/user_data_retrieval/view/pages/welcome_page.dart';
 import 'functions/authenticating_user/view/auth_bloc/auth_bloc_bloc.dart';
 import 'functions/authenticating_user/view/pages/authetication_page.dart';
 import 'functions/authetication_checker/view/authentication_checker_bloc/authentication_checker_bloc.dart';
-import 'functions/home/view/pages/home_page.dart';
 import 'dependency_injection.dart';
 import 'functions/authetication_checker/view/authetication_action_cubit/authentication_action_cubit.dart';
 import 'functions/result_presentation/view/blocs/results_difficulty_representation_cubit/results_difficulty_representation_cubit.dart';
@@ -75,7 +74,7 @@ class MyApp extends StatelessWidget {
               builder: (context, themeState) {
                 return MaterialApp(
                   debugShowCheckedModeBanner: false,
-                  title: 'Flutter Demo',
+                  title: 'Mutext',
                   theme: themeState.theme,
                   onGenerateRoute: onGenerateRoute,
                   home: BlocBuilder<AuthenticationCheckerBloc,

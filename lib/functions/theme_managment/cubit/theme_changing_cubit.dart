@@ -56,9 +56,6 @@ final _lightTheme = ThemeData(
   accentColor: LIGHT_HIGHLIGHTED_COLOR,
   brightness: Brightness.light,
   backgroundColor: LIGHT_PRIMARY_COLOR,
-  // checkboxTheme: CheckboxThemeData(
-  //   checkColor: MaterialStateProperty.all(LIGHT_HIGHLIGHTED_COLOR),
-  // ),
   textTheme: TextTheme(
     bodyText1: TextStyle(
       fontSize: 16,

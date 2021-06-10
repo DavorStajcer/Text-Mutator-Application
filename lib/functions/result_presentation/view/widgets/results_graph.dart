@@ -1,10 +1,10 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:text_mutator/functions/result_presentation/domain/models/result.dart';
-import 'package:text_mutator/functions/result_presentation/view/blocs/results_difficulty_representation_cubit/results_difficulty_representation_cubit.dart';
-import 'package:text_mutator/functions/result_presentation/view/blocs/results_graph_bloc/results_graph_bloc.dart';
-import 'package:text_mutator/functions/result_presentation/view/widgets/graph_difficulty_selection.dart';
+import '../../domain/models/result.dart';
+import '../blocs/results_difficulty_representation_cubit/results_difficulty_representation_cubit.dart';
+import '../blocs/results_graph_bloc/results_graph_bloc.dart';
+import 'graph_difficulty_selection.dart';
 
 final List<Color> gradientColors = [
   const Color(0xff23b6e6),
@@ -56,10 +56,12 @@ class ResultsGraph extends StatelessWidget {
     final List<FlSpot> _graphSpots = [
       resultsToShow.isEmpty
           ? FlSpot(1, 0)
-          : FlSpot(1, resultsToShow.first.score)
+          : FlSpot(
+              1, double.parse((resultsToShow.first.score).toStringAsFixed(2)))
     ];
     for (var i = 0; i < resultsToShow.length; i++) {
-      _graphSpots.add(FlSpot(i.toDouble() + 1, resultsToShow[i].score));
+      _graphSpots.add(FlSpot(i.toDouble() + 1,
+          double.parse((resultsToShow[i].score).toStringAsFixed(2))));
     }
 
     return LineChartData(

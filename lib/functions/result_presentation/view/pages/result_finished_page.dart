@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:text_mutator/functions/theme_managment/cubit/theme_changing_cubit.dart';
+import '../../../theme_managment/cubit/theme_changing_cubit.dart';
 import '../../../../core/constants/pages.dart';
 import '../../../../core/widgets/app_button.dart';
 import '../../../../core/widgets/circular_data_represetnation_widget.dart';

@@ -2,7 +2,7 @@
     package="com.focus_app_mutator">
      <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="text_mutator"
+        android:label="Mutext"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

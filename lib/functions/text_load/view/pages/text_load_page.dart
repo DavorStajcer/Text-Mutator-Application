@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:text_mutator/core/constants/enums.dart';
+import '../../../../core/constants/enums.dart';
 import '../../../../core/widgets/app_button.dart';
 import '../../../../core/widgets/bottom_page_navitator.dart';
 import '../../../../core/widgets/dialog.dart';
@@ -145,10 +145,9 @@ class _TextLoadPageState extends State<TextLoadPage> {
       ThemeData _theme, TextValidatorBloc _textValidatorBloc) {
     return TextField(
       controller: _textEditingController,
-      textDirection: TextDirection.ltr,
       style: _theme.textTheme.bodyText1,
       onChanged: (String text) {
-        _textEditingController.text = text;
+        //_textEditingController.text = text;
         _textValidatorBloc.add(TextChanged(text));
       },
       decoration: InputDecoration(

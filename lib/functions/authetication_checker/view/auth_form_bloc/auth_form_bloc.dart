@@ -2,8 +2,9 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import '../../domain/models/auth_credentials.dart';
 import 'package:stream_transform/stream_transform.dart';
+
+import '../../domain/models/auth_credentials.dart';
 
 part 'auth_form_event.dart';
 part 'auth_form_state.dart';

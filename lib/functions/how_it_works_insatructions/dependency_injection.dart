@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+
 import 'view/instructions_cubit/instructions_cubit_cubit.dart';
 
 void initiDependenciesHowItWorksInstructions() {

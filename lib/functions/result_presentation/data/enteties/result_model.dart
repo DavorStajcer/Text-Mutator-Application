@@ -25,7 +25,7 @@ class ResultModel extends Result {
       map['wrongWords'],
       map['numberOfMarkedWords'],
       map['difficulty'],
-      '', //map['id'],
+      '',
       date: map['date'] == null ? null : (map['date'] as Timestamp).toDate(),
     );
   }

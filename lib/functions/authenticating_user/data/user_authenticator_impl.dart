@@ -1,11 +1,11 @@
 import 'dart:developer';
 
+import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../core/constants/error_messages.dart';
 import '../../../core/error/failures/failure.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:dartz/dartz.dart';
 import '../../../core/network/connection_checker.dart';
 import '../domain/contracts/user_authenticator.dart';
 
@@ -41,16 +41,14 @@ class UserAuthenticatorImpl extends UserAuthenticator {
 
   @override
   Future<Either<Failure, bool>> authenticateUserWithGoogle() async {
-    // if (!await _connectionChecker.hasConnection)
-    //   return Left(NoConnetionFailure());
+    if (!await _connectionChecker.hasConnection)
+      return Left(NoConnetionFailure());
     try {
       final _acc = await _googleSignIn.signIn();
-      log('goolge user: ' + _acc.toString());
       return Right(_acc == null);
     } on FirebaseAuthException catch (err) {
       return Left(UserAuthenticationFailure(_pickFailureMessage(err.code)));
     } catch (err) {
-      log(err.toString());
       return Left(ServerFailure());
     }
   }

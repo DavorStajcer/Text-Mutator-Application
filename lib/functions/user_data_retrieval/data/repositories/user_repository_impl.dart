@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:text_mutator/core/authentication/signed_user_provider.dart';
+import '../../../../core/authentication/signed_user_provider.dart';
 import '../../domain/models/app_user.dart';
 import '../../../../core/error/failures/failure.dart';
 import 'package:dartz/dartz.dart';

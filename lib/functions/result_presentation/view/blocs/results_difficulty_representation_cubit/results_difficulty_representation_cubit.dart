@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:text_mutator/functions/result_presentation/domain/models/result.dart';
+import '../../../domain/models/result.dart';
 
 part 'results_difficulty_representation_state.dart';
 

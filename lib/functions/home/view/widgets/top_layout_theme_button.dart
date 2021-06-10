@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_switch/flutter_switch.dart';
-import 'package:text_mutator/functions/theme_managment/cubit/theme_changing_cubit.dart';
+import '../../../theme_managment/cubit/theme_changing_cubit.dart';
 
 class TopLayoutThemeButton extends StatelessWidget {
   const TopLayoutThemeButton({Key? key}) : super(key: key);

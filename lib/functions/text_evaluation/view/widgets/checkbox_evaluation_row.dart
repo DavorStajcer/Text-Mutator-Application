@@ -34,7 +34,9 @@ class CheckBoxEvaluationRow extends StatelessWidget {
             fontSize: 20,
           ),
         ),
-        Icon(Icons.mark_chat_read_outlined),
+        SizedBox(
+          width: 10,
+        )
       ],
     );
   }

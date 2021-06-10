@@ -1,9 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:text_mutator/functions/authenticating_user/view/auth_bloc/auth_bloc_bloc.dart';
-import 'package:text_mutator/functions/authetication_checker/view/authetication_action_cubit/authentication_action_cubit.dart';
-import 'package:text_mutator/functions/result_presentation/view/blocs/results_graph_bloc/results_graph_bloc.dart';
+import '../../../authenticating_user/view/auth_bloc/auth_bloc_bloc.dart';
+import '../../../authetication_checker/view/authetication_action_cubit/authentication_action_cubit.dart';
+import '../../../result_presentation/view/blocs/results_graph_bloc/results_graph_bloc.dart';
 import '../../../../core/constants/pages.dart';
 import '../../../../core/widgets/app_button.dart';
 

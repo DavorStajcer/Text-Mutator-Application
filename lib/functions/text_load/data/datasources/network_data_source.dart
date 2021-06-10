@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:text_mutator/core/authentication/signed_user_provider.dart';
+import '../../../../core/authentication/signed_user_provider.dart';
 import '../../../../core/error/exceptions/exceptions.dart';
 import '../enteties/text_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

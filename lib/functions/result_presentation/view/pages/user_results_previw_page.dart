@@ -2,11 +2,11 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:text_mutator/functions/result_presentation/view/blocs/results_difficulty_representation_cubit/results_difficulty_representation_cubit.dart';
-import 'package:text_mutator/functions/result_presentation/view/blocs/results_graph_bloc/results_graph_bloc.dart';
-import 'package:text_mutator/functions/result_presentation/view/widgets/results_graph.dart';
-import 'package:text_mutator/functions/result_presentation/view/widgets/user_results_preview_list.dart';
-import 'package:text_mutator/functions/theme_managment/cubit/theme_changing_cubit.dart';
+import '../blocs/results_difficulty_representation_cubit/results_difficulty_representation_cubit.dart';
+import '../blocs/results_graph_bloc/results_graph_bloc.dart';
+import '../widgets/results_graph.dart';
+import '../widgets/user_results_preview_list.dart';
+import '../../../theme_managment/cubit/theme_changing_cubit.dart';
 
 class UserResultsPreviewPage extends StatelessWidget {
   UserResultsPreviewPage({Key? key}) : super(key: key);

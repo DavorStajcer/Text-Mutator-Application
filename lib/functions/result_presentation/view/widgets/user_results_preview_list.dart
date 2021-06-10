@@ -2,8 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:text_mutator/functions/result_presentation/domain/models/result.dart';
-import 'package:text_mutator/functions/result_presentation/view/blocs/results_difficulty_representation_cubit/results_difficulty_representation_cubit.dart';
+import '../../domain/models/result.dart';
+import '../blocs/results_difficulty_representation_cubit/results_difficulty_representation_cubit.dart';
 
 class UserResultsPreviewList extends StatelessWidget {
   const UserResultsPreviewList({Key? key}) : super(key: key);
@@ -25,11 +25,13 @@ class UserResultsPreviewList extends StatelessWidget {
             );
           }
 
+          final List<Result> _resultsToShow =
+              resultsDifficultyState.resultsToShow.reversed.toList();
+
           return ListView.builder(
               itemCount: resultsDifficultyState.resultsToShow.length,
               itemBuilder: (ctx, index) {
-                final Result _currentResult =
-                    resultsDifficultyState.resultsToShow[index];
+                final Result _currentResult = _resultsToShow[index];
 
                 return Container(
                   constraints: BoxConstraints(maxHeight: 100),
@@ -87,7 +89,7 @@ class UserResultsPreviewList extends StatelessWidget {
                                     FractionallySizedBox(
                                       widthFactor: _currentResult.score / 100,
                                       child: Container(
-                                        margin: EdgeInsets.all(1),
+                                        margin: EdgeInsets.all(2.2),
                                         decoration: BoxDecoration(
                                           gradient: LinearGradient(
                                             colors: [

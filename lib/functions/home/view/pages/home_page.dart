@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:text_mutator/functions/home/view/widgets/top_layout_theme_button.dart';
+import '../widgets/top_layout_theme_button.dart';
 import '../widgets/bottom_layout.dart';
 import '../widgets/top_layout_buttons.dart';
 import '../widgets/top_layout_text.dart';

@@ -33,7 +33,8 @@ dependencies:
   firebase_core: ^1.1.0
   fl_chart: ^0.36.1
   flutter_bloc: ^7.0.0
-  flutter_native_splash: ^1.2.0
+  flutter_launcher_icons: ^0.9.0
+  flutter_native_splash: ^1.1.8+4
   flutter_signin_button: ^2.0.0
   flutter_svg: ^0.22.0
   flutter_switch: ^0.3.1
@@ -53,6 +54,14 @@ dev_dependencies:
   firebase_auth_mocks: ^0.6.0
   mockito: ^5.0.7
 
+flutter_icons:
+  ios: true
+  android: true
+  image_path_ios: "assets/launcher/icon.png"
+  image_path_android: "assets/launcher/icon.png"
+  adaptive_icon_background: "assets/launcher/background.png"
+  adaptive_icon_foreground: "assets/launcher/foreground.png"
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter.
@@ -70,7 +79,6 @@ flutter:
     - 'assets/svg/woman_reading.svg'
     - 'assets/svg/result.svg'
     - 'assets/svg/no_results.svg'
-    - 'assets/svg/virus_background_new.svg'
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see

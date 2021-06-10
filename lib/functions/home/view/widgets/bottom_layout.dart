@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:text_mutator/functions/theme_managment/cubit/theme_changing_cubit.dart';
+import '../../../theme_managment/cubit/theme_changing_cubit.dart';
 
 class BottomLayout extends StatelessWidget {
   const BottomLayout({

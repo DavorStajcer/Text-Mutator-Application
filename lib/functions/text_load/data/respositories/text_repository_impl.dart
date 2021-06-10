@@ -65,9 +65,7 @@ class TextRepositoryImpl extends TextRepository {
     try {
       String _textId = text.id;
 
-      log('text id:' + _textId);
       if (_textId.length < 8) {
-        log('saving text');
         _textId = await _networkTextDataSource.saveText(
             text, _assignDifficulty(text.textDifficulty));
       }
