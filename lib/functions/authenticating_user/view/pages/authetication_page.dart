@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import '../auth_bloc/auth_bloc_bloc.dart';
 import '../widgets/auth_input_form/authentication_input_form.dart';
 import '../widgets/google_login_button.dart';
 import '../../../authetication_checker/view/auth_form_bloc/auth_form_bloc.dart';

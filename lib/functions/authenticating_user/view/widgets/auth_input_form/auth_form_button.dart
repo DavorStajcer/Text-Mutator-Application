@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:text_mutator/functions/user_data_retrieval/view/user_data_bloc/user_data_bloc.dart';
 import '../../../../../core/constants/pages.dart';
 import '../../../../../core/widgets/app_button.dart';
 import '../../auth_bloc/auth_bloc_bloc.dart';
@@ -19,6 +20,7 @@ class AuthFormButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AuthBloc _authenticationBloc = BlocProvider.of<AuthBloc>(context);
+    final UserDataBloc _userDataBloc = BlocProvider.of<UserDataBloc>(context);
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -28,9 +30,10 @@ class AuthFormButton extends StatelessWidget {
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(authState.message)));
           else if (authState is AuthSuccesfull) {
+            _userDataBloc.add(LoadUserData());
             if (authState.isEmailSignIn) {
-              Navigator.of(context).pushReplacementNamed(
-                  _isLogin ? ROUTE_WELCOME_PAGE : ROUTE_USERNAME_INPUT_PAGE);
+              Navigator.of(context)
+                  .pushReplacementNamed(ROUTE_USERNAME_INPUT_PAGE);
             } else {
               Navigator.of(context).pushReplacementNamed(ROUTE_WELCOME_PAGE);
             }

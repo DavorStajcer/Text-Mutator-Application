@@ -32,9 +32,7 @@ Route? onGenerateRoute(RouteSettings settings) {
     case ROUTE_USERNAME_INPUT_PAGE:
       return MaterialPageRoute(builder: (_) => UsernameInputPage());
     case ROUTE_WELCOME_PAGE:
-      return MaterialPageRoute(
-          builder: (_) => WelcomePage(
-              isDataAllreadyLoaded: (settings.arguments as bool?) ?? false));
+      return MaterialPageRoute(builder: (_) => WelcomePage());
     default:
       return MaterialPageRoute(builder: (_) => HomePage());
   }
