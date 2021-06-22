@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "978003045031-808i7rkd36kvmg70ob1m3fhjk5jlh6sr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.focus_app_mutator",
+            "certificate_hash": "e114b936be10ef60c6a46afc2a52039d8c5ebc8b"
+          }
+        },
+        {
           "client_id": "978003045031-pm43lsqqrq58uv6jrrrf9jala5bl7em4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

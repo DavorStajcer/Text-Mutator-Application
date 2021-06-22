@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/constants/pages.dart';
 import '../../../../core/widgets/app_button.dart';
-import '../../../../core/widgets/dialog.dart';
 import '../../../authenticating_user/view/widgets/auth_input_form/auth_input_field.dart';
 import '../../domain/models/app_user.dart';
 import '../user_data_bloc/user_data_bloc.dart';
@@ -21,8 +20,6 @@ class UsernameInputPage extends StatelessWidget {
     final UserDataBloc _userDataBloc = BlocProvider.of<UserDataBloc>(context);
     final UserDataValidatorCubit _userDataValidatorCubit =
         BlocProvider.of<UserDataValidatorCubit>(context);
-
-    // _userDataValidatorCubit.validateData(AppUser(""));
 
     log(_userDataBloc.state.toString());
 

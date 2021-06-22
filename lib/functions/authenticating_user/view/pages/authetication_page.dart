@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,6 +15,8 @@ class AuthenticationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeData _theme = Theme.of(context);
     final Size _deviceSize = MediaQuery.of(context).size;
+
+    log("Building welcome");
 
     return Scaffold(
       backgroundColor: _theme.primaryColor,
