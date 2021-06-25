@@ -1,8 +1,6 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import '../../../../core/constants/enums.dart';
+import 'package:text_mutator/core/constants/enums.dart';
 import '../../domain/model/text_evalluation_model.dart';
 import '../../../text_load/domain/models/text.dart';
 
@@ -18,10 +16,7 @@ class TextEvaluationBloc
     TextEvaluationEvent event,
   ) async* {
     if (event is TextEvaluationStarted) {
-      log(
-        'evalutation: ' + event.text.id,
-      );
-      yield TextEvaluationLoaded(TextEvaluationModel(event.text, 8, false));
+      yield TextEvaluationLoaded(TextEvaluationModel(event.text, 4, false));
     } else if (event is TextMutationsChanged) {
       yield TextEvaluationLoaded(state.textEvaluationModel
           .copyWith(numberOfMutations: event.numberOfMutations));

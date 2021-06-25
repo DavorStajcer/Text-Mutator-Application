@@ -81,15 +81,15 @@ class MyApp extends StatelessWidget {
                   home: BlocBuilder<AuthenticationCheckerBloc,
                       AuthenticationCheckerState>(
                     builder: (context, state) {
-                      BlocProvider.of<UserDataBloc>(context)
-                          .add(LoadUserData());
-
                       log('auth state:    ' + state.toString());
                       if (state is UserAuthenticated) {
+                        BlocProvider.of<UserDataBloc>(context)
+                            .add(LoadUserData());
                         return UsernameInputPage();
                       }
-                      if (state is UserNotAuthenticated)
+                      if (state is UserNotAuthenticated) {
                         return AuthenticationPage();
+                      }
                       return Scaffold(
                         backgroundColor: themeState.theme.primaryColor,
                         body: Container(),

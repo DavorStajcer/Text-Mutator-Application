@@ -41,26 +41,25 @@ class TextReadPage extends StatelessWidget {
                 ),
               ),
             ),
-            BottomPageNavigator(
-              backOnTapFunction: () => _progressAnimationCubit.pageBack(),
-              proceedeOnTapFunction: () {},
-              proceedWidget: BlocConsumer<MutateBloc, MutateState>(
-                listener: (context, mutateState) {
-                  if (mutateState is MutateError)
-                    showNotificationDialog(
-                        context, mutateState.message, _theme);
-                  else if (mutateState is MutateLoaded) {
-                    Navigator.of(context).pushReplacementNamed(
-                      ROUTE_MUTATED_TEXT_PAGE,
-                    );
-                  }
-                },
-                builder: (context, mutateState) {
-                  if (mutateState is MutateLoading)
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  return AppButton(
+            BlocConsumer<MutateBloc, MutateState>(
+              listener: (context, mutateState) {
+                if (mutateState is MutateError)
+                  showNotificationDialog(context, mutateState.message, _theme);
+                else if (mutateState is MutateLoaded) {
+                  Navigator.of(context).pushReplacementNamed(
+                    ROUTE_MUTATED_TEXT_PAGE,
+                  );
+                }
+              },
+              builder: (context, mutateState) {
+                if (mutateState is MutateLoading)
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                return BottomPageNavigator(
+                  backOnTapFunction: () => _progressAnimationCubit.pageBack(),
+                  proceedeOnTapFunction: () {},
+                  proceedWidget: AppButton(
                     text: 'Mutate.',
                     onTap: () => _mutateBloc.add(
                       MutateText(
@@ -69,10 +68,10 @@ class TextReadPage extends StatelessWidget {
                       ),
                     ),
                     widthSizeFactor: 2.8,
-                  );
-                },
-              ),
-              deviceSize: _deviceSize,
+                  ),
+                  deviceSize: _deviceSize,
+                );
+              },
             ),
           ],
         );

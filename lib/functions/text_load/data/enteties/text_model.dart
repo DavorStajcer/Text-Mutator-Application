@@ -16,7 +16,8 @@ class TextModel extends Text {
     return TextModel(
       map['text'],
       map['id'],
-      TextDifficulty.values[map['textDifficulty']],
+      // TextDifficulty.values[map['textDifficulty']]
+      TextDifficulty.Easy,
     );
   }
 

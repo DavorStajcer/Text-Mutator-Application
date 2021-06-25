@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
@@ -21,6 +23,9 @@ class MutationsSliderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log(currentSliderValue.toString());
+
+    log(maximumSliderValue.toString());
     return Column(
       children: [
         Expanded(
@@ -36,7 +41,7 @@ class MutationsSliderWidget extends StatelessWidget {
           child: Slider(
             value: currentSliderValue,
             max: maximumSliderValue,
-            min: 8,
+            min: 4,
             activeColor: _theme.textTheme.bodyText1!.color,
             inactiveColor: _theme.textTheme.bodyText1!.color,
             onChanged: (newValue) => _textEvaluationBloc.add(

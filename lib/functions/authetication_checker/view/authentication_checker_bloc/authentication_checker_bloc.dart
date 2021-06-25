@@ -34,12 +34,17 @@ class AuthenticationCheckerBloc
       },
     );
 
-    _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
-      log('google sign in changed');
-      if (account != null) {
-        this.add(AuthenticationStateChanged(true));
-      }
-    });
+    _googleSignIn.onCurrentUserChanged.listen(
+      (GoogleSignInAccount? account) {
+        log('google sign in changed');
+        if (account != null) {
+          this.add(AuthenticationStateChanged(true));
+        }
+      },
+      onError: (_) {
+        this.add(AuthenticationStateChanged(false));
+      },
+    );
     _googleSignIn.signInSilently();
   }
 

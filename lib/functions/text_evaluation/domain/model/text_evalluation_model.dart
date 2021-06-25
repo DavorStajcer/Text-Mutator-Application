@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart' show visibleForTesting;
 import '../../../text_load/domain/models/text.dart';
@@ -34,7 +36,7 @@ class TextEvaluationModel extends Equatable {
 
   int _calculateMaxNumberOfMutations(String text) {
     final List<String> _words = text.split(' ');
-    return _words.length ~/ 10;
+    return max(8, _words.length ~/ 10);
   }
 
   @visibleForTesting
