@@ -24,7 +24,7 @@ class ResultModel extends Result {
       map['mutatedWords'],
       map['wrongWords'],
       map['numberOfMarkedWords'],
-      map['difficulty'],
+      (map['difficulty'] as num).toDouble(),
       '',
       date: map['date'] == null ? null : (map['date'] as Timestamp).toDate(),
     );
