@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:text_mutator/functions/user_data_retrieval/view/user_data_bloc/user_data_bloc.dart';
@@ -27,16 +28,9 @@ class AuthFormButton extends StatelessWidget {
       child: BlocConsumer<AuthBloc, AuthBlocState>(
         listener: (context, authState) {
           if (authState is AuthFailed)
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text(authState.message)));
+            _authFailed(context, authState);
           else if (authState is AuthSuccesfull) {
-            _userDataBloc.add(LoadUserData());
-            if (authState.isEmailSignIn) {
-              Navigator.of(context)
-                  .pushReplacementNamed(ROUTE_USERNAME_INPUT_PAGE);
-            } else {
-              Navigator.of(context).pushReplacementNamed(ROUTE_WELCOME_PAGE);
-            }
+            _authSuccess(_userDataBloc, authState, context);
           }
         },
         builder: (context, authState) {
@@ -58,6 +52,23 @@ class AuthFormButton extends StatelessWidget {
         },
       ),
     );
+  }
+
+  void _authSuccess(UserDataBloc _userDataBloc, AuthSuccesfull authState,
+      BuildContext context) {
+    _userDataBloc.add(LoadUserData());
+    if (authState.isEmailSignIn) {
+      Navigator.of(context).pushReplacementNamed(ROUTE_USERNAME_INPUT_PAGE);
+    } else {
+      Navigator.of(context).pushReplacementNamed(ROUTE_WELCOME_PAGE);
+    }
+  }
+
+  void _authFailed(BuildContext context, AuthFailed authState) {
+    if (!kIsWeb) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(authState.message)));
+    }
   }
 
   void _tryToAuthenticateUser(bool _areAllInputsValid, BuildContext context,

@@ -15,6 +15,7 @@ class GoogleLogInButton extends StatelessWidget {
       builder: (context, themeState) {
         return SignInButton(
           themeState.isLight ? Buttons.Google : Buttons.GoogleDark,
+          shape: RoundedRectangleBorder(),
           onPressed: () => _authBloc.add(
             LogInGoogle(),
           ),

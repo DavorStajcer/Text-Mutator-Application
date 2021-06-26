@@ -31,6 +31,7 @@ class AppButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: _deviceSize.width / widthSizeFactor,
+        constraints: BoxConstraints(maxWidth: 200),
         margin: includeTopMaring ? EdgeInsets.only(top: 30) : null,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 abstract class ConnectionChecker {
@@ -10,6 +11,8 @@ class ConnectionCheckerImpl extends ConnectionChecker {
   ConnectionCheckerImpl(this._internetConnectionChecker);
 
   @override
-  Future<bool> get hasConnection async =>
-      await _internetConnectionChecker.hasConnection;
+  Future<bool> get hasConnection async {
+    if (kIsWeb) return true;
+    return await _internetConnectionChecker.hasConnection;
+  }
 }

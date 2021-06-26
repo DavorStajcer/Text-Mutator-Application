@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -26,9 +27,18 @@ import 'functions/user_data_retrieval/view/user_data_validator_cubit/user_data_v
 
 //flutter run -d chrome --web-renderer canvaskit --web-hostname localhost --web-port 7357
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // final _app = await Firebase.initializeApp();
+  if (!kIsWeb) {
+    await Firebase.initializeApp(
+      options: FirebaseOptions(
+        apiKey: "AIzaSyCFkAIiPvjUB-TKzVW1_7a6kc1uJn4GnrM",
+        appId: "AIzaSyApIcUpISS5mMsrv3wfotRcWVmVfb2t8lk",
+        messagingSenderId: "978003045031",
+        projectId: "focus-app-a06cb",
+      ),
+    );
+  }
 
   // log(_app.toString());
 
@@ -41,14 +51,16 @@ class Test extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: Firebase.initializeApp(
-          options: FirebaseOptions(
-            apiKey: "AIzaSyCFkAIiPvjUB-TKzVW1_7a6kc1uJn4GnrM",
-            appId: "1:978003045031:web:33923d84ce80899d20c982",
-            messagingSenderId: "978003045031",
-            projectId: "focus-app-a06cb",
-          ),
-        ),
+        future: !kIsWeb
+            ? Future.delayed(Duration.zero)
+            : Firebase.initializeApp(
+                options: FirebaseOptions(
+                  apiKey: "AIzaSyCFkAIiPvjUB-TKzVW1_7a6kc1uJn4GnrM",
+                  appId: "1:978003045031:web:33923d84ce80899d20c982",
+                  messagingSenderId: "978003045031",
+                  projectId: "focus-app-a06cb",
+                ),
+              ),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             log('DONE LOADING!');
