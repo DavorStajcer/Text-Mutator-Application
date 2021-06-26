@@ -67,7 +67,9 @@ class MutatedTextRepositoryImpl extends MutatedTextRepository {
     'or',
     'yet',
     'and',
-    'so'
+    'so',
+    'a',
+    'the',
   ];
 
   //Ubacuje se broj mutiranih riječi po min(brojMutacija, duzinaTekstaZaMutiranje)
@@ -104,9 +106,11 @@ class MutatedTextRepositoryImpl extends MutatedTextRepository {
 
   int _calculateNumberOfConjuctionMutations(
       int _numberOfMutationsFromServer, List<String> _mutations) {
+    final Random _rand = Random();
+
     final int _numberOfMutationsFromConjuctions =
         (_numberOfMutationsFromServer * 0.1).ceil();
-    final Random _rand = Random();
+
     for (var i = 0; i < _numberOfMutationsFromConjuctions; i++) {
       _mutations.add(
         conjuctions.elementAt(

@@ -21,11 +21,56 @@ import 'functions/result_presentation/view/blocs/result_bloc/result_bloc.dart';
 import 'functions/user_data_retrieval/view/user_data_bloc/user_data_bloc.dart';
 import 'functions/user_data_retrieval/view/user_data_validator_cubit/user_data_validator_cubit.dart';
 
-void main() async {
+// flutter run -d chrome --web-renderer canvaskit
+// flutter build web --web-renderer canvaskit --release
+
+//flutter run -d chrome --web-renderer canvaskit --web-hostname localhost --web-port 7357
+
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  // final _app = await Firebase.initializeApp();
+
+  // log(_app.toString());
 
   runApp(MyApp());
+}
+
+class Test extends StatelessWidget {
+  const Test({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+        future: Firebase.initializeApp(
+          options: FirebaseOptions(
+            apiKey: "AIzaSyCFkAIiPvjUB-TKzVW1_7a6kc1uJn4GnrM",
+            appId: "1:978003045031:web:33923d84ce80899d20c982",
+            messagingSenderId: "978003045031",
+            projectId: "focus-app-a06cb",
+          ),
+        ),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            log('DONE LOADING!');
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'Mutext',
+              //onGenerateRoute: onGenerateRoute,
+              home: Scaffold(
+                backgroundColor: Colors.green,
+                body: Container(
+                  child: Center(
+                    child: Text(
+                        ' IHFGUIFHG UGH RGUR GURG RG RUGNB REUGNER UGNR GURE NGEURNG REUNG REUGNRE UGNER GR'),
+                  ),
+                ),
+              ),
+            );
+          }
+          log('LOADING....');
+          return Container();
+        });
+  }
 }
 
 class MyApp extends StatelessWidget {
