@@ -14,7 +14,7 @@ void main() {
   );
 
   final TextEvaluationModel _testTextEvaluationModel =
-      TextEvaluationModel(_testText, 8, false);
+      TextEvaluationModel(_testText, 4, false);
 
   final int _testTextMutationsChanged = 4;
   final bool _testIncludeConjustionsChanged = true;

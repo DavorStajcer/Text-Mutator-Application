@@ -15,7 +15,7 @@ void main() {
       // arrange
       textEvaluationModel = TextEvaluationModel(
         _testText,
-        1,
+        8,
         false,
       );
       // act
@@ -30,7 +30,7 @@ void main() {
       // arrange
       textEvaluationModel = TextEvaluationModel(
         _testText,
-        1,
+        8,
         true,
       );
       // act
