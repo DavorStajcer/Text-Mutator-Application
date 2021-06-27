@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../functions/authenticating_user/view/pages/authetication_page.dart';
@@ -14,26 +15,38 @@ import '../constants/pages.dart';
 Route? onGenerateRoute(RouteSettings settings) {
   switch (settings.name) {
     case ROUTE_HOME_PAGE:
-      return MaterialPageRoute(builder: (_) => HomePage());
-    case ROUTE_RESULTS_PAGE:
-      return MaterialPageRoute(builder: (_) => HomePage());
+      return _createRoute(HomePage());
+    // case ROUTE_RESULTS_PAGE:
+    //   return _createRoute( HomePage());
     case ROUTE_MUTATION_FLOW_PAGE:
-      return MaterialPageRoute(builder: (_) => MutationFlowPage());
+      return _createRoute(MutationFlowPage());
     case ROUTE_MUTATED_TEXT_PAGE:
-      return MaterialPageRoute(builder: (_) => MutatedTextPage());
+      return _createRoute(MutatedTextPage());
     case ROUTE_RESULT_FINISHED_PAGE:
-      return MaterialPageRoute(builder: (_) => ResultFinishedPage());
+      return _createRoute(ResultFinishedPage());
     case ROUTE_RESULT_PREVIEW_PAGE:
-      return MaterialPageRoute(builder: (_) => PreviewPage());
+      return _createRoute(PreviewPage());
     case ROUTE_USER_RESULTS_PREVIEW_PAGE:
-      return MaterialPageRoute(builder: (_) => UserResultsPreviewPage());
+      return _createRoute(UserResultsPreviewPage());
     case ROUTE_AUTHENTICATION_PAGE:
-      return MaterialPageRoute(builder: (_) => AuthenticationPage());
+      return _createRoute(AuthenticationPage());
     case ROUTE_USERNAME_INPUT_PAGE:
-      return MaterialPageRoute(builder: (_) => UsernameInputPage());
+      return _createRoute(UsernameInputPage());
     case ROUTE_WELCOME_PAGE:
-      return MaterialPageRoute(builder: (_) => WelcomePage());
+      return _createRoute(WelcomePage());
     default:
-      return MaterialPageRoute(builder: (_) => HomePage());
+      return _createRoute(HomePage());
   }
+}
+
+Route _createRoute(Widget child) {
+  if (!kIsWeb) {
+    return MaterialPageRoute(builder: (_) => child);
+  }
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => child,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      return child;
+    },
+  );
 }

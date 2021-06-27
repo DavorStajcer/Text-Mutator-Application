@@ -1,11 +1,14 @@
 import 'dart:developer';
 
+import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:text_mutator/core/widgets/scaffold_web.dart';
 import 'package:text_mutator/functions/user_data_retrieval/view/pages/username_input_page.dart';
+import 'package:text_mutator/system_orientation_mixin.dart';
 import 'functions/user_data_retrieval/view/pages/welcome_page.dart';
 import 'functions/authenticating_user/view/auth_bloc/auth_bloc_bloc.dart';
 import 'functions/authenticating_user/view/pages/authetication_page.dart';
@@ -42,50 +45,13 @@ void main() async {
 
   // log(_app.toString());
 
-  runApp(MyApp());
+  runApp(DevicePreview(
+    enabled: false, //!kReleaseMode,
+    builder: (ctx) => MyApp(),
+  ));
 }
 
-class Test extends StatelessWidget {
-  const Test({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: !kIsWeb
-            ? Future.delayed(Duration.zero)
-            : Firebase.initializeApp(
-                options: FirebaseOptions(
-                  apiKey: "AIzaSyCFkAIiPvjUB-TKzVW1_7a6kc1uJn4GnrM",
-                  appId: "1:978003045031:web:33923d84ce80899d20c982",
-                  messagingSenderId: "978003045031",
-                  projectId: "focus-app-a06cb",
-                ),
-              ),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            log('DONE LOADING!');
-            return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              title: 'Mutext',
-              //onGenerateRoute: onGenerateRoute,
-              home: Scaffold(
-                backgroundColor: Colors.green,
-                body: Container(
-                  child: Center(
-                    child: Text(
-                        ' IHFGUIFHG UGH RGUR GURG RG RUGNB REUGNER UGNR GURE NGEURNG REUNG REUGNRE UGNER GR'),
-                  ),
-                ),
-              ),
-            );
-          }
-          log('LOADING....');
-          return Container();
-        });
-  }
-}
-
-class MyApp extends StatelessWidget {
+class MyApp extends StatelessWidget with PortraitModeMixin {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<void>(
@@ -135,28 +101,36 @@ class MyApp extends StatelessWidget {
                   title: 'Mutext',
                   theme: themeState.theme,
                   onGenerateRoute: onGenerateRoute,
-                  home: BlocBuilder<AuthenticationCheckerBloc,
-                      AuthenticationCheckerState>(
-                    builder: (context, state) {
-                      log('auth state:    ' + state.toString());
-                      if (state is UserAuthenticated) {
-                        BlocProvider.of<UserDataBloc>(context)
-                            .add(LoadUserData());
-                        return UsernameInputPage();
-                      }
-                      if (state is UserNotAuthenticated) {
-                        return AuthenticationPage();
-                      }
-                      return Scaffold(
-                        backgroundColor: themeState.theme.primaryColor,
-                        body: Container(),
-                      );
-                    },
-                  ),
+                  home: kIsWeb
+                      ? _buildWebStart(themeState)
+                      : _buildMobileStart(themeState),
                 );
               },
             ),
           );
         });
+  }
+
+  Widget _buildWebStart(ThemeChangingState themeState) {
+    return ScaffoldWeb();
+  }
+
+  Widget _buildMobileStart(ThemeChangingState themeState) {
+    return BlocBuilder<AuthenticationCheckerBloc, AuthenticationCheckerState>(
+      builder: (context, state) {
+        log('auth state:    ' + state.toString());
+        if (state is UserAuthenticated) {
+          BlocProvider.of<UserDataBloc>(context).add(LoadUserData());
+          return UsernameInputPage();
+        }
+        if (state is UserNotAuthenticated) {
+          return AuthenticationPage();
+        }
+        return Scaffold(
+          backgroundColor: themeState.theme.primaryColor,
+          body: Container(),
+        );
+      },
+    );
   }
 }

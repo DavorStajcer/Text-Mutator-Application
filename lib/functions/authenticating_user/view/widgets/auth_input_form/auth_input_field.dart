@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class AuthInputField extends StatelessWidget {
@@ -30,7 +31,9 @@ class AuthInputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(4.0),
+      padding: kIsWeb
+          ? const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10)
+          : const EdgeInsets.all(4.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,22 +52,25 @@ class AuthInputField extends StatelessWidget {
           ),
           Flexible(
             flex: 4,
-            child: TextField(
-              onChanged: onChanged,
-              obscureText: obscureText,
-              style: theme.textTheme.bodyText1!
-                  .copyWith(color: theme.accentColor, wordSpacing: 1),
-              decoration: InputDecoration(
-                focusedBorder: _highlitedBorder,
-                border: _normalBorder,
-                enabledBorder: _normalBorder,
-                errorText: errorMessage,
-                focusColor: theme.accentColor,
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 400),
+              child: TextField(
+                onChanged: onChanged,
+                obscureText: obscureText,
+                style: theme.textTheme.bodyText1!
+                    .copyWith(color: theme.accentColor, wordSpacing: 1),
+                decoration: InputDecoration(
+                  focusedBorder: _highlitedBorder,
+                  border: _normalBorder,
+                  enabledBorder: _normalBorder,
+                  errorText: errorMessage,
+                  focusColor: theme.accentColor,
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                ),
+                textInputAction: textInputAction,
+                keyboardType: textInputType,
               ),
-              textInputAction: textInputAction,
-              keyboardType: textInputType,
             ),
           ),
         ],

@@ -1,4 +1,4 @@
-import 'dart:math';
+import 'dart:developer';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/foundation.dart';
@@ -17,6 +17,8 @@ class AuthenticationPage extends StatelessWidget {
     final ThemeData _theme = Theme.of(context);
     final Size _deviceSize = MediaQuery.of(context).size;
 
+    log("is building web: " + kIsWeb.toString());
+
     return Scaffold(
       backgroundColor: _theme.primaryColor,
       body: SingleChildScrollView(
@@ -30,7 +32,7 @@ class AuthenticationPage extends StatelessWidget {
   Widget _buildWeb(Size deviceSize, ThemeData theme) {
     return Container(
       alignment: Alignment.center,
-      height: 1000,
+      height: 900,
       width: deviceSize.width,
       child: Column(
         children: [
@@ -70,37 +72,35 @@ class AuthenticationPage extends StatelessWidget {
     return SizedBox(
       height: _deviceSize.height,
       width: _deviceSize.width,
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(14.0),
-          child: Column(
-            children: [
-              Flexible(
-                flex: 2,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: AutoSizeText(
-                    'Welcome Back!',
-                    textAlign: TextAlign.left,
-                    style: _theme.textTheme.headline1,
-                    maxLines: 1,
-                  ),
+      child: Padding(
+        padding: const EdgeInsets.all(14.0),
+        child: Column(
+          children: [
+            Flexible(
+              flex: 2,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: AutoSizeText(
+                  'Welcome Back!',
+                  textAlign: TextAlign.left,
+                  style: _theme.textTheme.headline1,
+                  maxLines: 1,
                 ),
               ),
-              Flexible(
-                flex: 11,
-                child: MultiBlocProvider(providers: [
-                  BlocProvider(
-                    create: (context) => GetIt.I<AuthFormBloc>(),
-                  ),
-                ], child: AuthenticationInputForm(theme: _theme)),
-              ),
-              Flexible(
-                flex: 1,
-                child: GoogleLogInButton(),
-              )
-            ],
-          ),
+            ),
+            Flexible(
+              flex: 11,
+              child: MultiBlocProvider(providers: [
+                BlocProvider(
+                  create: (context) => GetIt.I<AuthFormBloc>(),
+                ),
+              ], child: AuthenticationInputForm(theme: _theme)),
+            ),
+            Flexible(
+              flex: 1,
+              child: GoogleLogInButton(),
+            )
+          ],
         ),
       ),
     );
