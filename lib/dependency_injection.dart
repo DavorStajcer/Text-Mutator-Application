@@ -2,12 +2,12 @@ import 'dart:math';
 
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:text_mutator/functions/cursor_animation/dependecy_injection.dart';
 import 'functions/user_data_retrieval/di/dependency_injection.dart';
 import 'core/local_storage_manager/dependency_injection.dart';
 import 'core/network/dependency_injection.dart';
 import 'functions/authenticating_user/di/dependency_injection.dart';
 import 'functions/authetication_checker/di/dependency_injection.dart';
-import 'functions/home/di/dependecy_injection.dart';
 import 'functions/how_it_works_insatructions/dependency_injection.dart';
 import 'functions/mutation_flow_managment/di/dependency_injection.dart';
 import 'functions/result_presentation/di/dependency_injection.dart';
@@ -31,7 +31,6 @@ void _initializeAllDependencies(SharedPreferences sharedPreferences) {
   initiDependenciesAuthenticationChecker();
   initiDependenciesCoreLocalStorageManager(sharedPreferences);
   initiDependenciesCoreNetwork();
-  initiDependenciesHome();
   initiDependenciesHowItWorksInstructions();
   initiDependenciesMuatationFlowManagment();
   initiDependenciesResultResporesentation();
@@ -39,5 +38,6 @@ void _initializeAllDependencies(SharedPreferences sharedPreferences) {
   initiDependenciesTextLoad();
   initiDependenciesTextMutation();
   initiDependenciesThemeManagment();
+  initiDependenciesMouseCursor();
   GetIt.I.registerLazySingleton<Random>(() => Random());
 }

@@ -1,5 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+import 'app_button_web.dart';
 
 class AppButton extends StatelessWidget {
   const AppButton({
@@ -29,30 +32,40 @@ class AppButton extends StatelessWidget {
 
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        width: _deviceSize.width / widthSizeFactor,
-        constraints: BoxConstraints(maxWidth: 200),
-        margin: includeTopMaring ? EdgeInsets.only(top: 30) : null,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(
-            Radius.circular(60),
-          ),
-          border: Border.all(
-            color: _buttonColor,
-            width: 3,
-          ),
+      child: kIsWeb
+          ? _buildWeb(_deviceSize, _buttonColor, _theme)
+          : _buildMobile(_deviceSize, _buttonColor, _theme),
+    );
+  }
+
+  Widget _buildWeb(Size _deviceSize, Color _buttonColor, ThemeData _theme) {
+    return AppButtonWeb(text: text, autoSizeGroup: autoSizeGroup);
+  }
+
+  Widget _buildMobile(Size _deviceSize, Color _buttonColor, ThemeData _theme) {
+    return Container(
+      width: _deviceSize.width / widthSizeFactor,
+      constraints: BoxConstraints(maxWidth: 200),
+      margin: includeTopMaring ? EdgeInsets.only(top: 30) : null,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(
+          Radius.circular(60),
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-          child: AutoSizeText(
-            text,
-            maxLines: 1,
-            textAlign: TextAlign.center,
-            group: autoSizeGroup,
-            style: _theme.textTheme.bodyText1!.copyWith(
-              color: _buttonColor,
-              fontWeight: FontWeight.w800,
-            ),
+        border: Border.all(
+          color: _buttonColor,
+          width: 3,
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        child: AutoSizeText(
+          text,
+          maxLines: 1,
+          textAlign: TextAlign.center,
+          group: autoSizeGroup,
+          style: _theme.textTheme.bodyText1!.copyWith(
+            color: _buttonColor,
+            fontWeight: FontWeight.w800,
           ),
         ),
       ),
