@@ -15,7 +15,9 @@ class AuthenticationCheckerBloc
 
   AuthenticationCheckerBloc(FirebaseAuth firebaseAuth, this._googleSignIn)
       : super(AuthenticationCheckerInitial()) {
-    // firebaseAuth.signOut();
+    //TODO: just for testing, remove later
+    firebaseAuth.signOut();
+    _googleSignIn.signOut();
 
     // if (firebaseAuth.currentUser != null)
     //   this.add(AuthenticationStateChanged(true));

@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:text_mutator/core/widgets/scaffold_web.dart';
 import 'package:text_mutator/functions/cursor_animation/mouse_cursor_bloc/mouse_cursor_bloc.dart';
+import 'package:text_mutator/functions/home/view/pages/home_page.dart';
 import 'package:text_mutator/functions/user_data_retrieval/view/pages/username_input_page.dart';
 import 'package:text_mutator/system_orientation_mixin.dart';
 import 'functions/user_data_retrieval/view/pages/welcome_page.dart';
@@ -116,7 +117,22 @@ class MyApp extends StatelessWidget with PortraitModeMixin {
   }
 
   Widget _buildWebStart(ThemeChangingState themeState) {
-    return ScaffoldWeb();
+    return BlocBuilder<AuthenticationCheckerBloc, AuthenticationCheckerState>(
+      builder: (context, state) {
+        log('auth state:    ' + state.toString());
+        if (state is UserAuthenticated) {
+          BlocProvider.of<UserDataBloc>(context).add(LoadUserData());
+          return UsernameInputPage();
+        }
+        if (state is UserNotAuthenticated) {
+          return HomePage();
+        }
+        return Scaffold(
+          backgroundColor: themeState.theme.primaryColor,
+          body: Container(),
+        );
+      },
+    );
   }
 
   Widget _buildMobileStart(ThemeChangingState themeState) {

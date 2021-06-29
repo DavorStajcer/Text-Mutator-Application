@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:text_mutator/core/widgets/scaffold_web.dart';
 import 'package:text_mutator/functions/home/view/widgets/web/home_page_description_web.dart';
 import 'package:text_mutator/functions/home/view/widgets/web/home_page_top_web.dart';
 import '../widgets/top_layout_theme_button.dart';
@@ -20,20 +21,22 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildWeb(ThemeData theme, BuildContext context) {
-    return SingleChildScrollView(
-      child: SizedBox(
-        height: 2400,
-        width: double.infinity,
-        child: Column(
-          children: [
-            HomePageTopWeb(),
-            SizedBox(
-              height: 100,
-            ),
-            Expanded(
-              child: HomePageDescriptionWeb(),
-            ),
-          ],
+    return ScaffoldWeb(
+      body: SingleChildScrollView(
+        child: SizedBox(
+          height: 2400,
+          width: double.infinity,
+          child: Column(
+            children: [
+              HomePageTopWeb(),
+              SizedBox(
+                height: 100,
+              ),
+              Expanded(
+                child: HomePageDescriptionWeb(),
+              ),
+            ],
+          ),
         ),
       ),
     );

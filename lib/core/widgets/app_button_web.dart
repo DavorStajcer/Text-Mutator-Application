@@ -8,10 +8,12 @@ class AppButtonWeb extends StatefulWidget {
     Key? key,
     required this.text,
     required this.autoSizeGroup,
+    required this.textStyle,
   }) : super(key: key);
 
   final String text;
   final AutoSizeGroup? autoSizeGroup;
+  final TextStyle textStyle;
 
   @override
   _AppButtonWebState createState() => _AppButtonWebState();
@@ -22,7 +24,6 @@ class _AppButtonWebState extends State<AppButtonWeb> {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData _theme = Theme.of(context);
     final MouseCursorBloc _mouseCursorBloc =
         BlocProvider.of<MouseCursorBloc>(context);
 
@@ -37,7 +38,9 @@ class _AppButtonWebState extends State<AppButtonWeb> {
         onExit: (e) => _mouseRegionExited(_mouseCursorBloc),
         child: LayoutBuilder(builder: (ctx, contraints) {
           return Container(
-            constraints: BoxConstraints(maxWidth: 200),
+            constraints: BoxConstraints(
+              maxWidth: 400,
+            ),
             decoration: BoxDecoration(
                 // borderRadius: BorderRadius.all(
                 //   Radius.circular(60),
@@ -54,10 +57,7 @@ class _AppButtonWebState extends State<AppButtonWeb> {
                 maxLines: 1,
                 textAlign: TextAlign.center,
                 group: widget.autoSizeGroup,
-                style: _theme.textTheme.bodyText1!.copyWith(
-                  color: _theme.accentColor,
-                  fontWeight: FontWeight.w800,
-                ),
+                style: widget.textStyle,
               ),
             ),
           );

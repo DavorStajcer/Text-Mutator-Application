@@ -15,6 +15,15 @@ class UserDataBloc extends Bloc<UserDataEvent, UserDataState> {
   UserDataBloc(this._userDataRepository) : super(UserDataInitial());
 
   @override
+  void onChange(Change<UserDataState> change) {
+    print('current state UDB:' +
+        change.currentState.toString() +
+        'next state:' +
+        change.nextState.toString());
+    super.onChange(change);
+  }
+
+  @override
   Stream<UserDataState> mapEventToState(
     UserDataEvent event,
   ) async* {

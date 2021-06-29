@@ -7,8 +7,10 @@ import 'package:text_mutator/functions/cursor_animation/mouse_cursor_bloc/mouse_
 import 'package:text_mutator/functions/home/view/widgets/top_layout_theme_button.dart';
 
 class ScaffoldWeb extends StatefulWidget {
+  final Widget body;
   const ScaffoldWeb({
     Key? key,
+    required this.body,
   }) : super(key: key);
 
   @override
@@ -39,39 +41,40 @@ class _ScaffoldWebState extends State<ScaffoldWeb>
     final ThemeData _theme = Theme.of(context);
 
     return Scaffold(
-      drawer: GestureDetector(
-        onHorizontalDragUpdate: (_) => null,
-        child: Row(
-          children: [
-            Drawer(
-              child: Column(children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text('Home page'),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text('Practice'),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text('Results'),
-                ),
-              ]),
-            ),
-          ],
-        ),
-      ),
-      appBar: AppBar(
-        //title: Text("MUTEXT"),
-        backgroundColor: _theme.primaryColor,
-        actions: [
-          TopLayoutThemeButton(),
-          SizedBox(
-            width: 100,
-          )
-        ],
-      ),
+      // drawer:
+      //  GestureDetector(
+      //   onHorizontalDragUpdate: (_) => null,
+      //   child: Row(
+      //     children: [
+      //       Drawer(
+      //         child: Column(children: [
+      //           Padding(
+      //             padding: const EdgeInsets.all(8.0),
+      //             child: Text('Home page'),
+      //           ),
+      //           Padding(
+      //             padding: const EdgeInsets.all(8.0),
+      //             child: Text('Practice'),
+      //           ),
+      //           Padding(
+      //             padding: const EdgeInsets.all(8.0),
+      //             child: Text('Results'),
+      //           ),
+      //         ]),
+      //       ),
+      //     ],
+      //   ),
+      // ),
+      // appBar: AppBar(
+      //   //title: Text("MUTEXT"),
+      //   backgroundColor: _theme.primaryColor,
+      //   actions: [
+      //     TopLayoutThemeButton(),
+      //     SizedBox(
+      //       width: 100,
+      //     )
+      //   ],
+      // ),
       backgroundColor: _theme.primaryColor,
       body: MouseRegion(
         cursor: SystemMouseCursors.none,
@@ -84,9 +87,11 @@ class _ScaffoldWebState extends State<ScaffoldWeb>
         }),
         child: Stack(
           children: [
-            Navigator(
-              initialRoute: ROUTE_HOME_PAGE,
-              onGenerateRoute: onGenerateRoute,
+            widget.body,
+            Positioned(
+              right: 100,
+              top: 40,
+              child: TopLayoutThemeButton(),
             ),
             BlocListener<MouseCursorBloc, MouseCursorState>(
               listener: (context, state) {

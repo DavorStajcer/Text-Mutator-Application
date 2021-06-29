@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class ConfirmPasswordAnimatedField extends StatelessWidget {
@@ -12,19 +13,24 @@ class ConfirmPasswordAnimatedField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return
-        // SizeTransition(
-        //   sizeFactor: Tween<double>(begin: 0, end: 1).animate(
-        //     CurvedAnimation(
-        //       parent: animationController,
-        //       curve: Curves.easeOut,
-        //       reverseCurve: Curves.easeIn,
-        //     ),
-        //   ),
-        //   // width: double.infinity,
-        //   // height: _isLogin ? 0 : _inputFiledSize,
-        //   child:
-        FadeTransition(
+    return kIsWeb
+        ? _fadeTransition()
+        : SizeTransition(
+            sizeFactor: Tween<double>(begin: 0, end: 1).animate(
+              CurvedAnimation(
+                parent: animationController,
+                curve: Curves.easeOut,
+                reverseCurve: Curves.easeIn,
+              ),
+            ),
+            // width: double.infinity,
+            // height: _isLogin ? 0 : _inputFiledSize,
+            child: _fadeTransition(),
+          );
+  }
+
+  FadeTransition _fadeTransition() {
+    return FadeTransition(
       opacity: Tween<double>(begin: 0, end: 1).animate(
         CurvedAnimation(
           parent: animationController,

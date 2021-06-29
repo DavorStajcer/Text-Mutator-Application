@@ -6,7 +6,7 @@ const Color FADED_TEXT = Color.fromRGBO(112, 112, 112, 0.66);
 const Color LIGHT_PRIMARY_COLOR = Color.fromRGBO(252, 252, 252, 1);
 const Color LIGHT_TEXT_COLOR = Color.fromRGBO(68, 68, 68, 1);
 
-const Color LIGHT_HIGHLIGHTED_COLOR = Color.fromRGBO(53, 89, 171, 1);
+const Color LIGHT_HIGHLIGHTED_COLOR = Color.fromRGBO(43, 49, 200, 1);
 const Color LIGHT_WRONGLY_SELECTED_COLOR = Color.fromRGBO(210, 31, 79, 0.94);
 const Color LIGHT_MISSED_SELECTION_COLOR = Color.fromRGBO(242, 123, 3, 1);
 

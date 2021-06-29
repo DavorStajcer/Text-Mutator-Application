@@ -2,8 +2,10 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:text_mutator/core/constants/pages.dart';
 import 'package:text_mutator/core/widgets/app_button.dart';
 import 'package:text_mutator/functions/theme_managment/cubit/theme_changing_cubit.dart';
+import 'package:text_mutator/functions/user_data_retrieval/view/user_data_bloc/user_data_bloc.dart';
 
 class HomePageTopWeb extends StatelessWidget {
   const HomePageTopWeb({
@@ -70,13 +72,53 @@ class HomePageTopWeb extends StatelessWidget {
                   style: _theme.textTheme.headline2,
                 ),
                 SizedBox(
-                  height: 300,
+                  height: 120,
+                ),
+                BlocBuilder<UserDataBloc, UserDataState>(
+                    builder: (context, userDataState) {
+                  if (userDataState is UserDataLoaded) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        AutoSizeText(
+                          'Hello, ${userDataState.user.username}! ',
+                          style: _theme.textTheme.headline2,
+                        ),
+                      ],
+                    );
+                  }
+
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      AutoSizeText(
+                        'Hello, practice anonimus, or',
+                        style: _theme.textTheme.headline2,
+                      ),
+                      AppButton(
+                        text: 'join',
+                        textStyle: _theme.textTheme.headline2!
+                            .copyWith(color: _theme.accentColor),
+                        onTap: () => Navigator.of(context)
+                            .pushNamed(ROUTE_AUTHENTICATION_PAGE),
+                      ),
+                      AutoSizeText(
+                        'and track results!',
+                        style: _theme.textTheme.headline2,
+                      ),
+                    ],
+                  );
+                }),
+                SizedBox(
+                  height: 80,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     AppButton(
                       text: 'Practice reading.',
+                      textStyle: _theme.textTheme.headline2!
+                          .copyWith(color: _theme.accentColor),
                       onTap: () {},
                     ),
                     SizedBox(
@@ -84,6 +126,9 @@ class HomePageTopWeb extends StatelessWidget {
                     ),
                     AppButton(
                       text: 'How does it work?',
+                      textStyle: _theme.textTheme.headline2!.copyWith(
+                        color: _theme.accentColor,
+                      ),
                       onTap: () {},
                     ),
                   ],

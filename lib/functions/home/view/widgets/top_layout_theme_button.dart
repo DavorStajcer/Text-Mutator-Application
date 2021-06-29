@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_switch/flutter_switch.dart';
+import 'package:text_mutator/functions/authenticating_user/view/auth_bloc/auth_bloc_bloc.dart';
 import '../../../theme_managment/cubit/theme_changing_cubit.dart';
 
 class TopLayoutThemeButton extends StatelessWidget {
@@ -12,7 +13,27 @@ class TopLayoutThemeButton extends StatelessWidget {
     final Size _deviceSize = MediaQuery.of(context).size;
     final ThemeChangingCubit _themeChangingCubit =
         BlocProvider.of<ThemeChangingCubit>(context);
+    final AuthBloc _authBloc = BlocProvider.of<AuthBloc>(context);
 
+    return kIsWeb
+        ? Row(
+            children: [
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: IconButton(
+                  onPressed: () => _authBloc.add(SignOut()),
+                  icon: Icon(Icons.login_outlined),
+                  color: Theme.of(context).accentColor,
+                ),
+              ),
+              _buildThemeChangeButton(_deviceSize, _themeChangingCubit),
+            ],
+          )
+        : _buildThemeChangeButton(_deviceSize, _themeChangingCubit);
+  }
+
+  MouseRegion _buildThemeChangeButton(
+      Size _deviceSize, ThemeChangingCubit _themeChangingCubit) {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: Container(

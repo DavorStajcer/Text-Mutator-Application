@@ -60,7 +60,9 @@ class AuthFormButton extends StatelessWidget {
     if (authState.isEmailSignIn) {
       Navigator.of(context).pushReplacementNamed(ROUTE_USERNAME_INPUT_PAGE);
     } else {
-      Navigator.of(context).pushReplacementNamed(ROUTE_WELCOME_PAGE);
+      print("AUTH SUCCESS WEB!");
+      Navigator.of(context)
+          .pushReplacementNamed(kIsWeb ? ROUTE_HOME_PAGE : ROUTE_WELCOME_PAGE);
     }
   }
 
@@ -69,6 +71,7 @@ class AuthFormButton extends StatelessWidget {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(authState.message)));
     }
+    print("AUTH FAILED!");
   }
 
   void _tryToAuthenticateUser(bool _areAllInputsValid, BuildContext context,

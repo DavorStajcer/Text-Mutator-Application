@@ -5,7 +5,6 @@ import 'package:line_icons/line_icon.dart';
 
 import '../../../../authetication_checker/view/auth_form_bloc/auth_form_bloc.dart';
 import '../../../../authetication_checker/view/authetication_action_cubit/authentication_action_cubit.dart';
-import 'package:line_icons/line_icons.dart';
 import '../auth_text_button.dart';
 import 'auth_form_button.dart';
 import 'auth_input_field.dart';
@@ -89,15 +88,18 @@ class _AuthenticationInputFormState extends State<AuthenticationInputForm>
                       _isLogin ? TextInputAction.done : TextInputAction.next,
                 ),
 
-                // if (kIsWeb && !_isLogin)
-                //   _buildConfirmPassowrd(_authFormBloc, authFormState),
-
-                Center(
-                  child: ConfirmPasswordAnimatedField(
-                      animationController: _animationController,
-                      child:
-                          _buildConfirmPassowrd(_authFormBloc, authFormState)),
-                ),
+                if (kIsWeb)
+                  Center(
+                    child: ConfirmPasswordAnimatedField(
+                        animationController: _animationController,
+                        child: _buildConfirmPassowrd(
+                            _authFormBloc, authFormState)),
+                  ),
+                if (!kIsWeb)
+                  ConfirmPasswordAnimatedField(
+                    animationController: _animationController,
+                    child: _buildConfirmPassowrd(_authFormBloc, authFormState),
+                  ),
 
                 AuthFormButton(
                   authFormState: authFormState,

@@ -13,6 +13,7 @@ class AppButton extends StatelessWidget {
     this.widthSizeFactor = 2.2,
     this.isAvailable = true,
     this.includeTopMaring = true,
+    this.textStyle,
   }) : super(key: key);
 
   final String text;
@@ -21,6 +22,7 @@ class AppButton extends StatelessWidget {
   final double widthSizeFactor;
   final bool isAvailable;
   final bool includeTopMaring;
+  final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -30,19 +32,30 @@ class AppButton extends StatelessWidget {
     final Color _buttonColor =
         isAvailable ? _theme.accentColor : _theme.accentColor.withAlpha(100);
 
+    final TextStyle _textStyle = textStyle ??
+        _theme.textTheme.bodyText1!.copyWith(
+          color: _buttonColor,
+          fontWeight: FontWeight.w800,
+        );
+
     return GestureDetector(
       onTap: onTap,
       child: kIsWeb
-          ? _buildWeb(_deviceSize, _buttonColor, _theme)
-          : _buildMobile(_deviceSize, _buttonColor, _theme),
+          ? _buildWeb(_deviceSize, _textStyle)
+          : _buildMobile(_deviceSize, _buttonColor, _textStyle),
     );
   }
 
-  Widget _buildWeb(Size _deviceSize, Color _buttonColor, ThemeData _theme) {
-    return AppButtonWeb(text: text, autoSizeGroup: autoSizeGroup);
+  Widget _buildWeb(Size _deviceSize, TextStyle _textStyle) {
+    return AppButtonWeb(
+      text: text,
+      autoSizeGroup: autoSizeGroup,
+      textStyle: _textStyle,
+    );
   }
 
-  Widget _buildMobile(Size _deviceSize, Color _buttonColor, ThemeData _theme) {
+  Widget _buildMobile(
+      Size _deviceSize, Color _buttonColor, TextStyle _textStyle) {
     return Container(
       width: _deviceSize.width / widthSizeFactor,
       constraints: BoxConstraints(maxWidth: 200),
@@ -63,10 +76,7 @@ class AppButton extends StatelessWidget {
           maxLines: 1,
           textAlign: TextAlign.center,
           group: autoSizeGroup,
-          style: _theme.textTheme.bodyText1!.copyWith(
-            color: _buttonColor,
-            fontWeight: FontWeight.w800,
-          ),
+          style: _textStyle,
         ),
       ),
     );

@@ -79,8 +79,7 @@ class MutatedTextRepositoryImpl extends MutatedTextRepository {
       return Left(NoConnetionFailure());
     try {
       final List<String> _mutations = [];
-      int _numberOfMutationsFromServer =
-          textEvaluationModel.maxNumberOfMutations;
+      int _numberOfMutationsFromServer = textEvaluationModel.numberOfMutations;
 
       if (textEvaluationModel.includeConjuctions) {
         _numberOfMutationsFromServer = _calculateNumberOfConjuctionMutations(

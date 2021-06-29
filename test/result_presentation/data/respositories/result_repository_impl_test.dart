@@ -86,6 +86,7 @@ void main() {
         'mutatedWords': 1,
         'wrongWords': 1,
         'numberOfMarkedWords': 2,
+        'difficulty': 44,
         'id': '1',
         'date': _testTimeStamp,
       },
@@ -93,6 +94,7 @@ void main() {
         'mutatedWords': 1,
         'wrongWords': 1,
         'numberOfMarkedWords': 2,
+        'difficulty': 44,
         'id': '2',
         'date': _testTimeStamp,
       }

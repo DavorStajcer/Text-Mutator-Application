@@ -54,7 +54,7 @@ class ResultRepositoryImpl extends ResultRepository {
       try {
         return await _loadAllResultsForCurrentUser();
       } catch (err) {
-        log('results loading error: ' + err.toString());
+        print('results loading error: ' + err.toString());
         return Left(ServerFailure());
       }
     } else {
@@ -66,7 +66,7 @@ class ResultRepositoryImpl extends ResultRepository {
     final List<Map<String, dynamic>> _res =
         await _networkResultDataSource.fetchResults();
 
-    log('results maps list is: ' + _res.toString());
+    print('results maps list is: ' + _res.toString());
 
     final List<ResultModel> _results = _res
         .map((Map<String, dynamic> map) => ResultModel.fromJson(map))
