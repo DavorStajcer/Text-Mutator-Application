@@ -4,8 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:text_mutator/core/constants/pages.dart';
 import 'package:text_mutator/core/widgets/app_button.dart';
+import 'package:text_mutator/core/widgets/log_out_button_web.dart';
+import 'package:text_mutator/functions/authenticating_user/view/auth_bloc/auth_bloc_bloc.dart';
 import 'package:text_mutator/functions/theme_managment/cubit/theme_changing_cubit.dart';
 import 'package:text_mutator/functions/user_data_retrieval/view/user_data_bloc/user_data_bloc.dart';
+
+import '../top_layout_theme_button.dart';
 
 class HomePageTopWeb extends StatelessWidget {
   const HomePageTopWeb({
@@ -15,6 +19,8 @@ class HomePageTopWeb extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData _theme = Theme.of(context);
+    final AuthBloc _authBloc = BlocProvider.of<AuthBloc>(context);
+
     return LayoutBuilder(
       builder: (ctx, constraints) {
         final bool _isDesktop = constraints.maxWidth >= 1000;
@@ -29,6 +35,20 @@ class HomePageTopWeb extends StatelessWidget {
               children: [
                 SizedBox(
                   height: 200,
+                  width: MediaQuery.of(context).size.width,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 60.0),
+                        child: LogOutButtonWeb(authBloc: _authBloc),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 60.0),
+                        child: TopLayoutThemeButton(),
+                      ),
+                    ],
+                  ),
                 ),
                 SizedBox(
                   height: _isDesktop
@@ -86,6 +106,10 @@ class HomePageTopWeb extends StatelessWidget {
                         ),
                       ],
                     );
+                  }
+
+                  if (userDataState is UserDataLoading) {
+                    return Container();
                   }
 
                   return Row(

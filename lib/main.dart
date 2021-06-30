@@ -119,12 +119,23 @@ class MyApp extends StatelessWidget with PortraitModeMixin {
   Widget _buildWebStart(ThemeChangingState themeState) {
     return BlocBuilder<AuthenticationCheckerBloc, AuthenticationCheckerState>(
       builder: (context, state) {
+        final _userDataBloc =
+            BlocProvider.of<UserDataBloc>(context, listen: false);
         log('auth state:    ' + state.toString());
+        print('auth state:    ' + state.toString());
+
         if (state is UserAuthenticated) {
-          BlocProvider.of<UserDataBloc>(context).add(LoadUserData());
+          if (_userDataBloc.state is! UserDataLoaded) {
+            _userDataBloc.add(
+              LoadUserData(),
+            );
+          }
           return UsernameInputPage();
         }
         if (state is UserNotAuthenticated) {
+          _userDataBloc.add(
+            LoadUserData(),
+          );
           return HomePage();
         }
         return Scaffold(

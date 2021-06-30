@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 part 'authentication_checker_event.dart';
@@ -15,16 +16,35 @@ class AuthenticationCheckerBloc
 
   AuthenticationCheckerBloc(FirebaseAuth firebaseAuth, this._googleSignIn)
       : super(AuthenticationCheckerInitial()) {
-    //TODO: just for testing, remove later
     firebaseAuth.signOut();
     _googleSignIn.signOut();
 
     // if (firebaseAuth.currentUser != null)
     //   this.add(AuthenticationStateChanged(true));
 
+    _googleSignIn.onCurrentUserChanged.listen(
+      (GoogleSignInAccount? account) {
+        log('google sign in changed');
+        if (kIsWeb) print('google sign in changed:' + account.toString());
+
+        if (account != null) {
+          this.add(AuthenticationStateChanged(true));
+        } else {
+          this.add(AuthenticationStateChanged(false));
+        }
+      },
+      onError: (_) {
+        this.add(AuthenticationStateChanged(false));
+      },
+    );
+
+    _googleSignIn.signInSilently();
+
     firebaseAuth.userChanges().listen(
       (User? user) {
         log('user changed: ' + user.toString());
+        if (kIsWeb) print('user changed: ' + user.toString());
+
         if (user == null) {
           this.add(AuthenticationStateChanged(false));
         } else {
@@ -35,19 +55,6 @@ class AuthenticationCheckerBloc
         this.add(AuthenticationStateChanged(false));
       },
     );
-
-    _googleSignIn.onCurrentUserChanged.listen(
-      (GoogleSignInAccount? account) {
-        log('google sign in changed');
-        if (account != null) {
-          this.add(AuthenticationStateChanged(true));
-        }
-      },
-      onError: (_) {
-        this.add(AuthenticationStateChanged(false));
-      },
-    );
-    _googleSignIn.signInSilently();
   }
 
   @override
@@ -55,6 +62,7 @@ class AuthenticationCheckerBloc
     AuthenticationCheckerEvent event,
   ) async* {
     log(event.toString());
+    print(event.toString());
     if (event is AuthenticationStateChanged)
       yield event.isLogedIn ? UserAuthenticated() : UserNotAuthenticated();
   }

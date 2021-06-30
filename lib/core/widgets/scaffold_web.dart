@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:text_mutator/core/constants/pages.dart';
-import 'package:text_mutator/core/navigation/route_generation.dart';
 import 'package:text_mutator/functions/cursor_animation/animated_pointer.dart';
 import 'package:text_mutator/functions/cursor_animation/mouse_cursor_bloc/mouse_cursor_bloc.dart';
-import 'package:text_mutator/functions/home/view/widgets/top_layout_theme_button.dart';
 
 class ScaffoldWeb extends StatefulWidget {
   final Widget body;
@@ -41,40 +38,6 @@ class _ScaffoldWebState extends State<ScaffoldWeb>
     final ThemeData _theme = Theme.of(context);
 
     return Scaffold(
-      // drawer:
-      //  GestureDetector(
-      //   onHorizontalDragUpdate: (_) => null,
-      //   child: Row(
-      //     children: [
-      //       Drawer(
-      //         child: Column(children: [
-      //           Padding(
-      //             padding: const EdgeInsets.all(8.0),
-      //             child: Text('Home page'),
-      //           ),
-      //           Padding(
-      //             padding: const EdgeInsets.all(8.0),
-      //             child: Text('Practice'),
-      //           ),
-      //           Padding(
-      //             padding: const EdgeInsets.all(8.0),
-      //             child: Text('Results'),
-      //           ),
-      //         ]),
-      //       ),
-      //     ],
-      //   ),
-      // ),
-      // appBar: AppBar(
-      //   //title: Text("MUTEXT"),
-      //   backgroundColor: _theme.primaryColor,
-      //   actions: [
-      //     TopLayoutThemeButton(),
-      //     SizedBox(
-      //       width: 100,
-      //     )
-      //   ],
-      // ),
       backgroundColor: _theme.primaryColor,
       body: MouseRegion(
         cursor: SystemMouseCursors.none,
@@ -88,11 +51,6 @@ class _ScaffoldWebState extends State<ScaffoldWeb>
         child: Stack(
           children: [
             widget.body,
-            Positioned(
-              right: 100,
-              top: 40,
-              child: TopLayoutThemeButton(),
-            ),
             BlocListener<MouseCursorBloc, MouseCursorState>(
               listener: (context, state) {
                 if (state.isCursorExpanded) {
