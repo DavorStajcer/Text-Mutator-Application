@@ -39,7 +39,7 @@ Widget buildPreviewText(MutatedText mutatedText, ThemeData theme) {
   }
 
   return RichText(
-      textAlign: TextAlign.left,
+      textAlign: TextAlign.justify,
       softWrap: true,
       text: TextSpan(
           text: "",

@@ -44,7 +44,6 @@ class _AuthenticationInputFormState extends State<AuthenticationInputForm>
   Widget build(BuildContext context) {
     final AuthenticationActionCubit _authenticationActionCubit =
         BlocProvider.of<AuthenticationActionCubit>(context);
-
     final AuthFormBloc _authFormBloc = BlocProvider.of<AuthFormBloc>(context);
 
     return BlocConsumer<AuthenticationActionCubit, AuthenticationActionState>(
@@ -55,7 +54,6 @@ class _AuthenticationInputFormState extends State<AuthenticationInputForm>
     }, builder: (ctx, authenticationActionState) {
       final bool _isLogin =
           (authenticationActionState is AuthenticationActionLogin);
-
       return BlocBuilder<AuthFormBloc, AuthFormState>(
         builder: (context, authFormState) {
           return Center(
@@ -87,7 +85,6 @@ class _AuthenticationInputFormState extends State<AuthenticationInputForm>
                   textInputAction:
                       _isLogin ? TextInputAction.done : TextInputAction.next,
                 ),
-
                 if (kIsWeb)
                   Center(
                     child: ConfirmPasswordAnimatedField(
@@ -100,7 +97,6 @@ class _AuthenticationInputFormState extends State<AuthenticationInputForm>
                     animationController: _animationController,
                     child: _buildConfirmPassowrd(_authFormBloc, authFormState),
                   ),
-
                 AuthFormButton(
                   authFormState: authFormState,
                   isLogin: _isLogin,
@@ -117,11 +113,6 @@ class _AuthenticationInputFormState extends State<AuthenticationInputForm>
                     textStyle: widget.theme.textTheme.bodyText1!,
                   ),
                 ),
-                // Padding(
-                //   padding:
-                //       const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                //   child: LineIcon(LineIcons.accessibleIcon),
-                // )
               ],
             ),
           );
@@ -169,7 +160,8 @@ class _AuthenticationInputFormState extends State<AuthenticationInputForm>
           20,
         ),
       ),
-      borderSide: BorderSide(width: 2, color: widget.theme.accentColor),
+      borderSide:
+          BorderSide(width: 2, color: widget.theme.colorScheme.secondary),
     );
   }
 }

@@ -32,9 +32,8 @@ class TextValidatorImpl extends TextValidator {
     //average word lenght less then 3
     if ((_lengthSum / words.length) <= 3) return false;
     if (_sameWords.keys.length < ((1 / 4) * words.length)) return false;
-    if (_sameWords.values.any(
-        (numberOfApperances) => numberOfApperances > ((1 / 3) * words.length)))
-      return false;
+    if (_sameWords.values.any((numberOfApperances) =>
+        numberOfApperances > ((1 / 3) * words.length).toInt())) return false;
     if (_sameLetters.values.any((element) => element >= (0.33 * textLength)))
       return false;
     return true;

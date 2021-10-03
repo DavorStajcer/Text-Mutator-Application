@@ -33,6 +33,7 @@ class TextReadPage extends StatelessWidget {
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
                         evaluationState.textEvaluationModel.text.text,
+                        textAlign: TextAlign.justify,
                         style: _theme.textTheme.bodyText1!.copyWith(
                             letterSpacing: 1.5, height: 2, wordSpacing: 1.5),
                       ),

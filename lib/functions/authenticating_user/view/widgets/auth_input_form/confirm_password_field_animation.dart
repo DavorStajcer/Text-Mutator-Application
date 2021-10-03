@@ -23,8 +23,6 @@ class ConfirmPasswordAnimatedField extends StatelessWidget {
                 reverseCurve: Curves.easeIn,
               ),
             ),
-            // width: double.infinity,
-            // height: _isLogin ? 0 : _inputFiledSize,
             child: _fadeTransition(),
           );
   }

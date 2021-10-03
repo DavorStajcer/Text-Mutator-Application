@@ -73,7 +73,6 @@ class _TextLoadPageState extends State<TextLoadPage> {
                 width: 1.4,
               ),
               borderRadius: BorderRadius.circular(20),
-              // color: Colors.green,
             ),
             child: Padding(
               padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
@@ -145,6 +144,7 @@ class _TextLoadPageState extends State<TextLoadPage> {
       ThemeData _theme, TextValidatorBloc _textValidatorBloc) {
     return TextField(
       controller: _textEditingController,
+      textAlign: TextAlign.justify,
       style: _theme.textTheme.bodyText1,
       onChanged: (String text) {
         //_textEditingController.text = text;

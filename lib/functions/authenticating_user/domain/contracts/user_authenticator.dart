@@ -7,8 +7,6 @@ abstract class UserAuthenticator {
   Future<Either<Failure, void>> authenticateUserWithEmailAndPassword(
       String email, String password);
   Future<Either<Failure, bool>> authenticateUserWithGoogle();
-
   Future<Either<Failure, void>> signUp(String email, String password);
-
   Future<Either<Failure, void>> signOut();
 }

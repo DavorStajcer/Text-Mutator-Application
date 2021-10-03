@@ -23,35 +23,34 @@ class UserAuthenticatorImpl extends UserAuthenticator {
   @override
   Future<Either<Failure, void>> authenticateUserWithEmailAndPassword(
       String email, String password) async {
-     if (!await _connectionChecker.hasConnection)
-       return Left(NoConnetionFailure());
+    if (!await _connectionChecker.hasConnection) {
+      return Left(NoConnetionFailure());
+    }
     try {
       final UserCredential _userCredential = await _firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password);
-
-      if (_userCredential.user == null)
+      if (_userCredential.user == null) {
         throw FirebaseAuthException(code: 'user-not-found');
+      }
       return Right(null);
     } on FirebaseAuthException catch (err) {
       return Left(UserAuthenticationFailure(_pickFailureMessage(err.code)));
     } catch (err) {
-      log(err.toString());
       return Left(ServerFailure());
     }
   }
 
   @override
   Future<Either<Failure, bool>> authenticateUserWithGoogle() async {
-     if (!await _connectionChecker.hasConnection)
-       return Left(NoConnetionFailure());
+    if (!await _connectionChecker.hasConnection) {
+      return Left(NoConnetionFailure());
+    }
     try {
       final _acc = await _googleSignIn.signIn();
       return Right(_acc == null);
     } on FirebaseAuthException catch (err) {
       return Left(UserAuthenticationFailure(_pickFailureMessage(err.code)));
     } catch (err) {
-      log(err.toString());
-
       return Left(ServerFailure());
     }
   }
@@ -79,8 +78,9 @@ class UserAuthenticatorImpl extends UserAuthenticator {
 
   @override
   Future<Either<Failure, void>> signOut() async {
-    if (!await _connectionChecker.hasConnection)
+    if (!await _connectionChecker.hasConnection) {
       return Left(NoConnetionFailure());
+    }
     try {
       if (_firebaseAuth.currentUser != null) {
         await _firebaseAuth.signOut();

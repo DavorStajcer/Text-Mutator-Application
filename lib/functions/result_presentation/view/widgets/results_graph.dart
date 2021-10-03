@@ -86,7 +86,7 @@ class ResultsGraph extends StatelessWidget {
         bottomTitles: SideTitles(rotateAngle: 60, showTitles: false),
         leftTitles: SideTitles(
           showTitles: true,
-          getTextStyles: (value) => const TextStyle(
+          getTextStyles: (_, value) => const TextStyle(
             color: Color(0xff67727d),
             fontWeight: FontWeight.bold,
             fontSize: 15,

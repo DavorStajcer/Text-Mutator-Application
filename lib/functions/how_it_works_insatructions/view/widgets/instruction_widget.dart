@@ -15,6 +15,8 @@ class InstructionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _theme = Theme.of(context);
+
     return Column(
       children: [
         Flexible(
@@ -30,7 +32,14 @@ class InstructionWidget extends StatelessWidget {
         ),
         Flexible(
           flex: 1,
-          child: AutoSizeText(textInstruction),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0),
+            child: AutoSizeText(
+              textInstruction,
+              textAlign: TextAlign.justify,
+              style: _theme.textTheme.bodyText1,
+            ),
+          ),
         ),
       ],
     );

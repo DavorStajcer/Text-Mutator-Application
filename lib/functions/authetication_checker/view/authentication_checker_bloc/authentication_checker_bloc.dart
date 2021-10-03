@@ -4,7 +4,6 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 part 'authentication_checker_event.dart';
@@ -16,17 +15,42 @@ class AuthenticationCheckerBloc
 
   AuthenticationCheckerBloc(FirebaseAuth firebaseAuth, this._googleSignIn)
       : super(AuthenticationCheckerInitial()) {
-    firebaseAuth.signOut();
-    _googleSignIn.signOut();
+    // firebaseAuth.signOut();
+    // _googleSignIn.signOut();
+    if (firebaseAuth.currentUser != null) {
+      this.add(AuthenticationStateChanged(true));
+    }
+    _trySingingInSilently();
+    _subscribeToUserAuthenitcationChangesForAllSignInOptions(firebaseAuth);
+  }
 
-    // if (firebaseAuth.currentUser != null)
-    //   this.add(AuthenticationStateChanged(true));
+  @override
+  Stream<AuthenticationCheckerState> mapEventToState(
+    AuthenticationCheckerEvent event,
+  ) async* {
+    log(event.toString());
+    print(event.toString());
+    if (event is AuthenticationStateChanged)
+      yield event.isLogedIn ? UserAuthenticated() : UserNotAuthenticated();
+  }
+}
 
+// Authenitcation checking functions
+extension on AuthenticationCheckerBloc {
+  void _trySingingInSilently() async {
+    final account = await _googleSignIn.signInSilently();
+    print("::::ACCOUNT OF GOOGLE IS  NULL! ...........");
+    if (account != null) {
+      print("::::ACCOUNT OF GOOGLE IS NOT NULL!");
+      this.add(AuthenticationStateChanged(true));
+    }
+  }
+
+  void _subscribeToUserAuthenitcationChangesForAllSignInOptions(
+      FirebaseAuth firebaseAuth) {
     _googleSignIn.onCurrentUserChanged.listen(
       (GoogleSignInAccount? account) {
-        log('google sign in changed');
-        if (kIsWeb) print('google sign in changed:' + account.toString());
-
+        print('google sign in changed:' + account.toString());
         if (account != null) {
           this.add(AuthenticationStateChanged(true));
         } else {
@@ -38,13 +62,9 @@ class AuthenticationCheckerBloc
       },
     );
 
-    _googleSignIn.signInSilently();
-
     firebaseAuth.userChanges().listen(
       (User? user) {
-        log('user changed: ' + user.toString());
-        if (kIsWeb) print('user changed: ' + user.toString());
-
+        print('user changed: ' + user.toString());
         if (user == null) {
           this.add(AuthenticationStateChanged(false));
         } else {
@@ -55,15 +75,5 @@ class AuthenticationCheckerBloc
         this.add(AuthenticationStateChanged(false));
       },
     );
-  }
-
-  @override
-  Stream<AuthenticationCheckerState> mapEventToState(
-    AuthenticationCheckerEvent event,
-  ) async* {
-    log(event.toString());
-    print(event.toString());
-    if (event is AuthenticationStateChanged)
-      yield event.isLogedIn ? UserAuthenticated() : UserNotAuthenticated();
   }
 }

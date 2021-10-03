@@ -27,13 +27,16 @@ class MutatedTextPage extends StatelessWidget {
               child: SafeArea(
                 child: Column(
                   children: [
-                    AutoSizeText(
-                      'Mark the imposter words!',
-                      style: _theme.textTheme.headline3!
-                          .copyWith(color: _theme.accentColor),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 30.0),
+                      child: AutoSizeText(
+                        'Mark the imposter words!',
+                        style: _theme.textTheme.headline3!
+                            .copyWith(color: _theme.colorScheme.secondary),
+                      ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.fromLTRB(16, 10, 16, 16),
                       child: buildSelectableText(
                         mutationState.mutateText,
                         _theme.textTheme.bodyText1!.copyWith(

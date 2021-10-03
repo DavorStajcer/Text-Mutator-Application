@@ -16,7 +16,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData _theme = Theme.of(context);
-
     return kIsWeb ? _buildWeb(_theme, context) : _buildMobile(_theme);
   }
 
